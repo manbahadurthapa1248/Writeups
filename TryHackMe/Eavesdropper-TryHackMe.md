@@ -186,7 +186,9 @@ flag{14.....00}
 
 With this we complete the room.
 
+```Summary
 Time to complete: ~15 minutes
 Difficulty: Medium
 Key lesson: PATH variable manipulation can lead to credential theft
+```
 
