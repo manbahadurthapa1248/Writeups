@@ -11,9 +11,8 @@ So, we are given a ssh key of frank, let's download and move forward.
 Don't forget to change the permissions too.
 
 
-'''bash
 >>*chmod 600 id\_rsa*
-'''
+
 
 >>*ssh -i id\_rsa frank@10.49.136.220*
 
@@ -380,5 +379,6 @@ Time to complete: ~15 minutes
 Difficulty: Medium
 
 Key lesson: PATH variable manipulation can lead to credential theft
+
 
 
