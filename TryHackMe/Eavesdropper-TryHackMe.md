@@ -17,13 +17,13 @@ ED25519 key fingerprint is: SHA256:WaKDmh6WMRiZ/ysLM5UQM/UirbKKHGy+jRJ5euxQS84
 This key is not known by any other names.
 Are you sure you want to continue connecting (yes/no/\[fingerprint])? yes
 Warning: Permanently added '10.49.136.220' (ED25519) to the list of known hosts.
-\*\* WARNING: connection is not using a post-quantum key exchange algorithm.
-\*\* This session may be vulnerable to "store now, decrypt later" attacks.
-\*\* The server may need to be upgraded. See https://openssh.com/pq.html
+** WARNING: connection is not using a post-quantum key exchange algorithm.
+** This session may be vulnerable to "store now, decrypt later" attacks.
+** The server may need to be upgraded. See https://openssh.com/pq.html
 Welcome to Ubuntu 20.04.4 LTS (GNU/Linux 5.4.0-96-generic x86\_64)
-&nbsp;\* Documentation:  https://help.ubuntu.com
-&nbsp;\* Management:     https://landscape.canonical.com
-&nbsp;\* Support:        https://ubuntu.com/advantage
+  * Documentation:  https://help.ubuntu.com
+  * Management:     https://landscape.canonical.com
+  * Support:        https://ubuntu.com/advantage
 
 This system has been minimized by removing packages and content that are
 not required on a system that users do not log into.
@@ -43,8 +43,8 @@ I was thinking like we are in sudo group, it is going to be easy, but while chec
 frank@workstation:~$ id
 uid=1000(frank) gid=1000(frank) groups=1000(frank),27(sudo)
 
-frank@workstation:~$ *sudo -l*
-\[sudo] password for frank:
+frank@workstation:~$ sudo -l
+[sudo] password for frank:
 
 frank@workstation:~$ 
 ```
@@ -70,7 +70,7 @@ pspy - version: v1.2.1 - Commit SHA: f9e6a1590a4312b9faa093d8dc84e19567977a6d
 .
 .
 .
-Config: Printing events (colored=true): processes=true | file-system-events=false ||| Scanning for processes every 100ms and on inotify events ||| Watching directories: \[/usr /tmp /etc /home /var /opt] (recursive) | \[] (non-recursive)
+Config: Printing events (colored=true): processes=true | file-system-events=false ||| Scanning for processes every 100ms and on inotify events ||| Watching directories: [/usr /tmp /etc /home /var /opt] (recursive) | [] (non-recursive)
 Draining file system events due to startup...
 done
 2026/01/29 05:23:59 CMD: UID=1000  PID=15772  | ./pspy64 
@@ -145,8 +145,8 @@ frank@workstation:cat .bashrc | head
 export PATH=/home/frank/bin:$PATH
 # If not running interactively, don't do anything
 case $- in
-&nbsp;   \*i\*) ;;
-&nbsp;     \*) return;;
+  *i*) ;;
+    *) return;;
 esac
 ```
 
@@ -189,3 +189,4 @@ With this we complete the room.
 Time to complete: ~15 minutes
 Difficulty: Medium
 Key lesson: PATH variable manipulation can lead to credential theft
+
