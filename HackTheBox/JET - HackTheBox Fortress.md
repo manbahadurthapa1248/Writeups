@@ -273,7 +273,7 @@ kali@kali:dig @10.13.37.10 -x 10.13.37.10
 ```
 
 
-Yay, we found another server 'www.securewebinc.jet", let's add it to out hosts file.
+Yay, we found another server "*www.securewebinc.jet*", let's add it to out hosts file.
 
 ```bash
 kali@kali:cat /etc/hosts   
@@ -1797,6 +1797,7 @@ This is the final flag, i.e. flag11
 *Flag11:JET{7.....7}*
 
 With this we wrap up the challenge. It took longer that expected because of too many pwn based ctf.
+
 
 
 
