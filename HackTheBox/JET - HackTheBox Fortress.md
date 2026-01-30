@@ -1,7 +1,7 @@
 # **JET - HackTheBox Fortress**
 
-# Fortress (Jet.com)
-# Fortress IP: 10.13.37.10
+Fortress (Jet.com)
+Fortress IP: 10.13.37.10
 
 This is the first fortress lab from Hack The Box called "JET". We are provided with a separate OpenVPN configuration for this fortress. Let's connect and get our VPN IP.
 ```bash
@@ -1796,3 +1796,4 @@ This is the final flag, i.e. flag11
 *Flag11:JET{7.....7}*
 
 With this we wrap up the challenge. It took longer that expected because of too many pwn based ctf.
+
