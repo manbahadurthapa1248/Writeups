@@ -125,7 +125,7 @@ wrote extracted data to "data.txt".
 ```
 
 ```bash
-kali@kali:cat data.txt                                                                                                                                    
+kali@kali:cat data.txt
 Hello.....  r..u
 
      I tell you something Important.Your Password is too Week So Change Your Password
@@ -238,3 +238,4 @@ And, now let's head to root directory, read the final flag and finish this chall
 # cat root.txt
 ThunderCipher{R0.....1E}
 ```
+
