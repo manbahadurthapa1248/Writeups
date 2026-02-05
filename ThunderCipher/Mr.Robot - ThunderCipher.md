@@ -23,8 +23,8 @@ PORT    STATE  SERVICE  VERSION
 |_Not valid after:  2025-09-13T10:45:03
 |_http-title: Site doesn't have a title (text/html).
 |_http-server-header: Apache
-                                                                                                                                                 
-Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .                                                     
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 30.30 seconds
 ```
 
@@ -37,13 +37,13 @@ We try to use gobuster to do some enumeration but it is getting 500 errors.
 
 ```bash
 kali@kali:gobuster dir -u http://192.168.5.244/ -w /usr/share/wordlists/dirb/big.txt
-===============================================================                                                                                    
-Gobuster v3.8.2                                                                                                                                    
-by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)                                                                                      
-===============================================================                                                                                    
-[+] Url:                     http://192.168.5.244/                                                                                                  
-[+] Method:                  GET                                                                                                                   
-[+] Threads:                 10                                                                                                                    
+===============================================================
+Gobuster v3.8.2
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://192.168.5.244/
+[+] Method:                  GET
+[+] Threads:                 10
 [+] Wordlist:                /usr/share/wordlists/dirb/big.txt
 [+] Negative Status codes:   404
 [+] User Agent:              gobuster/3.8.2
@@ -63,7 +63,7 @@ Progress: 341 / 20469 (1.67%)[ERROR] error on word 2019: timeout occurred during
 Let's exclude 500 error, and see what we get.
 
 ```bash
-kali@kali:gobuster dir -u http://192.168.5.244/ -w /usr/share/wordlists/dirb/big.txt --exclude-length 251                                                  
+kali@kali:gobuster dir -u http://192.168.5.244/ -w /usr/share/wordlists/dirb/big.txt --exclude-length 251
 ===============================================================
 Gobuster v3.8.2
 by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
@@ -285,3 +285,4 @@ We are now root, let's head to root directory, read the final flag and conclude 
 cat root.txt
 ThunderCipher{nm.....wn}
 ```
+
