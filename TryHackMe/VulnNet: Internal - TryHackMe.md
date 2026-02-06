@@ -12,12 +12,12 @@ Host is up (0.042s latency).
 Not shown: 993 closed tcp ports (reset)
 PORT     STATE    SERVICE     VERSION
 22/tcp   open     ssh         OpenSSH 8.2p1 Ubuntu 4ubuntu0.13 (Ubuntu Linux; protocol 2.0)
-| ssh-hostkey: 
+| ssh-hostkey:
 |   3072 7a:01:05:24:c4:b5:a9:1c:25:19:97:1d:2a:8d:87:25 (RSA)
 |   256 16:36:9b:39:13:67:9a:9b:f5:be:90:f5:da:fe:04:c3 (ECDSA)
 |_  256 9a:ea:7b:b3:74:d0:44:01:d1:2a:99:41:d5:55:10:ec (ED25519)
 111/tcp  open     rpcbind     2-4 (RPC #100000)
-| rpcinfo: 
+| rpcinfo:
 |   program version    port/proto  service
 |   100000  2,3,4        111/tcp   rpcbind
 |   100000  2,3,4        111/udp   rpcbind
@@ -44,18 +44,18 @@ PORT     STATE    SERVICE     VERSION
 873/tcp  open     rsync       (protocol version 31)
 2049/tcp open     nfs         3-4 (RPC #100003)
 9090/tcp filtered zeus-admin
-Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel                                                                               
-                                                                                                                                      
-Host script results:                                                                                                                  
-| smb2-security-mode:                                                                                                                 
-|   3.1.1:                                                                                                                            
-|_    Message signing enabled but not required                                                                                        
-| smb2-time:                                                                                                                          
-|   date: 2026-02-06T02:17:56                                                                                                         
-|_  start_date: N/A                                                                                                                   
-|_nbstat: NetBIOS name: IP-10-48-171-5, NetBIOS user: <unknown>, NetBIOS MAC: <unknown> (unknown)                                     
-                                                                                                                                      
-Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .                                        
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Host script results:
+| smb2-security-mode:
+|   3.1.1:
+|_    Message signing enabled but not required
+| smb2-time:
+|   date: 2026-02-06T02:17:56
+|_  start_date: N/A
+|_nbstat: NetBIOS name: IP-10-48-171-5, NetBIOS user: <unknown>, NetBIOS MAC: <unknown> (unknown)
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 18.75 seconds
 ```
 
@@ -79,7 +79,7 @@ Unable to connect with SMB1 -- no workgroup available
 Guest login is allowed, let's see what we find inside shares.
 
 ```bash
-kali@kali:smbclient \\\\10.48.171.5\\shares                                                                                                 
+kali@kali:smbclient \\\\10.48.171.5\\shares
 Password for [WORKGROUP\kali]:
 Try "help" to get a list of possible commands.
 smb: \> ls
@@ -112,7 +112,7 @@ getting file \temp\services.txt of size 38 as services.txt (0.2 KiloBytes/sec) (
 We find some interesting files, others are just conversation, and services.txt is our first flag.
 
 ```bash
-kali@kali:cat services.txt                                                                                                                  
+kali@kali:cat services.txt
 THM{0a.....0a}
 ```
 
@@ -137,16 +137,16 @@ kali@kali:sudo mount -t nfs 10.48.171.5:/opt/conf /tmp/mount
 Let's see what we have.
 
 ```bash
-kali@kali:cd /tmp/mount 
+kali@kali:cd /tmp/mount
 
-kali@kali:ls                                                                                                                                
+kali@kali:ls
 hp  init  opt  profile.d  redis  vim  wildmidi
 ```
 
 So, it seems we have a redis configuration, let's see if we have some hardcoded credentials.
 
 ```bash
-kali@kali:cat redis.conf | grep pass                                                                                                        
+kali@kali:cat redis.conf | grep pass
 # 2) No password is configured.
 # If the master is password protected (using the "requirepass" configuration
 # masterauth <master-password>
@@ -452,7 +452,7 @@ Let's head to 127.0.0.1:8111 on our attacker machine.
 
 So, we have a login page. Let's see inside the TeamCity folder to see if we can find any credentials.
 
-After lot's pf juggling arround. I found a superuser token and we can login using that.
+After lot's of juggling arround. I found a superuser token and we can login using that.
 
 ```bash
 sys-internal@ip-10-48-171-5:/TeamCity/logs$ cat catalina.out
