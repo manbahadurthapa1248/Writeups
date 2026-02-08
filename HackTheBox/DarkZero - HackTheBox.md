@@ -198,7 +198,7 @@ I've successfully bypassed the command length limitations and established a stab
 
 I was kind of getting stuck here. Running winpeas I found that it was using outdated kernel version and has critical vulnerability (CVE-2024-30088). It has a metasploit module as well, so we will have to switch to metasploit reverse shell.
 
-
+I am stuck at getting a stable shell after exploiting LPE. Need some help for that......
 
 To be continued.........
 
