@@ -78,7 +78,7 @@ ftp>
 So, we download 2 files from the ftp.
 
 ```bash
-kali@kali:cat readme                                                                                                                                               
+kali@kali:cat readme
 Files are not the only thing shared here.
 Some doors open when passwords are reused.
 Think beyond port 21.
@@ -90,19 +90,19 @@ Let's begin with gobuster while using that wordlist.
 
 ```bash
 kali@kali:gobuster dir -u http://192.168.5.87 -w word.dir
-===============================================================                                                                                              
-Gobuster v3.8.2                                                                                                                                              
-by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)                                                                                                
-===============================================================                                                                                              
-[+] Url:                     http://192.168.5.87                                                                                                             
-[+] Method:                  GET                                                                                                                             
-[+] Threads:                 10                                                                                                                              
-[+] Wordlist:                word.dir                                                                                                                        
-[+] Negative Status codes:   404                                                                                                                             
-[+] User Agent:              gobuster/3.8.2                                                                                                                  
-[+] Timeout:                 10s                                                                                                                             
-===============================================================                                                                                              
-Starting gobuster in directory enumeration mode                                                                                                              
+===============================================================
+Gobuster v3.8.2
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://192.168.5.87
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                word.dir
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.8.2
+[+] Timeout:                 10s
+===============================================================
+Starting gobuster in directory enumeration mode
 ===============================================================
 happy                (Status: 200) [Size: 108]
 Progress: 109 / 109 (100.00%)
@@ -176,7 +176,7 @@ Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2026-02-10 20:34:
 We have a valid set of credentials for ssh. Let's login via ssh on port 7223.
 
 ```bash
-kali@kali:ssh shadowops@192.168.5.87 -p 7223                                                                                                                       
+kali@kali:ssh shadowops@192.168.5.87 -p 7223
 The authenticity of host '[192.168.5.87]:7223 ([192.168.5.87]:7223)' can't be established.
 ED25519 key fingerprint is: SHA256:kVyS5RqS8tFczs71LETg90vnsj/ZLDrqbn91uPP1Cik
 This key is not known by any other names.
@@ -185,7 +185,7 @@ Warning: Permanently added '[192.168.5.87]:7223' (ED25519) to the list of known 
 ** WARNING: connection is not using a post-quantum key exchange algorithm.
 ** This session may be vulnerable to "store now, decrypt later" attacks.
 ** The server may need to be upgraded. See https://openssh.com/pq.html
-shadowops@192.168.5.87's password: 
+shadowops@192.168.5.87's password:
 Welcome to Ubuntu 20.04.2 LTS (GNU/Linux 5.4.0-74-generic x86_64)
 
  * Documentation:  https://help.ubuntu.com
@@ -193,7 +193,6 @@ Welcome to Ubuntu 20.04.2 LTS (GNU/Linux 5.4.0-74-generic x86_64)
  * Support:        https://ubuntu.com/advantage
 
   System information as of Tue 10 Feb 2026 02:50:32 PM UTC
-
   System load:  0.0                Processes:              123
   Usage of /:   24.0% of 18.57GB   Users logged in:        0
   Memory usage: 11%                IPv4 address for ens18: 192.168.5.87
@@ -212,7 +211,7 @@ Run 'do-release-upgrade' to upgrade to it.
 
 
 Last login: Fri Feb  6 11:57:32 2026 from 192.168.5.126
-shadowops@cyberhunt2:~$ 
+shadowops@cyberhunt2:~$
 ```
 
 We find the user flag at home direectory.
