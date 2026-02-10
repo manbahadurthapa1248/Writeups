@@ -67,19 +67,19 @@ ryuk please delete it
 Going, to /important.jpg, it shows error. Let's download it and see what it is.
 
 ```bash
-kali@kali:curl http://deathnote.vuln/important.jpg > important.jpg                                                                                             
+kali@kali:curl http://deathnote.vuln/important.jpg > important.jpg
   % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
                                  Dload  Upload  Total   Spent   Left   Speed
 100    277 100    277   0      0   1790      0                              0
 
-kali@kali:file important.jpg                                                                                                                                   
+kali@kali:file important.jpg
 important.jpg: ASCII text
 ```
 
 It is ASCII, we can read it.
 
 ```bash
-kali@kali:cat important.jpg                                                                                                                                    
+kali@kali:cat important.jpg
 i am Soichiro Yagami, light's father
 i have a doubt if L is true about the assumption that light is kira
 
@@ -87,14 +87,14 @@ i can only help you by giving something important
 
 login username : user.txt
 i don't know the password.
-find it by yourself 
+find it by yourself
 but i think it is in the hint section of site
 ```
 
 Since, this is wordpress, let's do wpscan too.
 
 ```bash
-kali@kali:wpscan --url http://deathnote.vuln/wordpress --enumerate vp --api-token=75e.....HahVVVc --no-update                      
+kali@kali:wpscan --url http://deathnote.vuln/wordpress --enumerate vp --api-token=75e.....HahVVVc --no-update
 _______________________________________________________________
          __          _______   _____
          \ \        / /  __ \ / ____|
@@ -257,8 +257,8 @@ User kira may run the following commands on deathnote:
 So, basically everything. Let's switch to root.
 
 ```bash
-kira@deathnote:~$ sudo su                                                                                                                                
-root@deathnote:/home/kira# id                                                                                                                            
+kira@deathnote:~$ sudo su
+root@deathnote:/home/kira# id
 uid=0(root) gid=0(root) groups=0(root)
 ```
 
