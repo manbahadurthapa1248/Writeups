@@ -62,6 +62,7 @@ ubuntu      2531  0.0  0.0   8172  2384 pts/1    S+   13:13   0:00 grep --color=
 So, the hidden process is "/home/mircoservice/.tmp/.strokes".
 
 **5. How many processes are found to be running from the backdoor account’s directory?**
+
 From the above output only, we see 2 processes are running from the backdoor account'sdirectory.
 
 **6.What is the name of the hidden file in memory from the root directory?**
@@ -224,7 +225,7 @@ root@cybertees:/# grep -a "Failed" /var/log/auth.log* | grep -i mircoservice
 /var/log/auth.log:Aug 13 22:15:44 cybertees sshd[2388]: Failed password for mircoservice from 10.11.75.247 port 64871 ssh2
 /var/log/auth.log:Aug 13 22:16:12 cybertees sshd[2388]: message repeated 2 times: [ Failed password for mircoservice from 10.11.75.247 port 64871 ssh2]
 ```
-So, 2 of them were haveing 2 error message repeated. So, total is 8.
+So, 2 of them were having 2 error message repeated. So, total is 8.
 
 **11. Which malicious package was installed on the host?**
 
