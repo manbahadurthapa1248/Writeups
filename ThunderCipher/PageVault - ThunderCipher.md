@@ -312,7 +312,7 @@ Let's see if we have sudo privileges.
 ```bash
 bookadmin@manbahadurthapa46467108:~$ sudo -l
 Matching Defaults entries for bookadmin on manbahadurthapa46467108:
-    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin, use_pty
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin,use_pty
 
 User bookadmin may run the following commands on manbahadurthapa46467108:
     (ALL) NOPASSWD: /bin/tar
