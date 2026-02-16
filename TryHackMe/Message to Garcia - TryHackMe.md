@@ -116,7 +116,7 @@ print("[+] message.enc generated successfully!
 Run the script.
 
 ```bash
-kali@kali:python3 message.py 
+kali@kali:python3 message.py
 [+] message.enc generated successfully!
 ```
 
