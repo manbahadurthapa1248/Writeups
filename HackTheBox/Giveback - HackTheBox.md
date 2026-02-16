@@ -48,7 +48,7 @@ Wappalyzer told this is a Wordpress site with Wordpress v. 6.8.1 and has a GiveW
 
 So, running whatweb, it reveals that GiveWP plugin is Give v3.14.0
 
-``bash
+```bash
 kali@kali:whatweb http://giveback.htb
 http://giveback.htb [200 OK] Bootstrap[0.3], Country[RESERVED][ZZ], HTML5, HTTPServer[nginx/1.28.0], IP[10.129.242.171], JQuery[3.7.1], MetaGenerator[Give v3.14.0,WordPress 6.8.1], Script[speculationrules,text/javascript], Title[GIVING BACK IS WHAT MATTERS MOST &#8211; OBVI], UncommonHeaders[link], WordPress[6.8.1], nginx[1.28.0]
 ```
@@ -351,7 +351,8 @@ Install the requirements, before running the script. Also make a virtual environ
 
 
 ```bash
-kali@kali:python3 -m venv giveback                                                                                                        
+kali@kali:python3 -m venv giveback
+
 kali@kali:source giveback/bin/activate
 ```
                                                                                                     
@@ -494,7 +495,7 @@ From linpeas we learn that at 10.43.2.241:5000, legacy service is running.
 
 
 ```info
-WORDPRESS_EXTRA_WP_CONFIG_CONTENT=                                                                                                  
+WORDPRESS_EXTRA_WP_CONFIG_CONTENT=
 WORDPRESS_MULTISITE_ENABLE_NIP_IO_REDIRECTION=no
 WORDPRESS_USERNAME=user
 BITNAMI_VOLUME_DIR=/bitnami
