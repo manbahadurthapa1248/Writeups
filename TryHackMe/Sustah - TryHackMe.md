@@ -85,7 +85,7 @@ It gave us a path. It works on website on port 80.
 So, the path leads us to Mara CMS. We don't know the exact version, but we know from hint it is vulnerable.
 
 ```bash
-kali@kali:searchsploit mara cms                                                                                                                 
+kali@kali:searchsploit mara cms
 ----------------------------------------------------------------------------------- -----------------------
  Exploit Title                                                                     |  Path
 ----------------------------------------------------------------------------------- -----------------------
