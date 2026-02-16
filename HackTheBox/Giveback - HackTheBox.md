@@ -586,7 +586,7 @@ I have no name!@beta-vino-wp-wordpress-65c8694d9b-f8p8l:/tmp$ php -r "echo file_
 </html>
 ```
 
-We will use PHP-CGI RCE chain in this context.
+The application is susceptible to remote code execution due to exposed and misconfigured PHP-CGI handling, enabling exploitation via known PHP-CGI argument injection attack chains.
 
 Start a listener.
 
