@@ -519,7 +519,7 @@ Copyright (C) 2016 Microsoft Corporation. All rights reserved.
 Let's use socat to forward the THMIIS 3389(RDP) port, so that we can login.
 
 ```powershell
-PS C:\tools\socat> ./socat.exe TCP4-LISTEN:12349,fork TCP4:THMIIS.za.tryhackme.com:3389                                                        
+PS C:\tools\socat> ./socat.exe TCP4-LISTEN:12349,fork TCP4:THMIIS.za.tryhackme.com:3389
 ```
 
 Now, we can login via RDP to THMIIS with the provided credentials.
