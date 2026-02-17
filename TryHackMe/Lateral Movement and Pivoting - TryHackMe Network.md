@@ -1,4 +1,4 @@
-<img width="1028" height="803" alt="Screenshot 2026-02-17 142033" src="https://github.com/user-attachments/assets/c0a1b321-1d58-4039-8dc1-a7aa88092740" /># **Lateral Movement and Pivoting - TryHackMe Network**
+# **Lateral Movement and Pivoting - TryHackMe Network**
 
 *VPN Ip. Address: 10.150.74.3*
 
