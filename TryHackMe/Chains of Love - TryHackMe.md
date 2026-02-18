@@ -72,8 +72,8 @@ internal                [Status: 403, Size: 162, Words: 4, Lines: 8, Duration: 4
 
 So, let's add internal to our hosts file, although it is showing 403 status code.
 
-```bash
-kali@kali:cat /etc/hosts                                                                                                                                  
+```bash\
+kali@kali:cat /etc/hosts
 10.49.132.89    nova.thm internal.nova.thm
 
 127.0.0.1       localhost
