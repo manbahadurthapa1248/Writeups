@@ -27,19 +27,19 @@ Open 10.49.156.227:1337
 So, we have 2 open ports, let's see what services are running.
 
 ```bash
-kali@kali:nmap -sV -sC -p 22,1337 10.49.156.227                                                                                                           
-Starting Nmap 7.98 ( https://nmap.org ) at 2026-02-18 08:03 +0545                                                                                   
-Nmap scan report for 10.49.156.227                                                                                                                  
-Host is up (0.074s latency).                                                                                                                        
-                                                                                                                                                    
-PORT     STATE SERVICE VERSION                                                                                                                      
-22/tcp   open  ssh     OpenSSH 9.6p1 Ubuntu 3ubuntu13.5 (Ubuntu Linux; protocol 2.0)                                                                
-| ssh-hostkey:                                                                                                                                      
-|   256 a0:a4:c8:3c:09:b9:1e:93:1e:c3:ea:56:26:16:8f:43 (ECDSA)                                                                                     
-|_  256 7e:a0:6a:66:47:df:7e:a4:3a:42:af:0f:5a:bd:89:3b (ED25519)                                                                                   
-1337/tcp open  http    Werkzeug httpd 3.1.5 (Python 3.12.3)                                                                                         
-|_http-server-header: Werkzeug/3.1.5 Python/3.12.3                                                                                                  
-|_http-title: CupidCards - Valentine's Day Card Generator                                                                                           
+kali@kali:nmap -sV -sC -p 22,1337 10.49.156.227
+Starting Nmap 7.98 ( https://nmap.org ) at 2026-02-18 08:03 +0545
+Nmap scan report for 10.49.156.227
+Host is up (0.074s latency).
+
+PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 9.6p1 Ubuntu 3ubuntu13.5 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|   256 a0:a4:c8:3c:09:b9:1e:93:1e:c3:ea:56:26:16:8f:43 (ECDSA)
+|_  256 7e:a0:6a:66:47:df:7e:a4:3a:42:af:0f:5a:bd:89:3b (ED25519)
+1337/tcp open  http    Werkzeug httpd 3.1.5 (Python 3.12.3)
+|_http-server-header: Werkzeug/3.1.5 Python/3.12.3
+|_http-title: CupidCards - Valentine's Day Card Generator
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
@@ -169,7 +169,6 @@ Expanded Security Maintenance for Applications is not enabled.
 233 updates can be applied immediately.
 113 of these updates are standard security updates.
 To see these additional updates run: apt list --upgradable
-
 6 additional security updates can be applied with ESM Apps.
 Learn more about enabling ESM Apps service at https://ubuntu.com/esm
 
@@ -177,21 +176,21 @@ Learn more about enabling ESM Apps service at https://ubuntu.com/esm
 The list of available updates is more than a week old.
 To check for new updates run: sudo apt update
 
-Last login: Tue Feb 10 12:16:17 2026 from 192.168.179.5                                                                                            
+Last login: Tue Feb 10 12:16:17 2026 from 192.168.179.5
 cupid@tryhackme-2404:~$
 ```
 
 First flag at home directory.
 
 ```bash
-cupid@tryhackme-2404:~$ cat cup1d.txt                                                                                                              
+cupid@tryhackme-2404:~$ cat cup1d.txt
 THM{r3.....37}
 ```
 
 We have no sudo for this user.
 
 ```bash
-cupid@tryhackme-2404:~$ id                                                                                                                         
+cupid@tryhackme-2404:~$ id
 uid=1001(cupid) gid=1001(cupid) groups=1001(cupid),1002(lovers)
 ```
 
@@ -199,7 +198,7 @@ I noticed we are in lovers group. Let's see if this group has anything that migh
 
 ```bash
 cupid@tryhackme-2404:~$ find / -group lovers 2>/dev/null
-/opt/heartbreak/matcher/PROCESSING.md                                                                                                              
+/opt/heartbreak/matcher/PROCESSING.md
 /var/spool/heartbreak/inbox
 ```
 
@@ -308,16 +307,15 @@ Learn more about enabling ESM Apps service at https://ubuntu.com/esm
 The list of available updates is more than a week old.
 To check for new updates run: sudo apt update
 Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
+                              
 
-                                                                                                                                                   
-                                                                                                                                                   
-The programs included with the Ubuntu system are free software;                                                                                    
-the exact distribution terms for each program are described in the                                                                                 
-individual files in /usr/share/doc/*/copyright.                                                                                                    
-                                                                                                                                                   
-Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by                                                                               
-applicable law.                                                                                                                                    
-                                                                                                                                                   
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
 aphrodite@tryhackme-2404:~$
 ```
 
