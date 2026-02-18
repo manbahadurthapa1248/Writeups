@@ -86,7 +86,7 @@ drwxr-xr-x    3 0        0            4096 Jul 26  2020 ..
 2 more hidden files, download all the files to the attacker machine.
 
 ```bash
-kali@kali;cat secret_room.txt
+kali@kali:cat secret_room.txt
                                                          
 Inuarashi: You reached the center of the Whale, the majestic tree of Zou.
 Nekomamushi: We have hidden this place for centuries.
