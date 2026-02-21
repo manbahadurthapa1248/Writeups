@@ -21,8 +21,8 @@ Nmap done: 1 IP address (1 host up) scanned in 88.49 seconds
 What !!! We only have 1 port. Let's do a udp scan.
 
 ```bash
-kali@kali:nmap -sU -Pn 10.129.238.52                                                                                                                               
-Starting Nmap 7.98 ( https://nmap.org ) at 2026-02-21 12:55 +0545                                                                                            
+kali@kali:nmap -sU -Pn 10.129.238.52
+Starting Nmap 7.98 ( https://nmap.org ) at 2026-02-21 12:55 +0545
 Nmap scan report for 10.129.238.52
 Host is up (2.2s latency).
 Not shown: 996 closed udp ports (port-unreach)
@@ -50,7 +50,7 @@ We have a user value: ike@expressway.htb. Let's enumerate further with this foun
 Before that add expressway.htb on /etc/hosts.
 
 ```bash
-kali@kali:cat /etc/hosts                                                                                                                                           
+kali@kali:cat /etc/hosts
 10.129.238.52   expressway.htb
 
 127.0.0.1       localhost
@@ -75,7 +75,7 @@ Ending ike-scan 1.9.6: 1 hosts scanned in 0.579 seconds (1.73 hosts/sec).  1 ret
 The successful Aggressive Mode handshake on 10.129.238.52 reveals that the target is using 3DES/SHA1 encryption and has returned a PSK hash for the identity ike@expressway.htb, which can now be saved and cracked offline using a tool like hashcat or john.
 
 ```bash
-kali@kali:cat presharedkey.txt                                                                                                                                     
+kali@kali:cat presharedkey.txt
 2843c7b2c2f.....30d7bfd538533b7
 ```
 
