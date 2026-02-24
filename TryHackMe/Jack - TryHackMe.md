@@ -28,7 +28,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 Nmap done: 1 IP address (1 host up) scanned in 17.47 seconds
 ```
 
-We have 2 ports. Port 22 (ssh) and Port 80 (http, running wordpress site). As the challenege has told to add jack.thm on our hosts file, let's do it.
+We have 2 ports. Port 22 (ssh) and Port 80 (http, running wordpress site). As the challenge has told to add jack.thm on our hosts file, let's do it.
 
 ```bash
 kali@kali:cat /etc/hosts
