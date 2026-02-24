@@ -274,7 +274,7 @@ Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 4096 bytes / 4096 bytes
 
 
-Disk /dev/nvme2n1: 1 GiB, 1073741824 bytes, 2097152 sectors                                                                                               
+Disk /dev/nvme2n1: 1 GiB, 1073741824 bytes, 2097152 sectors
 Units: sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 4096 bytes / 4096 bytes
