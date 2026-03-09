@@ -154,7 +154,7 @@ kali@kali:penelope -p 4444
 [+] Shell upgraded successfully using /usr/bin/python3! 💪
 [+] Interacting with session [1], Shell Type: PTY, Menu key: F12 
 [+] Logging to /home/kali/.penelope/sessions/desktop~10.48.162.35-Linux-x86_64/2026_03_09-02_50_55-218.log 📜
-───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 To run a command as administrator (user "root"), use "sudo <command>".
 See "man sudo_root" for details.
 
