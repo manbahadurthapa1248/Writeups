@@ -89,8 +89,8 @@ web@vulnnet-dotpy:~$ sudo -l
 Matching Defaults entries for web on vulnnet-dotpy:
     env_reset, mail_badpass,
     secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
-                                                                                                                                                
-User web may run the following commands on vulnnet-dotpy:                                                                                       
+
+User web may run the following commands on vulnnet-dotpy:
     (system-adm) NOPASSWD: /usr/bin/pip3 install *
 ```
 
