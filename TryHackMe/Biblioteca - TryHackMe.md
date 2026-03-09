@@ -137,8 +137,8 @@ The password was hazel:hazel. That is the weak password for sure.
 
 ```bash
 smokey@ip-10-48-134-114:/home$ su hazel
-Password:                                                                                                                                       
-hazel@ip-10-48-134-114:/home$ id                                                                                                                
+Password:
+hazel@ip-10-48-134-114:/home$ id
 uid=1001(hazel) gid=1001(hazel) groups=1001(hazel)
 ```
 
