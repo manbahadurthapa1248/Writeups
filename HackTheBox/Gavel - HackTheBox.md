@@ -49,7 +49,7 @@ Nothing interesting that might help. Let's do a directory bruteforcing.
 kali@kali:dirb http://gavel.htb/
 
 -----------------
-DIRB v2.22    
+DIRB v2.22
 By The Dark Raver
 -----------------
 
@@ -59,29 +59,29 @@ WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
 
 -----------------
 
-GENERATED WORDS: 4612                                                          
+GENERATED WORDS: 4612
 
 ---- Scanning URL: http://gavel.htb/ ----
-+ http://gavel.htb/.git/HEAD (CODE:200|SIZE:23)                                                                                                             
-+ http://gavel.htb/admin.php (CODE:302|SIZE:0)                                                                                                              
-==> DIRECTORY: http://gavel.htb/assets/                                                                                                                     
-==> DIRECTORY: http://gavel.htb/includes/                                                                                                                   
-+ http://gavel.htb/index.php (CODE:200|SIZE:14018)                                                                                                          
-==> DIRECTORY: http://gavel.htb/rules/                                                                                                                      
-+ http://gavel.htb/server-status (CODE:403|SIZE:274)                                                                                                        
-                                                                                                                                                            
++ http://gavel.htb/.git/HEAD (CODE:200|SIZE:23)
++ http://gavel.htb/admin.php (CODE:302|SIZE:0)
+==> DIRECTORY: http://gavel.htb/assets/
+==> DIRECTORY: http://gavel.htb/includes/
++ http://gavel.htb/index.php (CODE:200|SIZE:14018)
+==> DIRECTORY: http://gavel.htb/rules/
++ http://gavel.htb/server-status (CODE:403|SIZE:274)
+
 ---- Entering directory: http://gavel.htb/assets/ ----
-(!) WARNING: Directory IS LISTABLE. No need to scan it.                        
+(!) WARNING: Directory IS LISTABLE. No need to scan it.
     (Use mode '-w' if you want to scan it anyway)
-                                                                                                                                                            
+
 ---- Entering directory: http://gavel.htb/includes/ ----
-(!) WARNING: Directory IS LISTABLE. No need to scan it.                        
+(!) WARNING: Directory IS LISTABLE. No need to scan it.
     (Use mode '-w' if you want to scan it anyway)
-                                                                                                                                                            
+
 ---- Entering directory: http://gavel.htb/rules/ ----
-(!) WARNING: Directory IS LISTABLE. No need to scan it.                        
+(!) WARNING: Directory IS LISTABLE. No need to scan it.
     (Use mode '-w' if you want to scan it anyway)
-                                                                               
+
 -----------------
 END_TIME: Tue Mar 10 09:54:45 2026
 DOWNLOADED: 4612 - FOUND: 4
@@ -160,9 +160,9 @@ kali@kali:penelope -p 4444
 [+] Got reverse shell from gavel~10.129.253.62-Linux-x86_64 😍 Assigned SessionID <1>
 [+] Attempting to upgrade shell to PTY...
 [+] Shell upgraded successfully using /usr/bin/python3! 💪
-[+] Interacting with session [1], Shell Type: PTY, Menu key: F12 
+[+] Interacting with session [1], Shell Type: PTY, Menu key: F12
 [+] Logging to /home/kali/.penelope/sessions/gavel~10.129.253.62-Linux-x86_64/2026_03_10-10_27_05-470.log 📜
-─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 [+] Got reverse shell from gavel~10.129.253.62-Linux-x86_64 😍 Assigned SessionID <2>
 www-data@gavel:/var/www/html/gavel/includes$ id
 uid=33(www-data) gid=33(www-data) groups=33(www-data)
