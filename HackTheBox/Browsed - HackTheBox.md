@@ -46,7 +46,10 @@ So, let's download one of their samples, and upload the same sample.
 In one of the outputs, we see that there is another website too
 
 ```output
-cup2key=8:LZj _rvCJU5x4gA5oUl8uSk7cuDKjBMzd6Ks _ _nDm08M &cup2hreq=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  [3086:3114:0203/123518.009774:VERBOSE1:network _delegate.cc(37)] NetworkDelegate::NotifyBeforeURLRequest: http://browsedinternals.htb/  [3086:3114:0203/123518.010108:VERBOSE1:network _delegate.cc(37)] NetworkDelegate::NotifyBeforeURLRequest: http://localhost/  [3057:3057:0203/123518.017436:VERBOSE1:component _installer.cc(560)] FinishRegistration for Masked Domain List 
+cup2key=8:LZj _rvCJU5x4gA5oUl8uSk7cuDKjBMzd6Ks _ _nDm08M &cup2hreq=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+[3086:3114:0203/123518.009774:VERBOSE1:network _delegate.cc(37)] NetworkDelegate::NotifyBeforeURLRequest: http://browsedinternals.htb/
+[3086:3114:0203/123518.010108:VERBOSE1:network _delegate.cc(37)] NetworkDelegate::NotifyBeforeURLRequest: http://localhost/
+[3057:3057:0203/123518.017436:VERBOSE1:component _installer.cc(560)] FinishRegistration for Masked Domain List 
 ```
 
 Let's add browsedinternals.htb to our hosts and look what it has for us.
@@ -241,7 +244,7 @@ zip -j exploit.zip manifest.json exploit.js
 Optional: Start a python server on port 80, just to make sure our script has started.
 
 ```bash
-kali@kali:python -m http.server 80                                                                                                                                   
+kali@kali:python -m http.server 80
 Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
 ```
 
@@ -258,7 +261,7 @@ Now, upload the exploit.zip, and wait until the developer runs it.
 We get hit on our python server telling, the script has started to run.
 
 ```bash
-kali@kali:python -m http.server 80                                                                                                                                   
+kali@kali:python -m http.server 80
 Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
 10.129.16.217 - -  [03/Feb/2026 18:45:30] code 404, message File not found
 10.129.16.217 - -  [03/Feb/2026 18:45:30] "GET /ALIVE HTTP/1.1" 404 -
@@ -282,21 +285,21 @@ larry@browsed:~/markdownPreview$
 We find our first flag in our home directory.
 
 ```bash
-larry@browsed:~$ cat user.txt                                                                                                                                  
+larry@browsed:~$ cat user.txt
 38.....c1
 ```
 
 There are pair of ssh-keys in the home directory, if you want to ssh with a proper tty, but in my case Penelope has provided me with a proper tty.
 
 ```bash
-larry@browsed:~/.ssh$ ls                                                                                                                                       
-authorized _keys  id _ed25519  id _ed25519.pub 
+larry@browsed:~/.ssh$ ls
+authorized _keys  id _ed25519  id _ed25519.pub
 ```
 
 Checking sudo privileges, we can run /opt/extensiontool/extension _tool.py as root.
 
 ```bash
-sudo -l                                                                                                                                       
+karry@browsed:~/sudo -l
 Matching Defaults entries for larry on browsed:
     env _reset, mail _badpass, secure _path=/usr/local/sbin  :/usr/local/bin  :/usr/sbin  :/usr/bin  :/sbin  :/bin  :/snap/bin, use _pty
 
