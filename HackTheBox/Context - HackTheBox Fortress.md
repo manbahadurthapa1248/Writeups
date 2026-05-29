@@ -610,3 +610,9 @@ CONTEXT{OU.....?}
 ```flag
 Flag7: CONTEXT{OU.....t?}
 ```
+
+If you are not getting admin directly, get a shell on metasploit and use this module to get NT Authority/SYSTEM.
+
+```help
+[+] 10.13.37.12 - exploit/windows/local/cve_2024_35250_ks_driver: The target appears to be vulnerable. ks.sys is present, Windows Version detected: Windows Server 2019
+```
