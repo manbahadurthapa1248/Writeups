@@ -1,7 +1,7 @@
 # Breach — HackTheBox Writeup
 **Difficulty:** Medium  
 **Category:** Active Directory  
-**Platform:** HackTheBox / VulnLab  
+**Platform:** HackTheBox
 **Domain:** breach.vl  
 **DC Hostname:** BREACHDC.breach.vl
 
