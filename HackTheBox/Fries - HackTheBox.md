@@ -323,10 +323,10 @@ Key findings:
 
 ```
 john hash --wordlist=/usr/share/wordlists/rockyou.txt
-rockon!   (?)
+<REDACTED_PASSWORD>  (?)
 ```
 
-The config password (`rockon!`) allows login to the PWM ConfigurationEditor web UI at `pwm.fries.htb`.
+The config password we just cracked allows login to the PWM ConfigurationEditor web UI at `pwm.fries.htb`.
 
 ### 6.3 LDAP Credential Capture via PWM UI
 
